@@ -100,7 +100,7 @@ useEffect(() => {
     
     if (!data?.error) return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
+            <div className='grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-10'>
             
                 <div>
                     {/* first column */}
@@ -138,7 +138,7 @@ useEffect(() => {
 
                 </div>
 
-                <div className='pt-4'>
+                <div className='pt-4 pb-10'>
                     {/* all users  */}
                     <h1 className='pl-1 py-2 text-xl font-medium text-gray-700'>All Users</h1>
                     <AllUsersGrid users={data}/>
