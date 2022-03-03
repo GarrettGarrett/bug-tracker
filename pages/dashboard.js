@@ -29,19 +29,12 @@ const sidebarNavigation = [
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '#', signOut: true },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
-
-
-
-
-
-
 
 
 
@@ -78,6 +71,7 @@ function dashboard() {
 
         <div className="h-full flex">
           {/* Narrow sidebar */}
+         
           <div className="hidden w-28 bg-indigo-700 overflow-y-auto md:block">
             <div className="w-full py-6 flex flex-col items-center">
               <div className="flex-shrink-0 flex items-center">
@@ -260,6 +254,7 @@ function dashboard() {
                             <Menu.Item key={item.name}>
                               {({ active }) => (
                                 <a
+                                onClick={() => item?.signOut && signOut()}
                                   href={item.href}
                                   className={classNames(
                                     active ? 'bg-gray-100' : '',
