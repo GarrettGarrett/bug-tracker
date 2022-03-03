@@ -1,8 +1,25 @@
 import React from 'react'
+import { useSession, signIn, signOut, getCsrfToken, getProviders } from "next-auth/react"
+
 
 function callback() {
+
+  const { data: session } = useSession()
+
+
+  if (session) {
+    return (
+      <>
+        Signed in as {session.user.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    )
+  }
   return (
-    <div>callback page</div>
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
   )
 }
 
