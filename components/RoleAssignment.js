@@ -138,7 +138,7 @@ useEffect(() => {
 
                 </div>
 
-                <div className='pt-4 pb-10'>
+                <div className='pt-4 pb-32'>
                     {/* all users  */}
                     <h1 className='pl-1 py-2 text-xl font-medium text-gray-700'>All Users</h1>
                     <AllUsersGrid users={data}/>
