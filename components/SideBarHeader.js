@@ -178,7 +178,10 @@ function SideBarHeader() {
                           {sidebarNavigation.map((item) => (
                             <Link href={item.href}>
                             <a
-                              onClick={() => context.setTab(item.index)}
+                              onClick={() => {
+                                setMobileMenuOpen(false)
+                                context.setTab(item.index)
+                              }}
                               key={item.name}
                               
                               className={classNames(
