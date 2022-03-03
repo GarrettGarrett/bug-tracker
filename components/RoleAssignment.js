@@ -84,9 +84,7 @@ useEffect(() => {
     }
 
 
-    if (error) return <div>failed to load</div>
-    if (!data) return <div>loading...</div>
-
+   
     if (data?.error) return (
     <>
         <div class="flex h-screen">
@@ -146,7 +144,7 @@ useEffect(() => {
                     
                     </button>
                     :
-                    <div className='h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
+                    <div className='md:-mt-8 h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
                     }
     
                 </div>
