@@ -1,10 +1,10 @@
-import { useSession, signIn, signOut, getCsrfToken, getProviders } from "next-auth/react"
+import { useSession, signIn, signOut, getCsrfToken } from "next-auth/react"
 import { useState, useEffect } from 'react'
 
 
 export default function SignIn({ csrfToken }) {
 
-  
+  const [guestMode, setGuestMode] = useState(false)
 
 
 return (
@@ -86,19 +86,85 @@ return (
                 </a>
               </div>
 
-              <div     >
-                <a
-                  
-                  className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-gray-500 hover:bg-blue-400"
-                >
-                  
-                  
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  <span className="text-white px-6">Sign in as a Guest</span>
-                </a>
-              </div>
+             
+
+              {
+                  guestMode ? 
+                  <>
+                            
+                            <div className="flex -my-3 pt-3" >
+                               
+                    
+                            <a
+                            
+                            onClick={()=> signIn("credentials", { username: "developer", password: "" })}
+                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-gray-500 hover:bg-blue-400"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span className="text-white px-2.5">Developer</span>
+                            </a>
+                    
+                         
+                            <a
+                            onClick={()=> signIn("credentials", { username: "admin", password: "" })}
+                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-gray-500 hover:bg-blue-400"
+                            >
+                            
+                            
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            <span className="text-white px-6">Admin</span>
+                            </a>
+                        </div>
+
+
+                            <div className="flex" >
+                            <a
+                            onClick={()=> signIn("credentials", { username: "role1", password: "" })}
+                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-gray-500 hover:bg-blue-400"
+                            >
+                            
+                            
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            <span className="text-white px-6">role1</span>
+                            </a>
+                            <a
+                            onClick={()=> signIn("credentials", { username: "role2", password: "" })}
+                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-gray-500 hover:bg-blue-400"
+                            >
+                            
+                            
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            <span className="text-white px-6">role2</span>
+                            </a>
+                        </div>
+                       
+               
+                  </>
+
+                  :
+
+                        <div  >
+                        <a
+                            onClick={()=> {setGuestMode(true)}}
+                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-gray-500 hover:bg-blue-400"
+                        >
+                            
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-white px-6">Sign in as a Guest</span>
+                        </a>
+                        </div>
+              }
 
             </div>
           </div>

@@ -1,10 +1,18 @@
 import React from 'react'
-import { useSession, signIn, signOut, getCsrfToken, getProviders } from "next-auth/react"
-
+import { useEffect } from 'react'
+import { useSession, signIn, signOut, getCsrfToken, getProviders,  } from "next-auth/react"
+import { getToken } from "next-auth/jwt"
 
 function callback() {
 
   const { data: session } = useSession()
+  const { data } = useSession()
+  
+
+useEffect(() => {
+  console.log("🚀 ~ file: dashboard.js ~ line 16 ~ callback ~ session", session)
+
+}, [session])
 
 
   if (session) {
