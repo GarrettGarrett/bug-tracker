@@ -3,25 +3,7 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-const roles = [
-  {
-    id: 1,
-    name: 'Admin'
-  },
-  {
-    id: 2,
-    name: 'Project Manager'
-  },
-  {
-    id: 3,
-    name: 'Developer'
-  },
-  {
-    id: 3,
-    name: 'User'
-  },
- 
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -29,8 +11,8 @@ function classNames(...classes) {
 
 
 
-export default function SelectRole({}) {
-  const [selected, setSelected] = useState(roles[0])
+export default function SelectRole({selected, setSelected, roles}) {
+  
 
   return (
     <Listbox value={selected} onChange={setSelected}>

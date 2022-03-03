@@ -3,84 +3,14 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-const people = [
-  {
-    id: 1,
-    name: 'Wade Cooper',
-    avatar:
-      'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 2,
-    name: 'Arlene Mccoy',
-    avatar:
-      'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 3,
-    name: 'Devon Webb',
-    avatar:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80',
-  },
-  {
-    id: 4,
-    name: 'Tom Cook',
-    avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 5,
-    name: 'Tanya Fox',
-    avatar:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 6,
-    name: 'Hellen Schmidt',
-    avatar:
-      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 7,
-    name: 'Caroline Schultz',
-    avatar:
-      'https://images.unsplash.com/photo-1568409938619-12e139227838?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 8,
-    name: 'Mason Heaney',
-    avatar:
-      'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 9,
-    name: 'Claudie Smitham',
-    avatar:
-      'https://images.unsplash.com/photo-1584486520270-19eca1efcce5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 10,
-    name: 'Emil Schaefer',
-    avatar:
-      'https://images.unsplash.com/photo-1561505457-3bcad021f8ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const defaultUser = [{
-  name: "Alex",
-  image: "/images/alex.jpg",
-  email:"alex@email.com"
-}]
-
-
-export default function SelectUsers({session, users}) {
-  const [selected, setSelected] = useState(users?.length ? users[0] : defaultUser)
+export default function SelectUsers({session, users, defaultUser, selected, setSelected}) {
   let loadedUsers = users?.length ? users : defaultUser //load default data while waiting for users to fetch
-  console.log("🚀 ~ file: SelectUsers.js ~ line 81 ~ SelectUsers ~ loadedUsers", loadedUsers)
+
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -93,10 +23,10 @@ export default function SelectUsers({session, users}) {
               {
                                 selected?.image ?
                                 // if image, use image
-                                <img src={selected.image} alt="" className=" h-6 w-6 rounded-full" />
+                                <img src={selected.image} alt="" className=" h-8 w-8 rounded-full" />
                                 :
                                 // if no image, use first letter of name
-                                <span className='font-bold text-black text-2xl  pl-1'>{selected.email[0].toLocaleUpperCase()}</span>
+                                <span className='font-bold text-black text-2xl  pl-1'>{selected?.email[0].toLocaleUpperCase()}</span>
             }
 
             {
@@ -141,10 +71,10 @@ export default function SelectUsers({session, users}) {
                             {
                                 person?.image ?
                                 // if image, use image
-                                <img src={person.image} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
+                                <img src={person.image} alt="" className="flex-shrink-0 h-8 w-8 rounded-full" />
                                 :
                                 // if no image, use first letter of name
-                                <span className='font-bold text-black text-2xl  pl-1'>{person.email[0].toLocaleUpperCase()}</span>
+                                <span className='h-6 w-6 flex-shrink-0 font-bold text-black text-2xl  pl-1'>{person.email[0].toLocaleUpperCase()}</span>
                             }
                          
                           <span

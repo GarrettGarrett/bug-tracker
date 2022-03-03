@@ -14,7 +14,7 @@ return (
     <>
         <html className="h-screen bg-gray-100">
             <body className="h-full">
-                <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+                <div className="min-h-screen flex flex-col py-auto py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md 0">
                         <svg
                         fill="#4E47E0"
