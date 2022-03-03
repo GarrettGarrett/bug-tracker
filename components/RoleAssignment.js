@@ -36,7 +36,7 @@ const defaultUser = [{
   
 
 function RoleAssignment({session}) {
-    const { data, error } = useSWR('/api/getUsers', fetcher)
+    const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const { mutate } = useSWRConfig()
     const [selectedRole, setSelectedRole] = useState(roles[0])
     const [selectedUser, setSelectedUser] = useState(data?.length ? data[0] : defaultUser[0])
@@ -104,19 +104,32 @@ useEffect(() => {
             
                 <div>
                     {/* first column */}
+                    {
+                        data ? 
+                    
                     <SelectUsers users={data} session={session} selected={selectedUser} setSelected={setSelectedUser}/>
+                    :
+                    <div className='h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
+                    }
 
                 </div>
             
                 <div>
                     {/* second column */}
+                    {
+                        data ? 
                     <SelectRole selected={selectedRole} setSelected={setSelectedRole} roles={roles}/>
+                    :
+                    <div className='h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
+                    }
                 </div>
             
                 <div className='md:pt-8'>
                     {/* third column */}
+                    {
+                        data ? 
                     <button
-                        disabled={loading}
+                        disabled={buttonMessage != "Submit"}
                         onClick={()=> handleSubmit()}
                         type="button"
                         className=" w-full items-center text-center py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -132,6 +145,9 @@ useEffect(() => {
                         }
                     
                     </button>
+                    :
+                    <div className='h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
+                    }
     
                 </div>
 
@@ -140,9 +156,16 @@ useEffect(() => {
 
                 <div className='pt-4 pb-32'>
                     {/* all users  */}
-                    <h1 className='pl-1 py-2 text-xl font-medium text-gray-700'>All Users</h1>
-                    <AllUsersGrid users={data}/>
-               
+                    {
+                        data ? 
+                        <>
+                            <h1 className='pl-1 py-2 text-xl font-medium text-gray-700'>All Users</h1>
+                            <AllUsersGrid users={data}/>
+                        </>
+
+                    :
+                    <div className='h-72 animate-pulse bg-gray-300 w-full rounded-lg'></div>
+                    }
                 </div>
                    
         </>
