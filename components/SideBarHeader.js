@@ -176,10 +176,11 @@ function SideBarHeader() {
                       <nav className="h-full flex flex-col">
                         <div className="space-y-1">
                           {sidebarNavigation.map((item) => (
+                            <Link href={item.href}>
                             <a
                               onClick={() => context.setTab(item.index)}
                               key={item.name}
-                              href={item.href}
+                              
                               className={classNames(
                                 context.tab == item.index
                                   ? 'bg-indigo-800 text-white'
@@ -197,6 +198,8 @@ function SideBarHeader() {
                               />
                               <span>{item.name}</span>
                             </a>
+                            </Link>
+
                           ))}
                         </div>
                       </nav>

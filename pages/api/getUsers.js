@@ -28,12 +28,15 @@ export default async (req, res) => {
         
                
             } else {
+                console.log("You must have admin privileges to view the protected content on this page.")
                 res.send({
                     error: "You must have admin privileges to view the protected content on this page.",
+                    
                   })
             }
        
         } else {
+            console.log("You must have admin privileges to view the protected content on this page.")
             res.send({
                 error: "You must be signed in to view the protected content on this page.",
               })

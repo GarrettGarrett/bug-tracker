@@ -10,9 +10,22 @@ function RoleAssignment({session}) {
     const { data, error } = useSWR('/api/getUsers', fetcher)
     console.log("🚀 ~ file: roleassignment.js ~ line 12 ~ roleassignment ~ data", data)
 
+    if (error) return <div>failed to load</div>
+    if (!data) return <div>loading...</div>
 
-  return (
-   <>
+    if (data?.error) return (
+    <>
+        <div class="flex h-screen">
+            <div class="m-auto pb-96">
+                <h3 className='text-black text-lg'>{data.error}</h3>
+            </div>
+        </div>
+    </>
+    ) 
+    
+    
+    if (data && !data?.error) return (
+<>
     <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
     
         <div>
@@ -35,10 +48,19 @@ function RoleAssignment({session}) {
             Submit
             </button>
         </div>
+
+            {/* all users  */}
+        <div>
+
+
+        </div>
         
     </div>   
    </>
-  )
+
+
+    )
+   
 }
 
 export default RoleAssignment
