@@ -1,17 +1,23 @@
 import '../styles/globals.css'
-
-
-
-// pages/_app.js
+import {ThemeProvider} from 'next-themes'
 import { SessionProvider } from "next-auth/react"
+import { AppWrapper } from '../context/contextState'
+
 
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+
+
+
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <AppWrapper>
+      <ThemeProvider attribute="class" >
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </ThemeProvider>
+    </AppWrapper>
   )
 }

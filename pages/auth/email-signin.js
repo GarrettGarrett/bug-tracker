@@ -1,11 +1,14 @@
 import { useSession, signIn, signOut, getCsrfToken } from "next-auth/react"
 import { useState, useEffect } from 'react'
+import { useAppContext } from '../../context/contextState'
 
 
 export default function SignIn({ csrfToken }) {
 
   const [guestMode, setGuestMode] = useState(false)
 
+  let context = useAppContext()
+  console.log("🚀 ~ file: email-signin.js ~ line 11 ~ SignIn ~ test", context)
 
 return (
     <>
@@ -103,7 +106,7 @@ return (
                             guestMode ? 
                             <>
                                         
-                                    <div className="flex -my-3 pt-3" >
+                                    <div className="flex -my-3 pt-3 hover:cursor-pointer" >
                                             <a
                                             onClick={()=> signIn("credentials", { username: "developer", password: "" })}
                                             className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-orange-500 text-sm font-medium text-gray-500 hover:bg-orange-400"
@@ -121,12 +124,12 @@ return (
                                     </div>
 
 
-                                    <div className="flex" >
+                                    <div className="flex hover:cursor-pointer" >
                                         <a
-                                        onClick={()=> signIn("credentials", { username: "role1", password: "" })}
+                                        onClick={()=> signIn("credentials", { username: "user", password: "" })}
                                         className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-green-500 text-sm font-medium text-gray-500 hover:bg-green-400"
                                         >
-                                            <span className="text-white px-6">Role1</span>
+                                            <span className="text-white px-6">User</span>
                                         </a>
 
                                         <a
