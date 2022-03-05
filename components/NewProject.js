@@ -106,7 +106,9 @@ export default function NewProject() {
             </div>
   
             <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+
+                <div className="grid grid-col-2">
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                   Title
                 </label>
@@ -119,7 +121,7 @@ export default function NewProject() {
                     className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
-              </div>
+            </div>
             
   
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -137,6 +139,9 @@ export default function NewProject() {
                   <p className="mt-2 text-sm text-gray-500">Brief description of the project.</p>
                 </div>
               </div>
+
+                </div>
+           
   
              
   

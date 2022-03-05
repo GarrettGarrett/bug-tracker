@@ -13,7 +13,7 @@ export default function AlphaUsersSearch({searchBar , setSearchBar, filterUsers,
             const timeoutId = setTimeout(() =>  removeFilter(), 1000);
             return () => clearTimeout(timeoutId);
         }
-        
+         
       }, [searchBar]);
   
 
