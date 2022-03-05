@@ -1,14 +1,14 @@
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   CogIcon,
-  CollectionIcon,
   HomeIcon,
   MenuAlt2Icon,
   PhotographIcon,
   PlusSmIcon,
   XIcon,
   MailIcon,
-  UserGroupIcon
+  UserGroupIcon,
+  CollectionIcon
 } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
 import React from 'react'
@@ -19,6 +19,8 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/router'
 import SelectUsers from './SelectUsers'
 import RoleAssignment from './RoleAssignment'
+import NewBtnDropDown from './NewBtnDropDown'
+import NewProject from './NewProject'
 
 
 
@@ -26,7 +28,7 @@ import RoleAssignment from './RoleAssignment'
 const sidebarNavigation = [
     { name: 'Home', href: '#', icon: HomeIcon,  index: 1},
     { name: 'Role Assignment', href: '/roleassignment', icon: UserGroupIcon,  index: 2 },
-    { name: 'Photos', href: '#', icon: PhotographIcon,  index: 3 },
+    { name: 'Projects', href: '#', icon: CollectionIcon,  index: 3 },
     { name: 'Shared', href: '#', icon: UserGroupIcon,  index: 4 },
     { name: 'Albums', href: '#', icon: CollectionIcon, index: 5 },
     { name: 'Settings', href: '#', icon: CogIcon, index: 6 },
@@ -299,14 +301,8 @@ function SideBarHeader() {
                         </Menu.Items>
                       </Transition>
                     </Menu>
-
-                    <button
-                      type="button"
-                      className="flex bg-indigo-600 p-1 rounded-full items-center justify-center text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      <PlusSmIcon className="h-6 w-6" aria-hidden="true" />
-                      <span className="sr-only">Add file</span>
-                    </button>
+                    <NewBtnDropDown context={context}/>                
+                   
                   </div>
                 </div>
               </div>
@@ -330,6 +326,16 @@ function SideBarHeader() {
                         <>
                             <div className="px-5 py-5">
                                 <RoleAssignment session={session}/>
+                            </div>
+
+                        </>
+
+                    :
+                    // New Project = -1
+                    context.tab == -1 ? 
+                        <>
+                            <div className="px-5 py-5">
+                                <NewProject session={session}/>
                             </div>
 
                         </>

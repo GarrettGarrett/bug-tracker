@@ -27,7 +27,7 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
                                 :
                                 // if no image, use first letter of name
                                 <span className='font-bold text-black text-2xl  pl-1'>{selected?.email[0].toLocaleUpperCase()}</span>
-            }
+              }
 
             {
                 //   some entries have a name, some only have an email. prase the name out of the email if needed.

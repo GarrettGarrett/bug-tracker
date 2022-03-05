@@ -6,7 +6,6 @@ function getNameFromEmail(str){
     let indexOfAt = str.indexOf("@")
     return str.substring(0, indexOfAt)
   }
-  
 }
 
 const users = [

@@ -36,7 +36,7 @@ const defaultUser = [{
   
 
 function RoleAssignment({session}) {
-    const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
+    const { data, error, isValidating } = useSWR('/api/getUsersAdminRequired', fetcher)
     const { mutate } = useSWRConfig()
     const [selectedRole, setSelectedRole] = useState(roles[0])
     const [selectedUser, setSelectedUser] = useState(data?.length ? data[0] : defaultUser[0])
@@ -59,7 +59,7 @@ useEffect(() => {
 }, [buttonMessage])
 
 useEffect(() => {
-    mutate('/api/getUsers')
+    mutate('/api/getUsersAdminRequired')
 }, [reFetch])
 
 

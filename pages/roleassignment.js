@@ -8,7 +8,7 @@ const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched d
 
 
 function roleassignment() {
-    const { data, error } = useSWR('/api/getUsers', fetcher)
+    const { data, error } = useSWR('/api/getUsersAdminRequired', fetcher)
 
     
     return (
