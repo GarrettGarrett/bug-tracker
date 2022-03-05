@@ -44,23 +44,22 @@ function RoleAssignment({session}) {
     const [loading, setLoading] = useState(false)
     const [reFetch, setRefetch] = useState(false)
     
-    console.log("🚀 ~ file: roleassignment.js ~ line 12 ~ roleassignment ~ data", data)
 
-useEffect(() => {
-    async function sleep(){
-        setTimeout(() => {
-            setButtonMessage("Submit")
-        }, 5000);
+    useEffect(() => {
+        async function sleep(){
+            setTimeout(() => {
+                setButtonMessage("Submit")
+            }, 5000);
+        }
+    if (buttonMessage != "Submit") {
+        sleep()
+        
     }
-  if (buttonMessage != "Submit") {
-    sleep()
-    
-  }
-}, [buttonMessage])
+    }, [buttonMessage])
 
-useEffect(() => {
-    mutate('/api/getUsersAdminRequired')
-}, [reFetch])
+    useEffect(() => {
+        mutate('/api/getUsersAdminRequired')
+    }, [reFetch])
 
 
 

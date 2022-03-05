@@ -9,8 +9,8 @@ function getNameFromEmail(str){
   }
 
   
-  export default function AllUsersAlpha({users}) {
-      const [selectedUserID, setSelectedUserID] = useState([])
+  export default function AllUsersAlpha({users, selectedUserID, setSelectedUserID}) {
+      
     
       function handleRemove(id) {
         setSelectedUserID(selectedUserID.filter(function(e) { return e !== id }))

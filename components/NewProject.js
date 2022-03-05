@@ -2,6 +2,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import { useState, useEffect } from 'react'
 import AllUsersAlpha from './AllUsersAlpha'
 import AlphaUsersSearch from './AlphaUsersSearch'
+import NewProjectSubmitButtons from './NewProjectSubmitButtons'
 
 
 function getNameFromEmail(str){
@@ -59,10 +60,85 @@ function createAlphaObject(data){
 export default function NewProject() {
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
-    console.log("🚀 ~ file: NewProject.js ~ line 55 ~ NewProject ~ alphaUsers", alphaUsers)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
-    console.log("🚀 ~ file: NewProject.js ~ line 55 ~ NewProject ~ alphaUsersFiltered", alphaUsersFiltered)
     const [searchBar, setSearchBar] = useState(null)
+    const [selectedUserID, setSelectedUserID] = useState([])
+    const [project, setProject] = useState({
+        Title: '',
+        Description: '',
+        Members: [],
+        Tickets: []
+    })
+    const [buttonMessage, setButtonMessage] = useState("Submit")
+    const [loading, setLoading] = useState(false)
+    const [errorMsg, setErrorMsg] = useState([])
+    const [visibleErrorString, setVisibleErrorString] = useState(null)
+
+
+    
+
+
+    useEffect(() => {
+        async function sleep(){
+            setTimeout(() => {
+                setButtonMessage("Submit")
+            }, 5000);
+        }
+    if (buttonMessage != "Submit") {
+        sleep()
+    }
+    }, [buttonMessage])
+
+    function handleInputErrors() {
+        // input error control
+        setVisibleErrorString(null)
+        let errorMsgArray = []
+        for (const [key, value] of Object.entries(project)) {
+            if (value.length < 1 && key != "Tickets" && key != "Members") {
+                console.log("33", key, value.length)
+                setVisibleErrorString(`${key} is required`)
+                errorMsgArray.push(key)
+            }
+            if (selectedUserID.length < 1 && key != "Tickets" && key == "Members") {
+                console.log("33", key, value.length)
+                setVisibleErrorString(`Select at least 1 member`)
+                errorMsgArray.push(key)
+            }
+        }
+        console.log(errorMsgArray)
+        return errorMsgArray
+        
+    }
+
+    async function handleSubmit(){
+        let errorsArray = handleInputErrors()
+        
+        if (errorsArray.length == 0) {
+            setLoading(true) //for button loader icon
+            // take list of selected user IDs, and add the full user object to project.members
+            selectedUserID.forEach(userID => {
+                data.forEach(user => {
+                    if (userID == user._id) {
+                        setProject({...project, members: [...project.members, user]})
+                    }
+                })
+            })
+            const newPost = await fetch ('/api/newProject', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(project)
+            }) 
+
+            if (newPost.ok) {
+                setButtonMessage("Added")
+            } else {
+                setButtonMessage(submitRole.statusText)
+
+            }
+            setLoading(false) //for button loader icon
+            console.log("🚀 ~ file: NewProject.js ~ line 86 ~ handleSubmit ~ newPost", newPost)
+        }   
+    }
 
 
     useEffect(() => {
@@ -90,104 +166,88 @@ export default function NewProject() {
         setAlphaUsersFiltered(alphaUsers)
     }
     
-    
+    console.log("🚀 ~ file: NewProject.js ~ line 74 ~ NewProject ~ errorMsg", visibleErrorString)
+
     if (error) return <>error</>
     if (!data) return (<><h1 className='text-black'>Loading</h1></>)
     if (data) return (
-  
-      <form className="space-y-8 divide-y divide-gray-200">
-        <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-          <div>
-            <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900">New Project</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Use this form to create a new project.
-              </p>
-            </div>
-  
-            <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+       
 
-                <div className="grid grid-col-2">
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                  Title
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                  <input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    autoComplete="given-name"
-                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
+        <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
+            <div>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">New Project</h3>
+                    <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
+                        Use this form to create a new project.
+                    </p>
+
+                    <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
+                        <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                        <input
+                            type="text"
+                            value={project.Title}
+                            onChange={(e) => setProject({...project, Title: e.target.value})}
+                            name="first-name"
+                            id="first-name"
+                            autoComplete="given-name"
+                            className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-sm border-gray-300 rounded-md"
+                            placeholder='Title'
+                        />
+                    </div>
+
+
+   
+                        <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
+                            <textarea
+                                value={project.Description}
+                                onChange={(e) => setProject({...project, Description: e.target.value})}
+                                id="description"
+                                name="description"
+                                rows={3}
+                                className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                                defaultValue={''}
+                                placeholder='Description'
+                            />
+                        </div>
+                           
+                          
+                        </div>
+                        
+                        <div className='hidden md:block'>
+                             <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                        </div>
+                        
+                                
+
             </div>
             
-  
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                  Description
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                    defaultValue={''}
-                  />
-                  <p className="mt-2 text-sm text-gray-500">Brief description of the project.</p>
-                </div>
-              </div>
 
+             <div className="space-y-6 sm:space-y-5 ">
+                <div>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Project Members</h3>
+                    <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
+                        Select project members.
+                    </p>
                 </div>
-           
-  
-             
-  
-  
-          <div className=" pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-              
-            <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Project Members</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Select who will be apart of this project.
-              </p>
+                {
+                    alphaUsersFiltered !== null ?
+                    <>
+                        <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
+                        <AllUsersAlpha users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
+                    </>
+                    : null
+                }
+             </div>
+            
+             <div className='pb-36 block md:hidden md:pb-0'>
+                    <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
             </div>
-            <div className="space-y-6 sm:space-y-5 "></div>
-            {
-                alphaUsersFiltered !== null ?
-                <>
-                    <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
-                    <AllUsersAlpha users={alphaUsersFiltered}/>
-                </>
-                 : null
-            }
-           
-          </div>
-          
+         
+
+
         </div>
 
   
-        <div className="pt-5">
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save
-            </button>
-          </div>
-        </div>
-        </div>
-        </div>
-      </form>
+     
     )
   }
   
