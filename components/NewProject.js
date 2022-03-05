@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import AllUsersAlpha from './AllUsersAlpha'
 import AlphaUsersSearch from './AlphaUsersSearch'
 import NewProjectSubmitButtons from './NewProjectSubmitButtons'
+import NewProjectSkeleton from './NewProjectSkeleton'
 
 
 function getNameFromEmail(str){
@@ -166,10 +167,9 @@ export default function NewProject() {
         setAlphaUsersFiltered(alphaUsers)
     }
     
-    console.log("🚀 ~ file: NewProject.js ~ line 74 ~ NewProject ~ errorMsg", visibleErrorString)
 
     if (error) return <>error</>
-    if (!data) return (<><h1 className='text-black'>Loading</h1></>)
+    if (!data) return <NewProjectSkeleton/>
     if (data) return (
        
 
