@@ -64,10 +64,11 @@ export default function NewProject() {
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
     const [selectedUserID, setSelectedUserID] = useState([])
+    console.log("🚀 ~ file: NewProject.js ~ line 67 ~ NewProject ~ selectedUserID", selectedUserID)
     const [project, setProject] = useState({
         Title: '',
         Description: '',
-        Members: [],
+        // Members: [],
         Tickets: []
     })
     const [buttonMessage, setButtonMessage] = useState("Submit")
@@ -100,7 +101,7 @@ export default function NewProject() {
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
             }
-            if (selectedUserID.length < 1 && key != "Tickets" && key == "Members") {
+            if (selectedUserID.length < 1 && key != "Tickets" ) {
                 console.log("33", key, value.length)
                 setVisibleErrorString(`Select at least 1 member`)
                 errorMsgArray.push(key)
@@ -117,18 +118,21 @@ export default function NewProject() {
         if (errorsArray.length == 0) {
             setLoading(true) //for button loader icon
             // take list of selected user IDs, and add the full user object to project.members
+            let selectedUserObjects = []
             selectedUserID.forEach(userID => {
                 data.forEach(user => {
                     if (userID == user._id) {
-                        setProject({...project, Members: [...project.Members, user]})
+                        selectedUserObjects.push(user)
+                        // setProject({...project, Members: [...project.Members, user]})
                     }
                 })
             })
             const newPost = await fetch ('/api/newProject', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(project)
+                body: JSON.stringify({...project, Members: selectedUserObjects})
             }) 
+
 
             if (newPost.ok) {
                 setButtonMessage("Added")
@@ -137,7 +141,15 @@ export default function NewProject() {
 
             }
             setLoading(false) //for button loader icon
-            console.log("🚀 ~ file: NewProject.js ~ line 86 ~ handleSubmit ~ newPost", newPost)
+            // clear form values
+            console.log("🚀 ~ file: NewProject.js ~ line 132 ~ handleSubmit ~ newPost", project)
+            setProject({
+                Title: '',
+                Description: '',
+                // Members: [],
+                Tickets: []
+            })
+            setSelectedUserID([]) //clear selected users 
         }   
     }
 

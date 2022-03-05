@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 import SelectUsers from './SelectUsers'
 import RoleAssignment from './RoleAssignment'
 import NewBtnDropDown from './NewBtnDropDown'
+import AllProjectsGrid from './AllProjectsGrid'
 import NewProject from './NewProject'
 
 
@@ -336,6 +337,15 @@ function SideBarHeader() {
                         <>
                             <div className="px-5 py-5">
                                 <NewProject session={session}/>
+                            </div>
+
+                        </>
+
+                    :
+                    context.tab == 3 ? 
+                        <>
+                            <div className="px-5 py-5">
+                                <AllProjectsGrid session={session}/>
                             </div>
 
                         </>

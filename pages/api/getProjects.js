@@ -10,9 +10,9 @@ export default async (req, res) => {
         if (session) {
 
         const { db } = await connectToDatabase('myFirstDatabase');
-        const all_users_array = await db.collection('users').find().toArray()
-        if (all_users_array) {
-            return res.status(200).json(all_users_array)    
+        const allProjectsArray = await db.collection('projects').find().toArray()
+        if (allProjectsArray) {
+            return res.status(200).json(allProjectsArray)    
         }     
          
         

@@ -1,6 +1,15 @@
 import { CalendarIcon, ChevronRightIcon } from '@heroicons/react/solid'
+import useSWR, { useSWRConfig } from 'swr'
+import { useState, useEffect } from 'react'
 
-const positions = [
+function getNameFromEmail(str){
+  if (str){
+    let indexOfAt = str.indexOf("@")
+    return str.substring(0, indexOfAt)
+  }
+}
+
+const data = [
   {
     id: 1,
     title: 'Back End Developer',
@@ -90,39 +99,61 @@ const positions = [
   },
 ]
 
+const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
+
+
 export default function AllProjectsGrid() {
-  return (
+  const { data, error, isValidating } = useSWR('/api/getProjects', fetcher)
+  console.log("🚀 ~ file: AllProjectsGrid.js ~ line 107 ~ AllProjectsGrid ~ data", data)
+
+
+  if (error) return <>error</>
+  if (!data) return <h1>Loading...</h1>
+  if (data) return (
+    <>
+    <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Projects</h3>
     <div className="bg-white shadow overflow-hidden sm:rounded-md">
+      
       <ul role="list" className="divide-y divide-gray-200">
-        {positions.map((position) => (
-          <li key={position.id}>
+        {data.map((project) => (
+          <li key={project._id}>
             <a href="#" className="block hover:bg-gray-50">
               <div className="px-4 py-4 flex items-center sm:px-6">
                 <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                   <div className="truncate">
                     <div className="flex text-sm">
-                      <p className="font-medium text-indigo-600 truncate">{position.title}</p>
-                      <p className="ml-1 flex-shrink-0 font-normal text-gray-500">in {position.department}</p>
+                      <p className="font-medium text-indigo-600 truncate">{project.Title}</p>
+                      {/* <p className="ml-1 flex-shrink-0 font-normal text-gray-500">in {project.department}</p> */}
                     </div>
-                    <div className="mt-2 flex">
+                    <div className="mt-0 flex">
                       <div className="flex items-center text-sm text-gray-500">
-                        <CalendarIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                        {/* <CalendarIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" /> */}
                         <p>
-                          Closing on <time dateTime={position.closeDate}>{position.closeDateFull}</time>
+                          {project.Description}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                     <div className="flex overflow-hidden -space-x-1">
-                      {position.applicants.map((applicant) => (
-                        <img
-                          key={applicant.email}
-                          className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          src={applicant.imageUrl}
-                          alt={applicant.name}
-                        />
-                      ))}
+                      {project?.Members?.map(function(member, i) {
+                        if (member?.image?.length > 1) {
+                          return (
+                              <img
+                                key={member.email}
+                                className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                                src={member.image}
+                              />        
+                          )
+                        } else {
+                          console.log("no image")
+                          return (
+                            <span 
+                            className="inline-block h-6 w-6 rounded-full text-sm text-black bg-purple-200 pl-1.5 pt-px font-bold "  >{member?.email[0].toLocaleUpperCase()}</span>
+                          )
+                        }
+                      })}
+
                     </div>
                   </div>
                 </div>
@@ -135,5 +166,8 @@ export default function AllProjectsGrid() {
         ))}
       </ul>
     </div>
+    
+    </>
+    
   )
 }

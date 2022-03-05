@@ -18,7 +18,7 @@ export default function SelectRole({selected, setSelected, roles}) {
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
-          <Listbox.Label className="pl-1 block text-xl font-medium text-gray-700">Select a Role</Listbox.Label>
+          <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">Select a Role</h3>
           <div className="mt-1 relative ">
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center ">

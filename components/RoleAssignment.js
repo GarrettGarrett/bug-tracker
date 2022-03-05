@@ -156,7 +156,7 @@ function RoleAssignment({session}) {
                     {
                         data ? 
                         <>
-                            <h1 className='pl-1 py-2 text-xl font-medium text-gray-700'>All Users</h1>
+                            <h3 className="pb-2 text-lg leading-6 font-medium text-gray-900">All Users</h3>
                             <AllUsersGrid users={data}/>
                         </>
 
