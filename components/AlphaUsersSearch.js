@@ -6,11 +6,11 @@ export default function AlphaUsersSearch({searchBar , setSearchBar, filterUsers,
 
     useEffect(() => { //Search once user stops typing for 500 ms
         if (searchBar?.length > 1){
-            const timeoutId = setTimeout(() =>  filterUsers(searchBar), 1000);
+            const timeoutId = setTimeout(() =>  filterUsers(searchBar), 500);
             return () => clearTimeout(timeoutId);
         }
         if (searchBar == ''){
-            const timeoutId = setTimeout(() =>  removeFilter(), 1000);
+            const timeoutId = setTimeout(() =>  removeFilter(), 500);
             return () => clearTimeout(timeoutId);
         }
          

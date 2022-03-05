@@ -119,7 +119,7 @@ export default function NewProject() {
             selectedUserID.forEach(userID => {
                 data.forEach(user => {
                     if (userID == user._id) {
-                        setProject({...project, members: [...project.members, user]})
+                        setProject({...project, Members: [...project.Members, user]})
                     }
                 })
             })
