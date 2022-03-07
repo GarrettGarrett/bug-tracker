@@ -22,6 +22,7 @@ import RoleAssignment from './RoleAssignment'
 import NewBtnDropDown from './NewBtnDropDown'
 import AllProjectsGrid from './AllProjectsGrid'
 import NewProject from './NewProject'
+import NewTicket from './NewTicket'
 
 
 
@@ -337,6 +338,17 @@ function SideBarHeader() {
                         <>
                             <div className="px-5 py-5">
                                 <NewProject session={session}/>
+                            </div>
+
+                        </>
+
+                    :
+                  
+                    // New Ticket = -2
+                    context.tab == -2 ? 
+                        <>
+                            <div className="px-5 py-5">
+                                <NewTicket session={session}/>
                             </div>
 
                         </>

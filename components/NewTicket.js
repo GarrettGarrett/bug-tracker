@@ -4,11 +4,37 @@ import AllUsersAlpha from './AllUsersAlpha'
 import AlphaUsersSearch from './AlphaUsersSearch'
 import NewProjectSubmitButtons from './NewProjectSubmitButtons'
 import NewProjectSkeleton from './NewProjectSkeleton'
+import TicketPriorityDrop from './TicketPriorityDrop'
+import TicketTypeDrop from './TicketTypeDrop'
+import ComboBox from './ComboBox'
+import moment from 'moment'
 
 
 function getRandomID() {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
+
+
+const priorities = [
+    { id: 1, name: 'Low', color: "bg-yellow-400" },
+    { id: 2, name: 'Medium', color: "bg-blue-400" },
+    { id: 3, name: 'High', color: "bg-red-400" },
+    { id: 4, name: 'Emergency', color: "bg-red-600 animate-ping" },
+  
+  ]
+
+  const type = [
+    { id: 1, name: 'Bug', color: "bg-blue-400" },
+    { id: 2, name: 'Documentation', color: "bg-yellow-400" },
+    { id: 3, name: 'Duplicate', color: "bg-red-400" },
+    { id: 4, name: 'Enhancement', color: "bg-orange-400" },
+    { id: 4, name: 'Good First Issue', color: "bg-purple-400"  },
+    { id: 4, name: 'Help Wanted', color: "bg-green-400"  },
+    { id: 4, name: 'Invalid', color: "bg-gray-400"  },
+    { id: 4, name: 'Question', color: "bg-pink-400"  },
+    { id: 4, name: 'Wont Fix', color: "bg-blue-100"  },
+  
+  ]
 
 function getNameFromEmail(str){
     if (str){
@@ -60,28 +86,52 @@ function createAlphaObject(data){
     
 }
 
-   
 
-export default function NewProject() {
+function getData(endpoint){
+    const { data, error, isValidating } = useSWR(endpoint, fetcher)
+    const data1 =  { data :data}
+    return data1.data
+}
+    
+
+
+export default function NewTicket({session}) {
+      
+
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
+    const projects = getData('/api/getProjects')
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
     const [selectedUserID, setSelectedUserID] = useState([])
-    console.log("🚀 ~ file: NewProject.js ~ line 67 ~ NewProject ~ selectedUserID", selectedUserID)
-    const [project, setProject] = useState({
-        My_ID: getRandomID(),
+    const [ticket, setTicket] = useState({
+        Status: "Open",
+        SubmittedBy: session?.user?.name ? session?.user?.name : getNameFromEmail(session?.user?.email) ,
+        History: [],
+        Images: [],
+        Comments: [],
+        updatedAt: moment(),
+        CreatedAt: moment(),
+        TicketID: getRandomID(),
         Title: '',
         Description: '',
-        // Members: [],
-        Tickets: []
+        // Members: [], //added in on submit handle
+        Type: type[0].name,
+        Priority: priorities[0].name,
     })
     const [buttonMessage, setButtonMessage] = useState("Submit")
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState([])
     const [visibleErrorString, setVisibleErrorString] = useState(null)
+    const [selectedProjectID, setSelectedProjectID] = useState(projects ? projects[0]._id : null)
+    console.log("🚀 ~ file: NewTicket.js ~ line 114 ~ NewTicket ~ selectedProjectID", selectedProjectID)
+    
 
 
+    useEffect(() => {
+        if (projects?.length)
+        setSelectedProjectID(projects[0]._id)
+    }, [projects])
     
 
 
@@ -100,15 +150,21 @@ export default function NewProject() {
         // input error control
         setVisibleErrorString(null)
         let errorMsgArray = []
-        for (const [key, value] of Object.entries(project)) {
-            if (value.length < 1 && key != "Tickets" && key != "Members") {
-                console.log("33", key, value.length)
+        for (const [key, value] of Object.entries(ticket)) {
+            // applies to title, description, type, priority
+            if (value.length < 1 && key != "Tickets" && key != "Members" && key!="Comments" && key != "Images" && key!= "History") {
+                console.log("77", key, value)
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
             }
-            if (selectedUserID.length < 1 && key != "Tickets" ) {
-                console.log("33", key, value.length)
-                setVisibleErrorString(`Select at least 1 member`)
+            // applies to selected users
+            if (selectedUserID?.length < 1 && key != "Tickets" ) {
+                setVisibleErrorString(`Select at least 1 user`)
+                errorMsgArray.push(key)
+            }
+            // applies to selected project
+            if (selectedProjectID?.length < 1 && key != "Tickets" ) {
+                setVisibleErrorString(`Select at least 1 project`)
                 errorMsgArray.push(key)
             }
         }
@@ -132,29 +188,43 @@ export default function NewProject() {
                     }
                 })
             })
-            const newPost = await fetch ('/api/newProject', {
+            const TicketObject = { //pushed into project tickets array
+                ...ticket, 
+                Members: selectedUserObjects, 
+            }
+            const newTicket = await fetch ('/api/newTicket', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({...project, Members: selectedUserObjects})
+                body: JSON.stringify({...ticket, Members: selectedUserObjects, projectID: selectedProjectID, TicketObject: TicketObject})
             }) 
 
 
-            if (newPost.ok) {
+            if (newTicket.ok) {
+                console.log("🚀 ~ file: NewTicket.js ~ line 163 ~ handleSubmit ~ newTicket", newTicket)
                 setButtonMessage("Added")
             } else {
-                setButtonMessage(submitRole.statusText)
+                setButtonMessage(newTicket.statusText)
 
             }
             setLoading(false) //for button loader icon
             // clear form values
 
-            setProject({
+            setTicket({
+                Status: "Open",
+                SubmittedBy: session?.user?.name ? session?.user?.name : getNameFromEmail(session?.user?.email) ,
+                History: [],
+                Images: [],
+                Comments: [],
+                updatedAt: moment(),
+                CreatedAt: moment(),
+                TicketID: getRandomID(),
                 Title: '',
                 Description: '',
-                // Members: [],
-                Tickets: []
+                // Members: [], //added in on submit handle
+               
             })
             setSelectedUserID([]) //clear selected users 
+           
         }   
     }
 
@@ -164,6 +234,7 @@ export default function NewProject() {
           let createdAlphaObj = createAlphaObject(data)
             setAlphaUsers(createdAlphaObj)
             setAlphaUsersFiltered(createdAlphaObj)
+           
       }
     }, [data])
 
@@ -187,44 +258,69 @@ export default function NewProject() {
 
     if (error) return <>error</>
     if (!data) return <NewProjectSkeleton/>
-    if (data) return (
-       
+    if (data ) return (
+        <>
+        <div className='pb-3 border-b border-gray-200 mb-1 '>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">New Ticket</h3>
+                <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
+                    Use this form to create a new ticket.
+                </p>
+
+
+        </div>
+
 
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
+{/* First Column */}
             <div>
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">New Project</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
-                        Use this form to create a new project.
-                    </p>
-
+                    
                     <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
+                        
+                        {
+                            typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
+                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}/>
+                            </div>
+                        }
+                        
+                      
+                        
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                        <input
-                            type="text"
-                            value={project.Title}
-                            onChange={(e) => setProject({...project, Title: e.target.value})}
-                            name="first-name"
-                            id="first-name"
-                            autoComplete="given-name"
-                            className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-sm border-gray-300 rounded-md"
-                            placeholder='Title'
-                        />
-                    </div>
+                            <input
+                                type="text"
+                                value={ticket.Title}
+                                onChange={(e) => setTicket({...ticket, Title: e.target.value})}
+                                name="first-name"
+                                id="first-name"
+                                autoComplete="given-name"
+                                className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-sm border-gray-300 rounded-md"
+                                placeholder='Ticket Title'
+                            />
+                         </div>
 
 
    
                         <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
                             <textarea
-                                value={project.Description}
-                                onChange={(e) => setProject({...project, Description: e.target.value})}
+                                value={ticket.Description}
+                                onChange={(e) => setTicket({...ticket, Description: e.target.value})}
                                 id="description"
                                 name="description"
                                 rows={3}
                                 className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                                 defaultValue={''}
-                                placeholder='Description'
+                                placeholder='Ticket Description'
                             />
                         </div>
+
+                        
+
+                        <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                           <TicketTypeDrop type={type} ticket={ticket} setTicket={setTicket} />
+                         </div>
+
+                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                           <TicketPriorityDrop ticket={ticket} setTicket={setTicket} priorities={priorities}/>
+                         </div>
                            
                           
                         </div>
@@ -232,28 +328,35 @@ export default function NewProject() {
                         <div className='hidden md:block'>
                              <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
                         </div>
-                        
-                                
 
             </div>
             
-
-             <div className="space-y-6 sm:space-y-5 ">
+{/* Second Column */}
+             <div className=" ">
                 <div>
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">Project Members</h3>
+                    <h3 className="pt-6 text-lg leading-6 font-medium text-gray-900">Assign to User</h3>
                     <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
-                        Select project members.
+                        Who will receive this ticket?
                     </p>
                 </div>
                 {
                     alphaUsersFiltered !== null ?
                     <>
-                        <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
+                    <div>
+                         <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
                         <AllUsersAlpha users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
+
+                    </div>
+                       
                     </>
                     : null
                 }
              </div>
+
+
+
+
+
             
              <div className='pb-36 block md:hidden md:pb-0'>
                     <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
@@ -263,6 +366,11 @@ export default function NewProject() {
 
         </div>
 
+        
+        </>
+       
+
+       
   
      
     )

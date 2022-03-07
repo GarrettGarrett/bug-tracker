@@ -46,13 +46,14 @@ export default function NewBtnDropDown({context}) {
             <Menu.Item>
               {({ active }) => (
                 <a
+                onClick={() => context.setTab(-2)}
                   href="#"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  Support
+                  New Ticket
                 </a>
               )}
             </Menu.Item>
