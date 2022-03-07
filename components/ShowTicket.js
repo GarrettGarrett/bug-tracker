@@ -3,7 +3,13 @@ import { PaperClipIcon } from '@heroicons/react/solid'
 import moment from 'moment'
 import CommmentPostBox from './CommentPostBox'
 import Comments from './Comments'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import ImageUploader from './ImageUploader'
+import useSWR, { useSWRConfig } from 'swr'
+
+
+const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
+
 
 function getNameFromEmail(str){
     if (str){
@@ -14,6 +20,19 @@ function getNameFromEmail(str){
 
 function ShowTicket({ShowTicket, setShowTicket, ticket, project, session}) {
   const [mutateNewComment, setMutateNewComment] = useState(false)
+  const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
+  const { mutate } = useSWRConfig()
+  const [mutateImage, setMutateImage] = useState(false)
+
+
+
+  useEffect(() => {
+    mutate(`/api/getComments/${project.My_ID}-${ticket.TicketID}`)
+  }, [mutateNewComment])
+
+  useEffect(() => {
+    mutate(`/api/getImages/${project.My_ID}-${ticket.TicketID}`)
+  }, [mutateImage])
 
     function stringifyMembers(membersArray){
         let returnString = ''
@@ -79,28 +98,27 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session}) {
           <dt className="text-sm font-medium text-gray-500">Attachments</dt>
           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <ul role="list" className="border border-gray-200 rounded-md divide-y divide-gray-200">
-              <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                <div className="w-0 flex-1 flex items-center">
-                  <PaperClipIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  <span className="ml-2 flex-1 w-0 truncate">resume_back_end_developer.pdf</span>
-                </div>
-                <div className="ml-4 flex-shrink-0">
-                  <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Download
-                  </a>
-                </div>
-              </li>
-              <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                <div className="w-0 flex-1 flex items-center">
-                  <PaperClipIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  <span className="ml-2 flex-1 w-0 truncate">coverletter_back_end_developer.pdf</span>
-                </div>
-                <div className="ml-4 flex-shrink-0">
-                  <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Download
-                  </a>
-                </div>
-              </li>
+              {
+                data?.length > 0 && data?.map(image => {
+                  return (
+                    <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                    <div className="w-0 flex-1 flex items-center">
+                      <PaperClipIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <span className="ml-2 flex-1 w-0 truncate">{image.title}</span>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a target="_blank" href={image.image} className="font-medium text-indigo-600 hover:text-indigo-500">
+                        View
+                      </a>
+                    </div>
+                  </li>
+                  )
+                })
+              }
+
+             
+
+             
             </ul>
           </dd>
         </div>
@@ -115,6 +133,11 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session}) {
 <Comments project={project} session={session} ticket={ticket} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
 <CommmentPostBox project={project} ticket={ticket} session={session} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
 
+<div className='pt-4'>
+  <ImageUploader ticket={ticket} project={project} mutateImage={mutateImage} setMutateImage={setMutateImage}/>
+</div>
+   
+
 
 
 </div>
@@ -123,3 +146,5 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session}) {
   )}
 
 export default ShowTicket
+
+

@@ -11,8 +11,6 @@ export default function Comments({project, ticket, mutateNewComment, setMutateNe
     const { mutate } = useSWRConfig()
 
 
-
-
   useEffect(() => {
     mutate(`/api/getComments/${project.My_ID}-${ticket.TicketID}`)
   }, [mutateNewComment])

@@ -2,6 +2,7 @@
 
 import { connectToDatabase } from '../../../utils/dbConnect' //pass in the collection name
 import { getSession } from "next-auth/react"
+
  
 
 // get get comments, search by project ID then filter just comments for that ticket. 
@@ -21,13 +22,12 @@ export default async (req, res) => {
             if (session) {
                 const { db } = await connectToDatabase('myFirstDatabase');
                 const project = await db.collection("projects").findOne({"My_ID": parseInt(projectID)})
-                // console.log("🚀 ~ file: [id].js ~ line 22 ~ project", project)
 
                 // only return comments for requested ticket
-                let targetTicketComments = {}
+                let targetTicketImages = {}
                 for (const [key, value] of Object.entries(project)) {
-                    if (key.includes(`Comments-${ticketID}`)) {
-                        targetTicketComments = value 
+                    if (key.includes(`Images-${ticketID}`)) {
+                        targetTicketImages = value 
                     }
                 }
 
@@ -36,7 +36,7 @@ export default async (req, res) => {
                 
                 if (project){
                     
-                    return res.status(200).json(targetTicketComments)   
+                    return res.status(200).json(targetTicketImages)   
                 }
             }
            
