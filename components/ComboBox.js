@@ -3,7 +3,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Combobox } from '@headlessui/react'
 
 const fallBackItem = [
-  { id: 1, name: 'Leslie Alexander' },
+  { id: 1, name: 'Loading...' },
   // More users...
 ]
 
@@ -11,23 +11,23 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ComboBox({projects, ticket, setTicket, selectedProjectID, setSelectedProjectID}) {
+export default function ComboBox({projects, ticket, setTicket, selectedProjectID, setSelectedProjectID, existingProject}) {
   const [query, setQuery] = useState('')
   const [items, setItems] = useState(projects?.length ? projects : fallBackItem)
-  const [selectedPerson, setSelectedPerson] = useState(items[0])
+  const [selectedProject, setSelectedProject] = useState(!existingProject ? items[0] : existingProject)
   
 
   const filteredItems =
     query === ''
       ? items
-      : items.filter((person) => {
-          return person.Title.toLowerCase().includes(query.toLowerCase())
+      : items.filter((project) => {
+          return project.Title.toLowerCase().includes(query.toLowerCase())
         })
 
   return (
-    <Combobox  as="div" value={selectedPerson} onChange={
+    <Combobox  as="div" value={selectedProject} onChange={
         (e)=>{
-            setSelectedPerson(e)
+            setSelectedProject(e)
             setSelectedProjectID(e._id)
             }}>
       <Combobox.Label className="block text-sm font-medium text-gray-700">Assign to Project</Combobox.Label>
@@ -35,7 +35,7 @@ export default function ComboBox({projects, ticket, setTicket, selectedProjectID
         <Combobox.Input
           className="text-black w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(person) => person.Title}
+          displayValue={(project) => project.Title}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -43,10 +43,10 @@ export default function ComboBox({projects, ticket, setTicket, selectedProjectID
 
         {filteredItems.length > 0 && (
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredItems.map((person) => (
+            {filteredItems.map((project) => (
               <Combobox.Option
-                key={person._id}
-                value={person}
+                key={project._id}
+                value={project}
                 className={({ active }) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-8 pr-4',
@@ -56,7 +56,7 @@ export default function ComboBox({projects, ticket, setTicket, selectedProjectID
               >
                 {({ active, selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-semibold')}>{person.Title}</span>
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{project.Title}</span>
 
                     {selected && (
                       <span

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 function ImageUploader({project, ticket, mutateImage, setMutateImage}) {
     const [image, setImage ] = useState("")
     const [ url, setUrl ] = useState("")
+    const [ description, setDescription ] = useState("")
     const [buttonMessage, setButtonMessage] = useState("Upload")
     const [loading, setLoading] = useState(false)
 
@@ -27,8 +28,8 @@ function ImageUploader({project, ticket, mutateImage, setMutateImage}) {
                 Image:imageURL, 
                 ProjectID:project.My_ID, 
                 TicketID:ticket.TicketID,
-                ImageTitle: image.name
-                
+                ImageTitle: image.name,
+                Description: description
 
             })
         }) 
@@ -43,6 +44,7 @@ function ImageUploader({project, ticket, mutateImage, setMutateImage}) {
         setImage('')
         setUrl('')
         setMutateImage(!mutateImage)
+        setDescription('')
     }
 
    async function uploadImage() {
@@ -71,7 +73,7 @@ function ImageUploader({project, ticket, mutateImage, setMutateImage}) {
       
     <>
     <div>
-    <h3 className="text-lg leading-6 font-medium text-gray-900">Upload an Image</h3>
+    <h3 className="bg-transparent text-lg leading-6 font-medium text-gray-900">Upload an Image</h3>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         <svg
@@ -103,10 +105,22 @@ function ImageUploader({project, ticket, mutateImage, setMutateImage}) {
                         {!image ? 
                          <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                          :
+                        <>
+                            <div className="mt-1">
+                                <input
+                                type="Description"
+                                onChange={(e)=> setDescription(e.target.value)}
+                                value={description}
+                                name="Description"
+                                id="Description"
+                                className=" py-2 px-2 bg-transparent shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                placeholder="Image Description..."
+                                />
+                            </div>
                         
                             <button
                             onClick={() => {
-                                console.log("clicked")
+                               
                                 uploadImage()}}
                             type="button"
                             className=" bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -121,6 +135,7 @@ function ImageUploader({project, ticket, mutateImage, setMutateImage}) {
                             </svg>
                         }
                         </button>
+                        </>
                     
                     }
                        

@@ -17,7 +17,7 @@ export default async (req, res) => {
                 const { db } = await connectToDatabase('myFirstDatabase');
                 const newImage = await db.collection("projects").updateOne({My_ID: req.body.ProjectID}, 
                     {$push: {
-                        [`Images-${req.body.TicketID}`]: {image:req.body.Image, title: req.body.ImageTitle}
+                        [`Images-${req.body.TicketID}`]: {image:req.body.Image, title: req.body.ImageTitle, Description: req.body.Description}
                     }},{upsert: true})
 
                        

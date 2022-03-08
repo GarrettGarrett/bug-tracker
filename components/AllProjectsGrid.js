@@ -16,10 +16,12 @@ const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched d
 
 export default function AllProjectsGrid({session}) {
   const { data, error, isValidating } = useSWR('/api/getProjects', fetcher)
+  console.log("🚀 ~ file: AllProjectsGrid.js ~ line 19 ~ AllProjectsGrid ~ data", data)
   const [showProject, setShowProject] = useState(false)
   const [currentProject, setCurrentProject] = useState(null)
   const [showTicket, setShowTicket] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
+  const [showEdit, setShowEdit] = useState(false)
 
   if (error) return <>error</>
   if (!data) return <h1>Loading...</h1>
@@ -27,7 +29,7 @@ export default function AllProjectsGrid({session}) {
     <>
    
       {
-        showProject ? <ShowProject session={session} project={data[currentProject]} setShowProject={setShowProject} showTicket={showTicket} setShowTicket={setShowTicket} setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket}/> 
+        showProject ? <ShowProject showEdit={showEdit} setShowEdit={setShowEdit} session={session} project={data[currentProject]} setShowProject={setShowProject} showTicket={showTicket} setShowTicket={setShowTicket} setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket}/> 
         
         :
         <>

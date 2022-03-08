@@ -8,6 +8,7 @@ import TicketPriorityDrop from './TicketPriorityDrop'
 import TicketTypeDrop from './TicketTypeDrop'
 import ComboBox from './ComboBox'
 import moment from 'moment'
+import { ArrowLeftIcon } from '@heroicons/react/solid'
 
 
 function getRandomID() {
@@ -95,36 +96,44 @@ function getData(endpoint){
     
 
 
-export default function NewTicket({session}) {
-      
+export default function EditTicket({session, showEdit, setShowEdit, existingTicket, existingProject}) {
+console.log("🚀 ~ file: EditTicket.js ~ line 100 ~ EditTicket ~ existingTicket", existingTicket)
+    
+function getSelectedUserIDs(Members){
+    let selectedUserIDs = []
+    Members.forEach(member => {
+        selectedUserIDs.push(member._id)
+    })
+    return selectedUserIDs
+}
 
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const projects = getData('/api/getProjects')
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
-    const [selectedUserID, setSelectedUserID] = useState([])
+    const [selectedUserID, setSelectedUserID] = useState(getSelectedUserIDs(existingTicket.Members))
     const [ticket, setTicket] = useState({
-        Status: "Open",
+        Status: existingTicket.Status,
         SubmittedBy: session?.user?.name ? session?.user?.name : getNameFromEmail(session?.user?.email) ,
         History: [],
         Images: [],
         Comments: [],
         updatedAt: moment(),
         CreatedAt: moment(),
-        TicketID: getRandomID(),
-        Title: '',
-        Description: '',
+        TicketID: existingTicket.TicketID,
+        Title: existingTicket.Title,
+        Description: existingTicket.Description,
         // Members: [], //added in on submit handle
-        Type: type[0].name,
-        Priority: priorities[0].name,
+        Type: existingTicket.Type,
+        Priority: existingTicket.Priority,
     })
     const [buttonMessage, setButtonMessage] = useState("Submit")
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState([])
     const [visibleErrorString, setVisibleErrorString] = useState(null)
     const [selectedProjectID, setSelectedProjectID] = useState(projects ? projects[0]._id : null)
-    console.log("🚀 ~ file: NewTicket.js ~ line 114 ~ NewTicket ~ selectedProjectID", selectedProjectID)
+
     
 
 
@@ -261,10 +270,13 @@ export default function NewTicket({session}) {
     if (data ) return (
         <>
         <div className='pb-3 border-b border-gray-200 mb-1 '>
-              <h3 className="text-lg leading-6 font-medium text-gray-900">New Ticket</h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
-                    Use this form to create a new ticket.
-                </p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">Edit Ticket</h3>
+                <div 
+                onClick={()=> setShowEdit(!showEdit)}
+                className=" flex text-center mt-1 max-w-2xl text-sm text-gray-500 pb-4 ">
+                    <ArrowLeftIcon className='hover:cursor-pointer h-4 mt-px text-center pr-1'/>
+                    Go Back
+                </div>
 
 
         </div>
@@ -278,7 +290,7 @@ export default function NewTicket({session}) {
                         
                         {
                             typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
-                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}/>
+                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID} existingProject={existingProject}/>
                             </div>
                         }
                         
@@ -315,11 +327,11 @@ export default function NewTicket({session}) {
                         
 
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                           <TicketTypeDrop type={type} ticket={ticket} setTicket={setTicket} />
+                           <TicketTypeDrop existingTicket={existingTicket} type={type} ticket={ticket} setTicket={setTicket} />
                          </div>
 
                          <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                           <TicketPriorityDrop ticket={ticket} setTicket={setTicket} priorities={priorities}/>
+                           <TicketPriorityDrop existingTicket={existingTicket} ticket={ticket} setTicket={setTicket} priorities={priorities}/>
                          </div>
                            
                           

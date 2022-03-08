@@ -4,12 +4,35 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 
 
+function findSelectedPriorityByExistingTicket(existingPriority){
+  const priorities = [
+    { id: 1, name: 'Low', color: "bg-yellow-400" },
+    { id: 2, name: 'Medium', color: "bg-blue-400" },
+    { id: 3, name: 'High', color: "bg-red-400" },
+    { id: 4, name: 'Emergency', color: "bg-red-600 animate-ping" },
+  
+  ]
+  let returnObj = {}
+  priorities.forEach(priority => {
+    if (priority.name == existingPriority) {
+      returnObj = {
+        "id": priority.id,
+        "name": priority.name,
+        "color": priority.color
+    }
+    }
+  })
+  return returnObj
+}
+
+
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function TicketPriorityDrop({ticket, setTicket, priorities}) {
-  const [selected, setSelected] = useState(priorities[0])
+export default function TicketPriorityDrop({ticket, setTicket, priorities, existingTicket}) {
+  const [selected, setSelected] = useState(!existingTicket ? priorities[0] : findSelectedPriorityByExistingTicket(existingTicket.Priority))
 
 
   return (

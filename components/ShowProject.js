@@ -6,12 +6,12 @@ import BreadCrumb from './BreadCrumb'
 import ShowTicket from './ShowTicket'
 
 
-function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session}) {
-  console.log("🚀 ~ file: ShowProject.js ~ line 55 ~ ShowProject ~ project", selectedTicket)
+function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit}) {
+
   return (
     <>
     {
-        showTicket ? <ShowTicket session={session} showTicket={showTicket} setShowTicket={setShowTicket} ticket={project.Tickets[selectedTicket]} project={project}/> 
+        showTicket ? <ShowTicket session={session} showTicket={showTicket} setShowTicket={setShowTicket} ticket={project.Tickets[selectedTicket]} project={project} showEdit={showEdit} setShowEdit={setShowEdit}/> 
         : 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 
@@ -34,7 +34,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
 
         <div>
             <h3 className="pt-2 md:pt-28 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900"> Tickets</h3>
-            <TicketList tickets={project.Tickets} showTicket={showTicket} setShowTicket={setShowTicket} setShowProject={setShowProject} setSelectedTicket={setSelectedTicket}/>
+            <TicketList tickets={project.Tickets} showTicket={showTicket} setShowTicket={setShowTicket} setShowProject={setShowProject} setSelectedTicket={setSelectedTicket} />
     
 
         </div>

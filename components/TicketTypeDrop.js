@@ -8,13 +8,40 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function TicketTypeDrop({ticket, setTicket, type}) {
-  const [selected, setSelected] = useState(type[0])
+function findSelectedTypeByExistingTicket(existingType){
+  const type = [
+    { id: 1, name: 'Bug', color: "bg-blue-400" },
+    { id: 2, name: 'Documentation', color: "bg-yellow-400" },
+    { id: 3, name: 'Duplicate', color: "bg-red-400" },
+    { id: 4, name: 'Enhancement', color: "bg-orange-400" },
+    { id: 4, name: 'Good First Issue', color: "bg-purple-400"  },
+    { id: 4, name: 'Help Wanted', color: "bg-green-400"  },
+    { id: 4, name: 'Invalid', color: "bg-gray-400"  },
+    { id: 4, name: 'Question', color: "bg-pink-400"  },
+    { id: 4, name: 'Wont Fix', color: "bg-blue-100"  },
+  
+  ]
+  let returnObj = {}
+  type.forEach(_type => {
+    if (_type.name == existingType) {
+      returnObj = {
+        "id": _type.id,
+        "name": _type.name,
+        "color": _type.color
+    }
+    }
+  })
+  return returnObj
+}
+
+export default function TicketTypeDrop({ticket, setTicket, type, existingTicket}) {
+  const [selected, setSelected] = useState(!existingTicket ? type[0] : findSelectedTypeByExistingTicket(existingTicket.Type))
   console.log("🚀 ~ file: TicketTypeDrop.js ~ line 24 ~ TicketTypeDrop ~ selected", selected)
 
   return (
     <Listbox value={selected} onChange={(e)=>{
       setSelected(e)
+      console.log("🚀 ~ file: TicketTypeDrop.js ~ line 18 ~ TicketTypeDrop ~ e", e)
       setTicket({...ticket, Type: e.name})
     }}>
       {({ open }) => (
