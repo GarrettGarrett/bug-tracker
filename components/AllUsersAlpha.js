@@ -9,7 +9,7 @@ function getNameFromEmail(str){
   }
 
   
-  export default function AllUsersAlpha({users, selectedUserID, setSelectedUserID}) {
+  export default function AllUsersAlpha({users, selectedUserID, setSelectedUserID, editedValues, setEditedValues, existingProject}) {
       
     
       function handleRemove(id) {
@@ -37,10 +37,14 @@ function getNameFromEmail(str){
                     // if its not already selected, select it
                     if (!selectedUserID.includes(person._id)) {
                         handleSelect(person._id)
+                        if (existingProject){ //only true for edit ticket
+                          setEditedValues({...editedValues, MembersAdded: person._id})
+                        }
                     }
                     // if its already selected, un-select it
                     else {
                         handleRemove(person._id)
+                        setEditedValues({...editedValues, MembersRemoved: person._id})
                     }
                     
                 }}

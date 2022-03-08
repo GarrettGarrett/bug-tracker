@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import ImageUploader from './ImageUploader'
 import useSWR, { useSWRConfig } from 'swr'
 import EditTicket from './EditTicket'
+import History from './History'
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
@@ -18,7 +19,7 @@ function getNameFromEmail(str){
     }
   }
 
-function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit}) {
+function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit, mutateProject, setMutateProject}) {
   const [mutateNewComment, setMutateNewComment] = useState(false)
   const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
   const { mutate } = useSWRConfig()
@@ -42,7 +43,7 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
             if (i == (membersArray.length - 1)){
                 returnString += name
             } else {
-                returnString += name + ","
+                returnString += name + ", "
             }
            })
 
@@ -51,9 +52,9 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
 
 
   return (
-    <>
+    <div className='mb-28'>
     {
-      showEdit ? <EditTicket session={session} showEdit={showEdit} setShowEdit={setShowEdit} existingTicket={ticket} existingProject={project}/>
+      showEdit ? <EditTicket mutateProject={mutateProject} setMutateProject={setMutateProject} session={session} showEdit={showEdit} setShowEdit={setShowEdit} existingTicket={ticket} existingProject={project}/>
       :
 
       <div className='grid-cols-1 grid md:grid-cols-2 gap-4'>
@@ -158,7 +159,9 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
         <ImageUploader ticket={ticket} project={project} mutateImage={mutateImage} setMutateImage={setMutateImage}/>
       </div>
          
-      
+      <div className='pt-12'>
+        <History ticket={ticket} project={project}/>
+      </div>
       
       
       </div>
@@ -167,7 +170,7 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
     }
     
 
-    </>
+    </div>
   )
    
 

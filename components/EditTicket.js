@@ -9,6 +9,7 @@ import TicketTypeDrop from './TicketTypeDrop'
 import ComboBox from './ComboBox'
 import moment from 'moment'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
+import Toggle from './Toggle'
 
 
 function getRandomID() {
@@ -96,8 +97,9 @@ function getData(endpoint){
     
 
 
-export default function EditTicket({session, showEdit, setShowEdit, existingTicket, existingProject}) {
+export default function EditTicket({session, showEdit, setShowEdit, existingTicket, existingProject, mutateProject, setMutateProject}) {
 console.log("🚀 ~ file: EditTicket.js ~ line 100 ~ EditTicket ~ existingTicket", existingTicket)
+
     
 function getSelectedUserIDs(Members){
     let selectedUserIDs = []
@@ -106,6 +108,19 @@ function getSelectedUserIDs(Members){
     })
     return selectedUserIDs
 }
+    const [editedValues, setEditedValues] = useState({
+        selectedProjectID: null,
+        Status: null,
+        Title: null,
+        Description: null,
+        Type: null,
+        Priority: null,
+        MembersAdded: null,
+        MembersRemoved: null,
+        TicketID: existingTicket.TicketID,
+
+    })
+    console.log("🚀 ~ file: EditTicket.js ~ line 1000 ~ EditTicket ~ editedValues", editedValues)
 
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const projects = getData('/api/getProjects')
@@ -132,7 +147,7 @@ function getSelectedUserIDs(Members){
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState([])
     const [visibleErrorString, setVisibleErrorString] = useState(null)
-    const [selectedProjectID, setSelectedProjectID] = useState(projects ? projects[0]._id : null)
+    const [selectedProjectID, setSelectedProjectID] = useState(existingProject ? existingProject._id : projects ? projects[0]._id : null)
 
     
 
@@ -201,18 +216,30 @@ function getSelectedUserIDs(Members){
                 ...ticket, 
                 Members: selectedUserObjects, 
             }
-            const newTicket = await fetch ('/api/newTicket', {
+            
+            // updates ticket 
+            const editTicket = await fetch ('/api/editTicket', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({...ticket, Members: selectedUserObjects, projectID: selectedProjectID, TicketObject: TicketObject})
+                body: JSON.stringify({editedValues, selectedUserObjects: selectedUserObjects, TicketID: existingTicket.TicketID})
             }) 
 
+            // tracks changes for history
+            const newHistory = await fetch ('/api/newHistory', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({editedValues, selectedUserObjects: selectedUserObjects, existingTicket: existingTicket, ProjectID: existingProject.My_ID })
 
-            if (newTicket.ok) {
-                console.log("🚀 ~ file: NewTicket.js ~ line 163 ~ handleSubmit ~ newTicket", newTicket)
+            }) 
+            console.log("🚀 ~ file: EditTicket.js ~ line 232 ~ handleSubmit ~ existingProject", existingProject)
+            console.log("🚀 ~ file: EditTicket.js ~ line 232 ~ handleSubmit ~ newHistory", newHistory)
+
+
+            if (editTicket.ok) {
+                console.log("🚀 ~ file: editTicket.js ~ line 163 ~ handleSubmit ~ editTicket", editTicket)
                 setButtonMessage("Added")
             } else {
-                setButtonMessage(newTicket.statusText)
+                setButtonMessage(editTicket.statusText)
 
             }
             setLoading(false) //for button loader icon
@@ -233,6 +260,9 @@ function getSelectedUserIDs(Members){
                
             })
             setSelectedUserID([]) //clear selected users 
+            setShowEdit(false) //close edit component
+            setMutateProject(!mutateProject) //refresh the project object
+
            
         }   
     }
@@ -290,7 +320,7 @@ function getSelectedUserIDs(Members){
                         
                         {
                             typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
-                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID} existingProject={existingProject}/>
+                            <ComboBox setEditedValues={setEditedValues} editedValue={editedValues} projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID} existingProject={existingProject}/>
                             </div>
                         }
                         
@@ -300,7 +330,9 @@ function getSelectedUserIDs(Members){
                             <input
                                 type="text"
                                 value={ticket.Title}
-                                onChange={(e) => setTicket({...ticket, Title: e.target.value})}
+                                onChange={(e) => {
+                                    setEditedValues({...editedValues, Title: e.target.value})
+                                    setTicket({...ticket, Title: e.target.value})}}
                                 name="first-name"
                                 id="first-name"
                                 autoComplete="given-name"
@@ -314,7 +346,9 @@ function getSelectedUserIDs(Members){
                         <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
                             <textarea
                                 value={ticket.Description}
-                                onChange={(e) => setTicket({...ticket, Description: e.target.value})}
+                                onChange={(e) => {
+                                    setEditedValues({...editedValues, Description: e.target.value})
+                                    setTicket({...ticket, Description: e.target.value})}}
                                 id="description"
                                 name="description"
                                 rows={3}
@@ -327,18 +361,25 @@ function getSelectedUserIDs(Members){
                         
 
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                           <TicketTypeDrop existingTicket={existingTicket} type={type} ticket={ticket} setTicket={setTicket} />
+                           <TicketTypeDrop editedValue={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} type={type} ticket={ticket} setTicket={setTicket} />
                          </div>
 
                          <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                           <TicketPriorityDrop existingTicket={existingTicket} ticket={ticket} setTicket={setTicket} priorities={priorities}/>
+                           <TicketPriorityDrop editedValues={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} ticket={ticket} setTicket={setTicket} priorities={priorities}/>
                          </div>
-                           
+                         
+                         
                           
                         </div>
+
+                        <div>
+                        <h3 className="pb-2 pt-4 text-sm font-medium text-gray-700">{ticket.Status}</h3>
+                           <Toggle ticket={ticket} setTicket={setTicket} editedValues={editedValues} setEditedValues={setEditedValues}/>
+                        </div>
+                      
                         
                         <div className='hidden md:block'>
-                             <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                             <NewProjectSubmitButtons  buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
                         </div>
 
             </div>
@@ -356,7 +397,7 @@ function getSelectedUserIDs(Members){
                     <>
                     <div>
                          <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
-                        <AllUsersAlpha users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
+                        <AllUsersAlpha editedValues={editedValues} setEditedValues={setEditedValues} existingProject={existingProject} users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
 
                     </div>
                        

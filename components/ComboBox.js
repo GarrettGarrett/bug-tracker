@@ -11,7 +11,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ComboBox({projects, ticket, setTicket, selectedProjectID, setSelectedProjectID, existingProject}) {
+export default function ComboBox({projects, ticket, setTicket, selectedProjectID, setSelectedProjectID, existingProject, editedValues, setEditedValues}) {
   const [query, setQuery] = useState('')
   const [items, setItems] = useState(projects?.length ? projects : fallBackItem)
   const [selectedProject, setSelectedProject] = useState(!existingProject ? items[0] : existingProject)
@@ -29,6 +29,9 @@ export default function ComboBox({projects, ticket, setTicket, selectedProjectID
         (e)=>{
             setSelectedProject(e)
             setSelectedProjectID(e._id)
+            if (existingProject){//only true for Edit Ticket page
+              setEditedValues({...editedValues, selectedProjectID: e._id})
+            }
             }}>
       <Combobox.Label className="block text-sm font-medium text-gray-700">Assign to Project</Combobox.Label>
       <div className="relative mt-1 w-full">

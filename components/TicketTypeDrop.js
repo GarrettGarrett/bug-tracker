@@ -34,15 +34,17 @@ function findSelectedTypeByExistingTicket(existingType){
   return returnObj
 }
 
-export default function TicketTypeDrop({ticket, setTicket, type, existingTicket}) {
+export default function TicketTypeDrop({ticket, setTicket, type, existingTicket, editedValues, setEditedValues}) {
   const [selected, setSelected] = useState(!existingTicket ? type[0] : findSelectedTypeByExistingTicket(existingTicket.Type))
   console.log("🚀 ~ file: TicketTypeDrop.js ~ line 24 ~ TicketTypeDrop ~ selected", selected)
 
   return (
     <Listbox value={selected} onChange={(e)=>{
       setSelected(e)
-      console.log("🚀 ~ file: TicketTypeDrop.js ~ line 18 ~ TicketTypeDrop ~ e", e)
       setTicket({...ticket, Type: e.name})
+      if (existingTicket) { //only true for edit Ticket page
+        setEditedValues({...editedValues, Type: e.name})
+      }
     }}>
       {({ open }) => (
         <>

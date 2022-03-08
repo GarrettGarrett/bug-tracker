@@ -6,12 +6,12 @@ import BreadCrumb from './BreadCrumb'
 import ShowTicket from './ShowTicket'
 
 
-function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit}) {
+function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit, mutateProject, setMutateProject}) {
 
   return (
     <>
     {
-        showTicket ? <ShowTicket session={session} showTicket={showTicket} setShowTicket={setShowTicket} ticket={project.Tickets[selectedTicket]} project={project} showEdit={showEdit} setShowEdit={setShowEdit}/> 
+        showTicket ? <ShowTicket mutateProject={mutateProject} setMutateProject={setMutateProject} session={session} showTicket={showTicket} setShowTicket={setShowTicket} ticket={project.Tickets[selectedTicket]} project={project} showEdit={showEdit} setShowEdit={setShowEdit}/> 
         : 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 

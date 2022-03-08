@@ -22,6 +22,13 @@ export default function AllProjectsGrid({session}) {
   const [showTicket, setShowTicket] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
+  const { mutate } = useSWRConfig()
+  const [mutateProject, setMutateProject] = useState(false)
+
+  useEffect(() => {
+    mutate('/api/getProjects')
+  }, [mutateProject])
+  
 
   if (error) return <>error</>
   if (!data) return <h1>Loading...</h1>
@@ -29,7 +36,7 @@ export default function AllProjectsGrid({session}) {
     <>
    
       {
-        showProject ? <ShowProject showEdit={showEdit} setShowEdit={setShowEdit} session={session} project={data[currentProject]} setShowProject={setShowProject} showTicket={showTicket} setShowTicket={setShowTicket} setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket}/> 
+        showProject ? <ShowProject mutateProject={mutateProject} setMutateProject={setMutateProject} showEdit={showEdit} setShowEdit={setShowEdit} session={session} project={data[currentProject]} setShowProject={setShowProject} showTicket={showTicket} setShowTicket={setShowTicket} setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket}/> 
         
         :
         <>

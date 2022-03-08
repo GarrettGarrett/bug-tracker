@@ -31,7 +31,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function TicketPriorityDrop({ticket, setTicket, priorities, existingTicket}) {
+export default function TicketPriorityDrop({ticket, setTicket, priorities, existingTicket, editedValues, setEditedValues}) {
   const [selected, setSelected] = useState(!existingTicket ? priorities[0] : findSelectedPriorityByExistingTicket(existingTicket.Priority))
 
 
@@ -39,6 +39,9 @@ export default function TicketPriorityDrop({ticket, setTicket, priorities, exist
     <Listbox value={selected}onChange={(e)=>{
         setSelected(e)
         setTicket({...ticket, Priority: e.name})
+        if (existingTicket) { //only true for edit ticket 
+          setEditedValues({...editedValues, Priority: e.name})
+        }
       }}>
       {({ open }) => (
         <>
