@@ -118,7 +118,6 @@ function getSelectedUserIDs(Members){
         MembersAdded: null,
         MembersRemoved: null,
         TicketID: existingTicket.TicketID,
-
     })
     console.log("🚀 ~ file: EditTicket.js ~ line 1000 ~ EditTicket ~ editedValues", editedValues)
 
@@ -208,6 +207,7 @@ function getSelectedUserIDs(Members){
                 data.forEach(user => {
                     if (userID == user._id) {
                         selectedUserObjects.push(user)
+                        // selectedUserObjects.push(user?.session?.name ? user?.session?.name : getNameFromEmail(user.session.email))
                         // setProject({...project, Members: [...project.Members, user]})
                     }
                 })
@@ -347,7 +347,10 @@ function getSelectedUserIDs(Members){
                             <textarea
                                 value={ticket.Description}
                                 onChange={(e) => {
-                                    setEditedValues({...editedValues, Description: e.target.value})
+                                    if (existingTicket){ //only if editing a ticket
+                                        setEditedValues({...editedValues, Description: e.target.value})
+                                    }
+                                    
                                     setTicket({...ticket, Description: e.target.value})}}
                                 id="description"
                                 name="description"

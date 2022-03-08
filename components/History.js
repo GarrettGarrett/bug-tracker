@@ -57,12 +57,27 @@ export default function History({ticket, project}) {
                 </div>
                 <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                   <div>
-                    <p className="text-sm text-gray-500">
-                      {`${event.Owner} updated ${event.PropertyChanged} from ${event.OldValue} to ${event.NewValue}`}
-                      {/* <a href={event.href} className="font-medium text-gray-900">
-                        {event.target}
-                      </a> */}
-                    </p>
+                   
+                      {
+                        // if old value is null, then a member was added.
+                        event.OldValue == null ? 
+
+                        <p className="text-sm text-gray-500">{`${event.Owner} updated ${event.PropertyChanged} by adding ${event.NewValue}`}</p>
+
+                        :
+
+                        // if new value is null, then member was removed
+                        event.NewValue == null ? 
+
+                        <p className="text-sm text-gray-500">{`${event.Owner} updated ${event.PropertyChanged} by removing ${event.OldValue}`}</p>
+
+                        :
+                        <p className="text-sm text-gray-500">{`${event.Owner} updated ${event.PropertyChanged} from ${event.OldValue} to ${event.NewValue}`}</p>
+
+                      }
+                      
+                     
+                  
                   </div>
                   <div className="text-right text-sm whitespace-nowrap text-gray-500">
                     {/* <time dateTime={event.datetime}>{event.date}</time> */}
