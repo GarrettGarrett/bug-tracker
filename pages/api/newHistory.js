@@ -46,10 +46,7 @@ export default async (req, res) => {
                 // find the old value in the old object
                 // track the updated field name, old value, new value
                 if (fieldsToUpdate?.length > 0){
-                    for (const field of fieldsToUpdate) {
-                    
-                       
-    
+                    for (const field of fieldsToUpdate) {    
                         const newHistory = await db.collection("projects").updateOne({My_ID: req.body.ProjectID}, 
                             {$push: {
                                 [`History-${req.body.existingTicket.TicketID}`]: 

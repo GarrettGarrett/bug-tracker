@@ -27,8 +27,8 @@ export default function History({ticket, project}) {
   if (typeof data?.length == "undefined") return <h1>No History</h1>
   if (data?.length > 0) return (
     <div className="flow-root">
-    <h3 className="pb-4 bg-transparent text-lg leading-6 font-medium text-gray-900">History</h3>
-      <ul role="list" className="-mb-8">
+    
+      <ul role="list" className="-mb-8 pt-3">
         {data.map((event, eventIdx) => (
           <li key={event.CreatedAt._d}>
             <div className="relative pb-8">
@@ -52,7 +52,7 @@ export default function History({ticket, project}) {
                         "bg-cyan-300-400" } h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white`
                     }
                   >
-                    {/* <event.icon className="h-5 w-5 text-white" aria-hidden="true" /> */}
+                    <CheckIcon className="h-5 w-5 text-white" aria-hidden="true" />
                   </span>
                 </div>
                 <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">

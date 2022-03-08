@@ -149,17 +149,21 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
         </div>
       
       {/* second column */}
-      <div className='text-black'>
+      <div className='text-black pt-12 md:pt-0'>
       
-      <h3 className="text-lg leading-6 font-medium text-gray-900">Comments</h3>
-      <Comments project={project} session={session} ticket={ticket} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
-      <CommmentPostBox project={project} ticket={ticket} session={session} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
+      <div className='bg-white shadow overflow-hidden sm:rounded-lg p-4'>
+        <h3 className="text-lg leading-6 font-medium text-gray-900">Comments</h3>
+        <Comments project={project} session={session} ticket={ticket} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
+        <CommmentPostBox project={project} ticket={ticket} session={session} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
+      </div>
       
-      <div className='pt-4'>
+      
+      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4'>
         <ImageUploader ticket={ticket} project={project} mutateImage={mutateImage} setMutateImage={setMutateImage}/>
       </div>
          
-      <div className='pt-12'>
+      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4'>
+      <h3 className="pb-1 bg-transparent text-lg leading-6 font-medium text-gray-900">History</h3>
         <History ticket={ticket} project={project}/>
       </div>
       
