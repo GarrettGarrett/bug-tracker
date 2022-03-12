@@ -2,6 +2,7 @@ import { CalendarIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import useSWR, { useSWRConfig } from 'swr'
 import { useState, useEffect } from 'react'
 import ShowProject from './ShowProject'
+import EditProject from './EditProject'
 
 function getNameFromEmail(str){
   if (str){
@@ -19,12 +20,13 @@ export default function AllProjectsGrid({session}) {
   console.log("🚀 ~ file: AllProjectsGrid.js ~ line 19 ~ AllProjectsGrid ~ data", data)
   const [showProject, setShowProject] = useState(false)
   const [currentProject, setCurrentProject] = useState(null)
-  const [showTicket, setShowTicket] = useState(false)
+  const [showTicket, setShowTicket] = useState(false) //ticket edit
   const [selectedTicket, setSelectedTicket] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
   const { mutate } = useSWRConfig()
   const [mutateProject, setMutateProject] = useState(false)
-
+  const [showEditProject, setShowEditProject] = useState(false)
+ 
   useEffect(() => {
     mutate('/api/getProjects')
   }, [mutateProject])
@@ -34,11 +36,37 @@ export default function AllProjectsGrid({session}) {
   if (!data) return <h1>Loading...</h1>
   if (data) return (
     <>
+
+      {
+        showEditProject && 
+        <EditProject 
+          session={session}
+          existingProject={data[currentProject]}
+        />
+      }
    
       {
-        showProject ? <ShowProject mutateProject={mutateProject} setMutateProject={setMutateProject} showEdit={showEdit} setShowEdit={setShowEdit} session={session} project={data[currentProject]} setShowProject={setShowProject} showTicket={showTicket} setShowTicket={setShowTicket} setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket}/> 
+        showProject && !showEditProject &&
+        <ShowProject 
+          showEditProject={showEditProject}
+          setShowEditProject={setShowEditProject}
+          mutateProject={mutateProject} 
+          setMutateProject={setMutateProject} 
+          showEdit={showEdit} 
+          setShowEdit={setShowEdit} 
+          session={session} 
+          project={data[currentProject]} 
+          setShowProject={setShowProject} 
+          showTicket={showTicket} 
+          setShowTicket={setShowTicket} 
+          setSelectedTicket={setSelectedTicket} 
+          selectedTicket={selectedTicket}
+        /> 
         
-        :
+      }
+      {
+        !showEditProject && !showProject ?
+   
         <>
           <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Projects</h3>
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
@@ -100,10 +128,11 @@ export default function AllProjectsGrid({session}) {
           </ul>
         </div>
       </>
-        
-      }
-      
-   
+
+      :
+
+      null
+      } 
     
     </>
     

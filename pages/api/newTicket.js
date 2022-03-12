@@ -19,8 +19,9 @@ export default async (req, res) => {
                 const newTicket = await db.collection("projects").updateOne({_id: good_id}, 
                         {$push: {
                             Tickets: req.body.TicketObject, 
+                            
                         }})
-                    
+                        console.log("🚀 ~ file: newTicket.js ~ line 22 ~ TicketObject", req.body.TicketObject)
                 
                 if (newTicket){
                     console.log("🚀 ~ file: newTicket.js ~ line 33 ~ newProject", newTicket)

@@ -44,7 +44,10 @@ function getNameFromEmail(str){
                     // if its already selected, un-select it
                     else {
                         handleRemove(person._id)
-                        setEditedValues({...editedValues, MembersRemoved: person._id})
+                        if (existingProject){ //only true for edit ticket
+                          setEditedValues({...editedValues, MembersRemoved: person._id})
+                        }
+                        
                     }
                     
                 }}

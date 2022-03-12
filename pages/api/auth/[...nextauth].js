@@ -50,16 +50,16 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
         let user
         if (credentials.username == "developer") {
-          user = { id: 2, name: "developer", image: "" }
+          user = { id: 1, name: "developer", image: "", email: 'developer@email.com' }
           return user
         }if (credentials.username == "admin") {
-          user = { id: 2, name: "admin", image: "" }
+          user = { id: 2, name: "admin", image: "", email: 'admin@email.com' }
           return user
         }if (credentials.username == "user") {
-          user = { id: 2, name: "user", image: "" }
+          user = { id: 3, name: "user", image: "", email: 'user@email.com' }
           return user
-        }if (credentials.username == "role2") {
-          user = { id: 2, name: "role2", image: "" }
+        }if (credentials.username == "manager") {
+          user = { id: 4, name: "manager", image: "", email: 'manager@email.com' }
           return user
         } else {
           // If you return null then an error will be displayed advising the user to check their details.

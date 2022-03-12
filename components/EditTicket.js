@@ -16,16 +16,14 @@ function getRandomID() {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
 
-
 const priorities = [
     { id: 1, name: 'Low', color: "bg-yellow-400" },
     { id: 2, name: 'Medium', color: "bg-blue-400" },
     { id: 3, name: 'High', color: "bg-red-400" },
     { id: 4, name: 'Emergency', color: "bg-red-600 animate-ping" },
-  
-  ]
+]
 
-  const type = [
+const type = [
     { id: 1, name: 'Bug', color: "bg-blue-400" },
     { id: 2, name: 'Documentation', color: "bg-yellow-400" },
     { id: 3, name: 'Duplicate', color: "bg-red-400" },
@@ -35,8 +33,7 @@ const priorities = [
     { id: 4, name: 'Invalid', color: "bg-gray-400"  },
     { id: 4, name: 'Question', color: "bg-pink-400"  },
     { id: 4, name: 'Wont Fix', color: "bg-blue-100"  },
-  
-  ]
+]
 
 function getNameFromEmail(str){
     if (str){
@@ -85,7 +82,6 @@ function createAlphaObject(data){
         sortedAlphaObject[key] = alphaObject[key];
     });
     return sortedAlphaObject
-    
 }
 
 
@@ -95,12 +91,8 @@ function getData(endpoint){
     return data1.data
 }
     
-
-
 export default function EditTicket({session, showEdit, setShowEdit, existingTicket, existingProject, mutateProject, setMutateProject}) {
-console.log("🚀 ~ file: EditTicket.js ~ line 100 ~ EditTicket ~ existingTicket", existingTicket)
-
-    
+ 
 function getSelectedUserIDs(Members){
     let selectedUserIDs = []
     Members.forEach(member => {
@@ -119,7 +111,6 @@ function getSelectedUserIDs(Members){
         MembersRemoved: null,
         TicketID: existingTicket.TicketID,
     })
-    console.log("🚀 ~ file: EditTicket.js ~ line 1000 ~ EditTicket ~ editedValues", editedValues)
 
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const projects = getData('/api/getProjects')
@@ -148,16 +139,11 @@ function getSelectedUserIDs(Members){
     const [visibleErrorString, setVisibleErrorString] = useState(null)
     const [selectedProjectID, setSelectedProjectID] = useState(existingProject ? existingProject._id : projects ? projects[0]._id : null)
 
-    
-
-
     useEffect(() => {
         if (projects?.length)
         setSelectedProjectID(projects[0]._id)
     }, [projects])
     
-
-
     useEffect(() => {
         async function sleep(){
             setTimeout(() => {
@@ -193,7 +179,6 @@ function getSelectedUserIDs(Members){
         }
         console.log(errorMsgArray)
         return errorMsgArray
-        
     }
 
     async function handleSubmit(){
@@ -262,8 +247,6 @@ function getSelectedUserIDs(Members){
             setSelectedUserID([]) //clear selected users 
             setShowEdit(false) //close edit component
             setMutateProject(!mutateProject) //refresh the project object
-
-           
         }   
     }
 
@@ -273,12 +256,10 @@ function getSelectedUserIDs(Members){
           let createdAlphaObj = createAlphaObject(data)
             setAlphaUsers(createdAlphaObj)
             setAlphaUsersFiltered(createdAlphaObj)
-           
       }
     }, [data])
 
     function filterUsers(filterTerm) {
-        
         let filteredAlpha = []
         data.map(user => {
             let name = user?.name ? user.name : getNameFromEmail(user.email)
@@ -286,7 +267,6 @@ function getSelectedUserIDs(Members){
                 filteredAlpha.push(user)
             }
         })
-        
         setAlphaUsersFiltered(createAlphaObject(filteredAlpha))
     }
 
@@ -294,7 +274,6 @@ function getSelectedUserIDs(Members){
         setAlphaUsersFiltered(alphaUsers)
     }
     
-
     if (error) return <>error</>
     if (!data) return <NewProjectSkeleton/>
     if (data ) return (
@@ -307,25 +286,17 @@ function getSelectedUserIDs(Members){
                     <ArrowLeftIcon className='hover:cursor-pointer h-4 mt-px text-center pr-1'/>
                     Go Back
                 </div>
-
-
         </div>
-
 
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
 {/* First Column */}
-            <div>
-                    
+            <div>   
                     <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
-                        
                         {
                             typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
                             <ComboBox setEditedValues={setEditedValues} editedValue={editedValues} projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID} existingProject={existingProject}/>
                             </div>
                         }
-                        
-                      
-                        
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
                             <input
                                 type="text"
@@ -340,9 +311,6 @@ function getSelectedUserIDs(Members){
                                 placeholder='Ticket Title'
                             />
                          </div>
-
-
-   
                         <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
                             <textarea
                                 value={ticket.Description}
@@ -360,9 +328,6 @@ function getSelectedUserIDs(Members){
                                 placeholder='Ticket Description'
                             />
                         </div>
-
-                        
-
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
                            <TicketTypeDrop editedValue={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} type={type} ticket={ticket} setTicket={setTicket} />
                          </div>
@@ -370,17 +335,12 @@ function getSelectedUserIDs(Members){
                          <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
                            <TicketPriorityDrop editedValues={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} ticket={ticket} setTicket={setTicket} priorities={priorities}/>
                          </div>
-                         
-                         
-                          
                         </div>
 
                         <div>
                         <h3 className="pb-2 pt-4 text-sm font-medium text-gray-700">{ticket.Status}</h3>
                            <Toggle ticket={ticket} setTicket={setTicket} editedValues={editedValues} setEditedValues={setEditedValues}/>
                         </div>
-                      
-                        
                         <div className='hidden md:block'>
                              <NewProjectSubmitButtons  buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
                         </div>

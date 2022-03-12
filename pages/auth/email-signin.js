@@ -50,7 +50,7 @@ return (
                             type="email"
                             autoComplete="email"
                             required
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="text-black appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                         </div>
                         </div>
@@ -133,10 +133,10 @@ return (
                                         </a>
 
                                         <a
-                                        onClick={()=> signIn("credentials", { username: "role2", password: "" })}
+                                        onClick={()=> signIn("credentials", { username: "manager", password: "" })}
                                         className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-red-500 text-sm font-medium text-gray-500 hover:bg-red-400"
                                         >
-                                            <span className="text-white px-6">Role2</span>
+                                            <span className="text-white px-6">Manager</span>
                                         </a>
                                     </div>
                                 

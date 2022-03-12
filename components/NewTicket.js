@@ -82,9 +82,11 @@ function createAlphaObject(data){
     }).forEach(function(key) {
         sortedAlphaObject[key] = alphaObject[key];
     });
+    console.log("🚀 ~ file: NewTicket.js ~ line 88 ~ createAlphaObject ~ sortedAlphaObject", sortedAlphaObject)
     return sortedAlphaObject
     
 }
+
 
 
 function getData(endpoint){
@@ -95,16 +97,19 @@ function getData(endpoint){
     
 
 
-export default function NewTicket({session}) {
+export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
       
 
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
+    console.log("🚀 ~ file: NewTicket.js ~ line 102 ~ NewTicket ~ data", data)
     const projects = getData('/api/getProjects')
+    const [selectedProjectMyID, setSelectedProjectMyID] = useState(projects ? projects[0].My_ID : null)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
     const [selectedUserID, setSelectedUserID] = useState([])
     const [ticket, setTicket] = useState({
+        ParentProjectID: selectedProjectMyID,
         Status: "Open",
         SubmittedBy: session?.user?.name ? session?.user?.name : getNameFromEmail(session?.user?.email) ,
         History: [],
@@ -124,13 +129,16 @@ export default function NewTicket({session}) {
     const [errorMsg, setErrorMsg] = useState([])
     const [visibleErrorString, setVisibleErrorString] = useState(null)
     const [selectedProjectID, setSelectedProjectID] = useState(projects ? projects[0]._id : null)
+    
     console.log("🚀 ~ file: NewTicket.js ~ line 114 ~ NewTicket ~ selectedProjectID", selectedProjectID)
     
 
 
     useEffect(() => {
-        if (projects?.length)
-        setSelectedProjectID(projects[0]._id)
+        if (projects?.length){
+            setSelectedProjectID(projects[0]._id)
+            setSelectedProjectMyID(projects[0].My_ID)
+        }
     }, [projects])
     
 
@@ -152,7 +160,10 @@ export default function NewTicket({session}) {
         let errorMsgArray = []
         for (const [key, value] of Object.entries(ticket)) {
             // applies to title, description, type, priority
-            if (value.length < 1 && key != "Tickets" && key != "Members" && key!="Comments" && key != "Images" && key!= "History") {
+            if (value?.length < 1 && key != "Tickets" && key != "Members" && key!="Comments" 
+            && key != "Images"
+            && key != "ParentProjectID"
+            && key!= "History") {
                 console.log("77", key, value)
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
@@ -258,7 +269,8 @@ export default function NewTicket({session}) {
 
     if (error) return <>error</>
     if (!data) return <NewProjectSkeleton/>
-    if (data ) return (
+    if (typeof data?.length == "undefined") return <>Loading...</>
+    if (data?.length && projects?.length) return (
         <>
         <div className='pb-3 border-b border-gray-200 mb-1 '>
               <h3 className="text-lg leading-6 font-medium text-gray-900">New Ticket</h3>
@@ -278,7 +290,9 @@ export default function NewTicket({session}) {
                         
                         {
                             typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
-                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}/>
+                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}
+                            setSelectedProjectMyID={setSelectedProjectMyID}
+                            />
                             </div>
                         }
                         
@@ -326,7 +340,13 @@ export default function NewTicket({session}) {
                         </div>
                         
                         <div className='hidden md:block'>
-                             <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                             <NewProjectSubmitButtons
+                                setShowNewTicket={setShowNewTicket ? setShowNewTicket : null}
+                                showNewTicket={showNewTicket ? showNewTicket : null}
+                                buttonMessage={buttonMessage} 
+                                loading={loading} 
+                                visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}
+                             />
                         </div>
 
             </div>
@@ -340,11 +360,12 @@ export default function NewTicket({session}) {
                     </p>
                 </div>
                 {
-                    alphaUsersFiltered !== null ?
+                    alphaUsersFiltered ?
                     <>
                     <div>
                          <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
-                        <AllUsersAlpha users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
+                        <AllUsersAlpha 
+                        users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
 
                     </div>
                        

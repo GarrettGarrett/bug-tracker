@@ -4,7 +4,7 @@ import {
   HomeIcon,
   MenuAlt2Icon,
   PhotographIcon,
-  PlusSmIcon,
+  TicketIcon,
   XIcon,
   MailIcon,
   UserGroupIcon,
@@ -23,6 +23,9 @@ import NewBtnDropDown from './NewBtnDropDown'
 import AllProjectsGrid from './AllProjectsGrid'
 import NewProject from './NewProject'
 import NewTicket from './NewTicket'
+import AllTickets from './AllTickets'
+import Home from './Home'
+
 
 
 
@@ -31,7 +34,7 @@ const sidebarNavigation = [
     { name: 'Home', href: '#', icon: HomeIcon,  index: 1},
     { name: 'Role Assignment', href: '/roleassignment', icon: UserGroupIcon,  index: 2 },
     { name: 'Projects', href: '#', icon: CollectionIcon,  index: 3 },
-    { name: 'Shared', href: '#', icon: UserGroupIcon,  index: 4 },
+    { name: 'Tickets', href: '#', icon: TicketIcon,  index: 4 },
     { name: 'Albums', href: '#', icon: CollectionIcon, index: 5 },
     { name: 'Settings', href: '#', icon: CogIcon, index: 6 },
     { name: 'Messages', href: '/messages', icon: MailIcon, index: 7 },
@@ -320,7 +323,9 @@ function SideBarHeader() {
                   {
                     context.tab == 1 ?  
                         <>
-                            <span className='text-black'>1st tab</span>
+                            <div className="px-5 py-5">
+                              <Home session={session}/>
+                            </div>
                         </>
                    
                     :
@@ -328,6 +333,14 @@ function SideBarHeader() {
                         <>
                             <div className="px-5 py-5">
                                 <RoleAssignment session={session}/>
+                            </div>
+
+                        </>
+                    :
+                    context.tab == 4 ? 
+                        <>
+                            <div className="px-5 py-5">
+                                <AllTickets session={session}/>
                             </div>
 
                         </>

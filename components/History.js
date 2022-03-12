@@ -45,10 +45,10 @@ export default function History({ticket, project}) {
                         eventIdx == 3 ? "bg-purple-400" : 
                         eventIdx == 4 ? "bg-orange-400" : 
                         eventIdx == 5 ? "bg-pink-400" : 
-                        eventIdx == 6 ? "bg-emerald-500-400" : 
-                        eventIdx == 7 ? "bg-slate-400" : 
+                        eventIdx == 6 ? "bg-emerald-400" : 
+                        eventIdx == 7 ? "bg-fuchsia-400" : 
                         eventIdx == 8 ? "bg-gray-400" : 
-                        eventIdx == 9 ? "bg-amber-900-400" : 
+                        eventIdx == 9 ? "bg-amber-400" : 
                         "bg-cyan-300-400" } h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white`
                     }
                   >
