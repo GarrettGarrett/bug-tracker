@@ -3,6 +3,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import { useState, useEffect } from 'react'
 import ShowProject from './ShowProject'
 import EditProject from './EditProject'
+import { useAppContext } from '../context/contextState'
 
 function getNameFromEmail(str){
   if (str){
@@ -16,9 +17,17 @@ const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched d
 
 
 export default function AllProjectsGrid({session}) {
+  let context = useAppContext()
   const { data, error, isValidating } = useSWR('/api/getProjects', fetcher)
-  console.log("🚀 ~ file: AllProjectsGrid.js ~ line 19 ~ AllProjectsGrid ~ data", data)
-  const [showProject, setShowProject] = useState(false)
+  // const [showProject, setShowProject] = useState(
+  //   false
+  //   )
+  // const [showProject, setShowProject] = useState(
+  //   context.searchBarSelectedProject == null ?
+  //   false
+  //   :
+  //   true
+  //   )
   const [currentProject, setCurrentProject] = useState(null)
   const [showTicket, setShowTicket] = useState(false) //ticket edit
   const [selectedTicket, setSelectedTicket] = useState(null)
@@ -26,6 +35,7 @@ export default function AllProjectsGrid({session}) {
   const { mutate } = useSWRConfig()
   const [mutateProject, setMutateProject] = useState(false)
   const [showEditProject, setShowEditProject] = useState(false)
+  
  
   useEffect(() => {
     mutate('/api/getProjects')
@@ -37,6 +47,7 @@ export default function AllProjectsGrid({session}) {
   if (data) return (
     <>
 
+
       {
         showEditProject && 
         <EditProject 
@@ -46,7 +57,10 @@ export default function AllProjectsGrid({session}) {
       }
    
       {
-        showProject && !showEditProject &&
+        context.showProject && !showEditProject && 
+        (context.searchBarSelectedProject?.Title != null ||
+          data[currentProject]?.Title != null) &&
+
         <ShowProject 
           showEditProject={showEditProject}
           setShowEditProject={setShowEditProject}
@@ -55,8 +69,13 @@ export default function AllProjectsGrid({session}) {
           showEdit={showEdit} 
           setShowEdit={setShowEdit} 
           session={session} 
-          project={data[currentProject]} 
-          setShowProject={setShowProject} 
+          project={
+            context.searchBarSelectedProject == null ?
+            data[currentProject]
+            :
+            context.searchBarSelectedProject
+          } 
+          setShowProject={context.setShowProject} 
           showTicket={showTicket} 
           setShowTicket={setShowTicket} 
           setSelectedTicket={setSelectedTicket} 
@@ -65,8 +84,8 @@ export default function AllProjectsGrid({session}) {
         
       }
       {
-        !showEditProject && !showProject ?
-   
+        !showEditProject && !context.showProject ?
+          
         <>
           <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Projects</h3>
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
@@ -74,7 +93,7 @@ export default function AllProjectsGrid({session}) {
             {data.map((project, i) => (
               <li 
               onClick={() => {
-                setShowProject(true)
+                context.setShowProject(true)
                 setCurrentProject(i)
               }}
               key={project._id}>

@@ -25,6 +25,10 @@ import NewProject from './NewProject'
 import NewTicket from './NewTicket'
 import AllTickets from './AllTickets'
 import Home from './Home'
+import SearchBar from './SearchBar'
+import useSWR, { useSWRConfig } from 'swr'
+import { textSpanContainsTextSpan } from 'typescript'
+
 
 
 
@@ -35,12 +39,10 @@ const sidebarNavigation = [
     { name: 'Role Assignment', href: '/roleassignment', icon: UserGroupIcon,  index: 2 },
     { name: 'Projects', href: '#', icon: CollectionIcon,  index: 3 },
     { name: 'Tickets', href: '#', icon: TicketIcon,  index: 4 },
-    { name: 'Albums', href: '#', icon: CollectionIcon, index: 5 },
-    { name: 'Settings', href: '#', icon: CogIcon, index: 6 },
-    { name: 'Messages', href: '/messages', icon: MailIcon, index: 7 },
+    
   ]
   const userNavigation = [
-    { name: 'Your Profile', href: '#' },
+   
     { name: 'Sign out', href: '#', signOut: true },
   ]
   
@@ -49,16 +51,18 @@ const sidebarNavigation = [
     return classes.filter(Boolean).join(' ')
   }
 
-
+  const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
 
 
 function SideBarHeader() {
+
     let context = useAppContext()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
       const { data: session, status } = useSession()
       const loading = status === "loading"
       const Router = useRouter()
+      const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
       
 
       useEffect(() => { //once finished loading, if not authenticated then route to login
@@ -103,7 +107,12 @@ function SideBarHeader() {
                 {sidebarNavigation.map((item) => (
                   <Link href={item.href}>
                     <a
-                      onClick={() => context.setTab(item.index)}
+                      onClick={() => {
+                        context.setShowTicket(false)
+                        context.setShowProject(false)
+                        context.setSearchBarSelectedProject(null)
+                        context.setTab(item.index)
+                      }}
                       key={item.name}
                       className={classNames(
                         context.tab == item.index ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
@@ -236,24 +245,18 @@ function SideBarHeader() {
                   <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
                 <div className="flex-1 flex justify-between px-4 sm:px-6">
-                  <div className="flex-1 flex">
-                    <form className="w-full flex md:ml-0" action="#" method="GET">
-                      <label htmlFor="search-field" className="sr-only">
-                        Search all files
-                      </label>
-                      <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
-                          <SearchIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
-                        </div>
-                        <input
-                          name="search-field"
-                          id="search-field"
-                          className="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400"
-                          placeholder="Search"
-                          type="search"
-                        />
-                      </div>
-                    </form>
+                  <div className="w-full pt-3">
+                    {
+                      data?.ProjectsForUser?.length > 0 &&
+                      <SearchBar  
+                        setSearchBarSelectedProject={context.setSearchBarSelectedProject}
+                        data={data?.ProjectsForUser}
+                      
+                      />
+                    }
+                    
+                  
+                  
                   </div>
                   <div className="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
                     {/* Profile dropdown */}

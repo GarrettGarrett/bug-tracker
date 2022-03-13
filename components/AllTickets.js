@@ -4,13 +4,15 @@ import useSWR, { useSWRConfig } from 'swr'
 import ShowTicket from './ShowTicket'
 import { useState, useEffect } from 'react'
 import EditTicket from './EditTicket'
+import { useAppContext } from '../context/contextState'
+
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
 function AllTickets({session}) {
+  let context = useAppContext()
 
     const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
-    const [showTicket, setShowTicket] = useState(false)
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [selectedProject, setSelectedProject] = useState(null)
     const { mutate } = useSWRConfig()
@@ -46,21 +48,21 @@ function AllTickets({session}) {
     <>
 
       {
-        data && !showTicket && 
+        data && !context.showTicket && 
         <TicketList
           selectedTicket={selectedTicket}
           setSelectedTicket={setSelectedTicket}
-          showTicket={showTicket}
-          setShowTicket={setShowTicket}
+          showTicket={context.showTicket}
+          setShowTicket={context.setShowTicket}
           tickets={data.TicketsForUser}
         />
       }
       {
-        data && showTicket && selectedProject &&       
+        data && context.showTicket && selectedProject &&       
         <ShowTicket 
           ticket={data.TicketsForUser[selectedTicket]}
-          showTicket={showTicket} 
-          setShowTicket={setShowTicket}
+          showTicket={context.showTicket} 
+          setShowTicket={context.setShowTicket}
           project={selectedProject}
           session={session}
           mutateProject={mutateProject} 

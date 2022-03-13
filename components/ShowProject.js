@@ -10,12 +10,18 @@ import { useState } from 'react'
 import NewTicket from '../components/NewTicket'
 
 
+
+
 function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit, mutateProject, setMutateProject, setShowEditProject, showEditProject}) {
 
   const [showNewTicket, setShowNewTicket] = useState(false)
 
+
+
   return (
     <>
+
+
     {
       showNewTicket && 
       <NewTicket 
@@ -27,6 +33,8 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
 
     {
       showTicket && !showNewTicket && 
+      <>
+      <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
       <ShowTicket 
       mutateProject={mutateProject} 
       setMutateProject={setMutateProject} 
@@ -38,7 +46,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
       showEdit={showEdit} 
       setShowEdit={setShowEdit}
       /> 
-      
+     </>
     }
 
 

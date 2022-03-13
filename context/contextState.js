@@ -6,15 +6,30 @@ export function AppWrapper({ children }) {
 
 
   const [tab, setTab] = useState(1)
+  const [searchBarSelectedProject, setSearchBarSelectedProject] = useState(null)
+  const [showProject, setShowProject] = useState(false)
+  const [showTicket, setShowTicket] = useState(false)
+
+  
   
   let sharedState = {
-        tab: tab,
-        setTab: setTab
+        tab,
+        setTab,
+        searchBarSelectedProject,
+        setSearchBarSelectedProject,
+        showProject,
+        setShowProject,
+        showTicket,
+        setShowTicket
     }
   
 
   return (
-    <AppContext.Provider value={sharedState} setTab={setTab}>
+    <AppContext.Provider 
+      value={sharedState} 
+      setTab={setTab} 
+      setSearchBarSelectedProject={setSearchBarSelectedProject}
+    >
       {children}
     </AppContext.Provider>
   );

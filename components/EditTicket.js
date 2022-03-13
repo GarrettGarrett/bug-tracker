@@ -10,6 +10,7 @@ import ComboBox from './ComboBox'
 import moment from 'moment'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
 import Toggle from './Toggle'
+import TicketStatusRadio from './TicketStatusRadio'
 
 
 function getRandomID() {
@@ -337,9 +338,15 @@ function getSelectedUserIDs(Members){
                          </div>
                         </div>
 
-                        <div>
-                        <h3 className="pb-2 pt-4 text-sm font-medium text-gray-700">{ticket.Status}</h3>
-                           <Toggle ticket={ticket} setTicket={setTicket} editedValues={editedValues} setEditedValues={setEditedValues}/>
+                        <div className='pt-2'>
+                       
+                           {/* <Toggle ticket={ticket} setTicket={setTicket} editedValues={editedValues} setEditedValues={setEditedValues}/> */}
+                           <TicketStatusRadio 
+                            ticket={ticket}
+                            setTicket={setTicket}
+                            editedValues={editedValues}
+                            setEditedValues={setEditedValues}
+                           />
                         </div>
                         <div className='hidden md:block'>
                              <NewProjectSubmitButtons  buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>

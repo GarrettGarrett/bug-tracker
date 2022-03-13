@@ -270,7 +270,7 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
     if (error) return <>error</>
     if (!data) return <NewProjectSkeleton/>
     if (typeof data?.length == "undefined") return <>Loading...</>
-    if (data?.length && projects?.length) return (
+    if (data?.length) return (
         <>
         <div className='pb-3 border-b border-gray-200 mb-1 '>
               <h3 className="text-lg leading-6 font-medium text-gray-900">New Ticket</h3>

@@ -4,7 +4,10 @@ import { InformationCircleIcon, LocationMarkerIcon, UsersIcon } from '@heroicons
 
 export default function TicketList({tickets, showTicket, setShowTicket, setShowProject, setSelectedTicket, showEdit, setShowEdit}) {
   return (
+    <>
+
     <div className="bg-white shadow overflow-hidden sm:rounded-md">
+      
       <ul role="list" className="divide-y divide-gray-200">
         {tickets.map((Ticket, i) => (
           <li 
@@ -46,5 +49,8 @@ export default function TicketList({tickets, showTicket, setShowTicket, setShowP
         ))}
       </ul>
     </div>
+    
+    </>
+
   )
 }
