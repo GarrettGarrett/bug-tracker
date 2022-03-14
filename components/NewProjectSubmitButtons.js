@@ -1,21 +1,28 @@
 import React from 'react'
 
-function NewProjectSubmitButtons({buttonMessage, loading, visibleErrorString, handleSubmit, setShowNewTicket, showNewTicket}) {
+function NewProjectSubmitButtons({buttonMessage, loading, visibleErrorString, handleSubmit, setShowNewTicket, showNewTicket, setShowEditProject,setShowProject}) {
   return (
     <>
     <div className="flex justify-end pt-5">
-                
+{/*                 
                 <button
                     onClick={() => {
+                        if (setShowEditProject){
+                            setShowEditProject(false)
+                        }
+                        if (setShowProject){
+                            setShowProject(true)
+                        }
                         if (showNewTicket) {
                             setShowNewTicket(false)
+                            
                         }
                     }}
                     type="button"
                     className=" w-32 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Cancel
-                </button>
+                </button> */}
 
                 <button
                     disabled={buttonMessage != "Submit"}

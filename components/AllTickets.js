@@ -49,6 +49,8 @@ function AllTickets({session}) {
 
       {
         data && !context.showTicket && 
+        <>
+        <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
         <TicketList
           selectedTicket={selectedTicket}
           setSelectedTicket={setSelectedTicket}
@@ -56,6 +58,8 @@ function AllTickets({session}) {
           setShowTicket={context.setShowTicket}
           tickets={data.TicketsForUser}
         />
+        </>
+        
       }
       {
         data && context.showTicket && selectedProject &&       

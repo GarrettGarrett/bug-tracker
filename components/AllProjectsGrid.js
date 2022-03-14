@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import ShowProject from './ShowProject'
 import EditProject from './EditProject'
 import { useAppContext } from '../context/contextState'
+import ProjectsSkeleton from './ProjectsSkeleton'
 
 function getNameFromEmail(str){
   if (str){
@@ -34,7 +35,6 @@ export default function AllProjectsGrid({session}) {
   const [showEdit, setShowEdit] = useState(false)
   const { mutate } = useSWRConfig()
   const [mutateProject, setMutateProject] = useState(false)
-  const [showEditProject, setShowEditProject] = useState(false)
   
  
   useEffect(() => {
@@ -43,27 +43,32 @@ export default function AllProjectsGrid({session}) {
   
 
   if (error) return <>error</>
-  if (!data) return <h1>Loading...</h1>
+  if (!data) return <ProjectsSkeleton />
   if (data) return (
     <>
 
 
       {
-        showEditProject && 
+        context.showEditProject && 
         <EditProject 
           session={session}
-          existingProject={data[currentProject]}
+          existingProject={
+            context.searchBarSelectedProject == null ?
+            data[currentProject]
+            :
+            context.searchBarSelectedProject
+          }
         />
       }
    
       {
-        context.showProject && !showEditProject && 
+        context.showProject && !context.showEditProject && 
         (context.searchBarSelectedProject?.Title != null ||
           data[currentProject]?.Title != null) &&
 
         <ShowProject 
-          showEditProject={showEditProject}
-          setShowEditProject={setShowEditProject}
+          showEditProject={context.showEditProject}
+          setShowEditProject={context.setShowEditProject}
           mutateProject={mutateProject} 
           setMutateProject={setMutateProject} 
           showEdit={showEdit} 
@@ -84,7 +89,7 @@ export default function AllProjectsGrid({session}) {
         
       }
       {
-        !showEditProject && !context.showProject ?
+        !context.showEditProject && !context.showProject ?
           
         <>
           <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Projects</h3>

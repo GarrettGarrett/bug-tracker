@@ -30,7 +30,7 @@ function SearchBar({data, setSearchBarSelectedProject}) {
                 name="search-field"
                 id="search-field"
                 className="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400"
-                placeholder="Search"
+                placeholder="Search Projects..."
                 type="search"
             />
         </div>

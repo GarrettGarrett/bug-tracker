@@ -21,13 +21,13 @@ function parseTickets  (tickets) {
         if (ticket.Status == "Open") {
             Open ++
         }
-        if (ticket.Status == "InProgress") {
+        if (ticket.Status == "In Progress") {
             InProgress ++
         }
         if (ticket.Status == "Resolved") {
             Resolved ++
         }
-        if (ticket.Status == "AdditionalInfoRequired") {
+        if (ticket.Status == "Additional Info Required") {
             AdditionalInfoRequired ++
         }
     })
@@ -41,35 +41,30 @@ function parseTickets  (tickets) {
         {
             title: "Open",
             count: Open,
-            percent:(Open / tickets.length),
+            percent:Math.floor((Open / tickets.length) * 100),
             color: "bg-red-400"
         },
         {
             title: "In Progress",
             count: InProgress,
-            percent:(InProgress / tickets.length),
+            percent:Math.floor((InProgress / tickets.length) * 100),
             color: "bg-orange-400"
         },
         {
             title: "Resolved",
             count: Resolved,
-            percent:(Resolved / tickets.length),
+            percent:Math.floor((Resolved / tickets.length) * 100),
             color: "bg-purple-400"
         },
         {
             title: "Info Required",
             count: AdditionalInfoRequired,
-            percent:(AdditionalInfoRequired / tickets.length),
+            percent:Math.floor((AdditionalInfoRequired / tickets.length) * 100),
             color: "bg-yellow-400"
         },
 
     ]
 }
-
-
-
-
-
 
 
 
@@ -96,7 +91,7 @@ export default function TicketStatusOverview({tickets}) {
                 <a className="text-gray-900 font-medium hover:text-gray-600">
                   {ticket.title}
                 </a>
-                <p className="text-gray-500">{(ticket.percent) * 100} %</p>
+                <p className="text-gray-500">{(ticket.percent)} %</p>
               </div>
               <div className="flex-shrink-0 pr-2">
                 <button
@@ -104,7 +99,6 @@ export default function TicketStatusOverview({tickets}) {
                   className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <span className="sr-only">Open options</span>
-                  {/* <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" /> */}
                 </button>
               </div>
             </div>

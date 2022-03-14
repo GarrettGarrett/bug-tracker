@@ -1,5 +1,6 @@
 import React from 'react'
 import useSWR, { useSWRConfig } from 'swr'
+import HomeSkeleton from './HomeSkeleton'
 import TicketOverView from './TicketOverview'
 import TicketStatusOverview from './TicketSTatusOverview'
 import TicketTypeOverview from './TicketTypeOverview'
@@ -14,8 +15,9 @@ function parseTickets (tickets) {
 
 function Home({session}) {
     const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
-   
-return (
+
+if (!data) return <HomeSkeleton />
+if (data) return (
     <div>
         {
             data &&  

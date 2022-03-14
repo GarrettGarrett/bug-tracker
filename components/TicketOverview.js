@@ -38,25 +38,25 @@ function parseTickets(tickets){
         {
             title: "Low",
             count: low,
-            percent:(low / tickets.length),
+            percent:Math.floor((low / tickets.length) * 100),
             color: "bg-yellow-400"
         },
        {
             title: "Medium",
             count: medium,
-            percent:(medium / tickets.length),
+            percent:Math.floor((medium / tickets.length) * 100),
             color: "bg-blue-400"
         },
         {
             title: "High",
             count: high,
-            percent:(high / tickets.length),
+            percent:Math.floor((high / tickets.length) * 100),
             color: "bg-red-400"
         },
         {
             title: "Emergency",
             count: emergency,
-            percent:(emergency / tickets.length),
+            percent:Math.floor((emergency / tickets.length) * 100),
             color: "bg-red-600"
         },
     ]
@@ -95,9 +95,9 @@ return (
               <p className="text-2xl font-semibold text-gray-900">{item.count}</p>
               <p
                 className={classNames(
-                  item.percent < .33 ? 'text-green-600' 
+                  item.percent < 33 ? 'text-green-600' 
                   : 
-                  item.percent > .33 && item.percent < .66 ? 'text-purple-600' 
+                  item.percent > 33 && item.percent < 66 ? 'text-purple-600' 
                   :
                   'text-red-600' ,
                   'ml-2 flex items-baseline text-sm font-semibold'
@@ -106,7 +106,7 @@ return (
               
 
               <span className="sr-only">{item.changeType === 'increase' ? 'Increased' : 'Decreased'} by</span>
-                {(item.percent) * 100} %
+                {(item.percent)} %
              </p>
             </dd>
           </div>

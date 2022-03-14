@@ -62,55 +62,55 @@ function parseTickets (tickets) {
         {
             title: "Bug",
             count: Bug,
-            percent:(Bug / tickets.length),
+            percent:Math.floor((Bug / tickets.length) * 100),
             color: "bg-blue-400"
         },
         {
             title: "Documentation",
             count: Documentation,
-            percent:(Documentation / tickets.length),
+            percent:Math.floor((Documentation / tickets.length) * 100),
             color: "bg-yellow-400"
         },
         {
             title: "Duplicate",
             count: Duplicate,
-            percent:(Duplicate / tickets.length),
+            percent:Math.floor((Duplicate / tickets.length) * 100),
             color: "bg-red-400"
         },
         {
             title: "Enhancement",
             count: Enhancement,
-            percent:(Enhancement / tickets.length),
+            percent:Math.floor((Enhancement / tickets.length)  * 100),
             color: "bg-orange-400"
         },
         {
             title: "Good First Issue",
             count: GoodFirstIssue,
-            percent:(GoodFirstIssue / tickets.length),
+            percent:Math.floor((GoodFirstIssue / tickets.length) * 100),
             color: "bg-purple-400"
         },
         {
             title: "Help Wanted",
             count: HelpWanted,
-            percent:(HelpWanted / tickets.length),
+            percent:Math.floor((HelpWanted / tickets.length) * 100),
             color: "bg-green-400"
         },
         {
             title: "Invalid",
             count: Invalid,
-            percent:(Invalid / tickets.length),
+            percent:Math.floor((Invalid / tickets.length) * 100),
             color: "bg-gray-400"
         },
         {
             title: "Question",
             count: Question,
-            percent:(Question / tickets.length),
+            percent:Math.floor((Question / tickets.length) * 100),
             color: "bg-pink-400"
         },
         {
             title: "Wont    Fix",
             count: WontFix,
-            percent:(WontFix / tickets.length),
+            percent:Math.floor((WontFix / tickets.length) * 100),
             color: "bg-blue-400"
         },
        
@@ -131,33 +131,23 @@ console.log("🚀 ~ file: TicketTypeOverview.js ~ line 122 ~ TicketTypeOverview 
             <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
               <div className="flex items-baseline text-2xl font-semibold text-indigo-600">
                 {item.count}
-                {/* <span className="ml-2 text-sm font-medium text-gray-500">from {item.percent}</span> */}
+
               </div>
 
               <div
                 className={classNames(
-                    item.percent < .33 ? 'text-green-600' 
+                    item.percent < 33 ? 'text-green-600' 
                     : 
-                    item.percent > .33 && item.percent < .66 ? 'text-purple-600' 
+                    item.percent > 33 && item.percent < 66 ? 'text-purple-600' 
                     :
                     'text-red-600' ,
                     'ml-2 flex items-baseline text-sm font-semibold'
                 )}
               >
-                {/* {item.changeType === 'increase' ? (
-                  <ArrowSmUpIcon
-                    className="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <ArrowSmDownIcon
-                    className="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-red-500"
-                    aria-hidden="true"
-                  />
-                )} */}
+               
 
                 <span className="sr-only">{item.changeType === 'increase' ? 'Increased' : 'Decreased'} by</span>
-                {(item.percent) * 100} %
+                {(item.percent) } %
               </div>
             </dd>
           </div>

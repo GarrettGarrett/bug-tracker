@@ -62,7 +62,7 @@ function createAlphaObject(data){
 
    
 
-export default function EditProject({session, existingProject}) {
+export default function EditProject({session, existingProject, setShowEditProject, setShowProject}) {
     console.log("🚀 ~ file: EditProject.js ~ line 444 ~ EditProject ~ existingProject", existingProject)
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
@@ -206,9 +206,9 @@ export default function EditProject({session, existingProject}) {
 
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
             <div>
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">New Project</h3>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Edit Project</h3>
                     <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
-                        Use this form to create a new project.
+                        Use this form to edit an existing project.
                     </p>
 
                     <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
@@ -244,7 +244,14 @@ export default function EditProject({session, existingProject}) {
                         </div>
                         
                         <div className='hidden md:block'>
-                             <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                             <NewProjectSubmitButtons 
+                                setShowProject={setShowProject}
+                                setShowEditProject={setShowEditProject}
+                                buttonMessage={buttonMessage} 
+                                loading={loading} 
+                                visibleErrorString={visibleErrorString} 
+                                handleSubmit={handleSubmit}
+                             />
                         </div>
                         
                                 
@@ -270,7 +277,14 @@ export default function EditProject({session, existingProject}) {
              </div>
             
              <div className='pb-36 block md:hidden md:pb-0'>
-                    <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                    <NewProjectSubmitButtons 
+                        setShowProject={setShowProject}
+                        setShowEditProject={setShowEditProject}
+                        buttonMessage={buttonMessage} 
+                        loading={loading} 
+                        visibleErrorString={visibleErrorString} 
+                        handleSubmit={handleSubmit}
+                    />
             </div>
          
 

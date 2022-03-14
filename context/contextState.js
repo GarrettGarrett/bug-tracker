@@ -9,6 +9,7 @@ export function AppWrapper({ children }) {
   const [searchBarSelectedProject, setSearchBarSelectedProject] = useState(null)
   const [showProject, setShowProject] = useState(false)
   const [showTicket, setShowTicket] = useState(false)
+  const [showEditProject, setShowEditProject] = useState(false)
 
   
   
@@ -20,7 +21,9 @@ export function AppWrapper({ children }) {
         showProject,
         setShowProject,
         showTicket,
-        setShowTicket
+        setShowTicket,
+        showEditProject,
+        setShowEditProject,
     }
   
 

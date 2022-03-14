@@ -112,6 +112,7 @@ function SideBarHeader() {
                         context.setShowProject(false)
                         context.setSearchBarSelectedProject(null)
                         context.setTab(item.index)
+                        context.setShowEditProject(false)
                       }}
                       key={item.name}
                       className={classNames(
