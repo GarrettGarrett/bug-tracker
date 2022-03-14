@@ -6,7 +6,7 @@ import EditProject from './EditProject'
 import { useAppContext } from '../context/contextState'
 import ProjectsSkeleton from './ProjectsSkeleton'
 import EmptyProjectState from './EmptyProjectState'
-
+import EmptySpaceLottie from './EmptySpaceLottie'
 
 function getRandomID() {
   return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)

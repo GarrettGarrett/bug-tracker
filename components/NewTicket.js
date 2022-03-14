@@ -9,6 +9,7 @@ import TicketTypeDrop from './TicketTypeDrop'
 import ComboBox from './ComboBox'
 import moment from 'moment'
 import EmptyProjectState from './EmptyProjectState'
+import EmptySpaceLottie from './EmptySpaceLottie'
 
 
 function getRandomID() {
