@@ -72,7 +72,7 @@ export default function TicketStatusOverview({tickets}) {
     const [ticketStatus, setTicketStatus] = useState(tickets ? parseTickets(tickets) : null)
 if (!tickets) return <h1>Loading...</h1>
   if (tickets) return (
-    <div className='w-full '>
+    <div className='w-full pb-16'>
       <h3 className="py-1 text-lg leading-6 font-medium text-gray-900">Tickets by Status</h3>
       <ul role="list" className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {ticketStatus.map((ticket) => (

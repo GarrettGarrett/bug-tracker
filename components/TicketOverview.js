@@ -89,7 +89,7 @@ if (tickets) return (
               </div>
               <p className="ml-16 text-sm font-medium text-gray-500 truncate">{item.title}</p>
             </dt>
-            <dd className="ml-16 pb-6 flex items-baseline sm:pb-7">
+            <dd className="ml-16 pb-5 flex items-baseline sm:pb-5">
               <p className="text-2xl font-semibold text-gray-900">{item.count}</p>
               <p
                 className={classNames(
