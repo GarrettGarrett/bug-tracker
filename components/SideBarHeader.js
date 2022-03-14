@@ -293,7 +293,7 @@ function SideBarHeader() {
                 </button>
                 <div className="flex-1 flex justify-between px-4 sm:px-6">
  
-                  <div className="opacity-0 md:w-full md:pt-3 md:opacity-100">
+                  <div className="invisible md:w-full md:pt-3 md:visible">
                     {
                       // data?.ProjectsForUser?.length > 0 &&
                       <SearchBar  
