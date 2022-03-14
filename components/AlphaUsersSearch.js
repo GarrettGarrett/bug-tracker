@@ -30,7 +30,7 @@ export default function AlphaUsersSearch({searchBar , setSearchBar, filterUsers,
             value={searchBar}
             name="search"
             id="search"
-            className="text-black focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+            className="text-black focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-lg border-gray-300 rounded-md"
             placeholder="Search Users"
         />
       </div>
