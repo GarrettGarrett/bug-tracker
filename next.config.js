@@ -8,6 +8,15 @@ module.exports = {
     MONGODB_URI: process.env.MONGODB_URI,
     MONGODB_DB: process.env.MONGODB_DB,
  },
+ async redirects() {
+  return [
+    {
+      source: '/',
+      destination: '/auth/email-signin',
+      permanent: true,
+    },
+  ]
+},
 
   reactStrictMode: true,
 }
