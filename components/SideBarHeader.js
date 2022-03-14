@@ -295,11 +295,11 @@ function SideBarHeader() {
                   <div className="w-full pt-3">
                     {
                       // data?.ProjectsForUser?.length > 0 &&
-                      // <SearchBar  
-                      //   setSearchBarSelectedProject={context.setSearchBarSelectedProject}
-                      //   data={data?.ProjectsForUser}
+                      <SearchBar  
+                        setSearchBarSelectedProject={context.setSearchBarSelectedProject}
+                        data={data?.ProjectsForUser}
                        
-                      // />
+                      />
                     }
                     
                   
