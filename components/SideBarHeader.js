@@ -32,9 +32,6 @@ function getRandomID() {
   return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
 
-
-
-
   const userNavigation = [
    
     { name: 'Sign out', href: '#', signOut: true },
@@ -298,7 +295,7 @@ function SideBarHeader() {
                               />
                               :
                             // if no image, use first letter of name 
-                            <span className='font-bold text-black text-2xl mx-auto'>{session?.user?.name[0].toLocaleUpperCase()}</span>
+                            <span className='font-bold text-black text-2xl'>{session?.user?.name[0].toLocaleUpperCase()}</span>
 
                           }
                           
