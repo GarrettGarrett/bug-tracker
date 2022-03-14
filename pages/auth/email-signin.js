@@ -1,6 +1,7 @@
 import { useSession, signIn, signOut, getCsrfToken } from "next-auth/react"
 import { useState, useEffect } from 'react'
 import { useAppContext } from '../../context/contextState'
+import BugSearchLogo from '../../components/BugSearchLogo'
 
 
 export default function SignIn({ csrfToken }) {
@@ -19,7 +20,11 @@ return (
             <body className="h-full">
                 <div className="min-h-screen flex flex-col py-auto py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md 0">
-                          <svg
+                    <div className="w-1/3 md:w-1/2 flex items-center mx-auto">
+                      <BugSearchLogo />
+                    </div>
+                    
+                          {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
                     
                     className="w-14 mx-auto "
@@ -50,7 +55,7 @@ return (
           d="M78.95 305.027l147.866-55.27c11.602-4.28 24.446 1.481 28.856 12.946l20.703 53.317c16.816-18.137 35.297-33.73 54.871-46.223l-15.754-80.067-91.027 32.903c-11.653 4.215-24.512-1.828-28.75-13.488-4.238-11.704 1.82-24.598 13.484-28.82l115.703-41.805c6.133-2.239 12.97-1.66 18.688 1.582a22.553 22.553 0 0111.035 15.238l18.258 93.086c45.078-18.04 92.992-21.02 136.648-5.531l-154.57 319.878c-2.215 4.805-48.48 103.625-138.43 69.102-19.238-39.781-26.87-87.512-21.664-137.027l-53.656-48.82-85.957 67.925a22.475 22.475 0 01-23.762 2.563 21.912 21.912 0 01-7.824-6.313c-7.695-9.734-6.059-23.875 3.7-31.578l100.96-79.727c8.629-6.82 20.965-6.41 29.059 1.012l47.543 43.281c4.87-17.011 11.289-33.957 19.336-50.644 5.949-12.363 12.77-23.942 19.988-35.043l-22.45-57.8-127.081 47.491a22.378 22.378 0 01-17.664-.84c-5.028-2.421-9.133-6.707-11.25-12.363-4.383-11.652 1.53-24.62 13.14-28.965zm0 0"
         ></path>
       </g>
-    </svg>
+    </svg> */}
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
                 
                 </div>

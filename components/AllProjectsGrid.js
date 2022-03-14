@@ -97,6 +97,12 @@ export default function AllProjectsGrid({session}) {
           <>
             <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
             <EmptyProjectState />
+            <div className='h-full flex justify-center '>
+          <div className='max-w-lg m-auto'>
+            <EmptySpaceLottie />
+          </div>
+
+        </div>
           </>
         }
         { 

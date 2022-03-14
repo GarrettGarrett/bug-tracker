@@ -7,6 +7,7 @@ import EditTicket from './EditTicket'
 import { useAppContext } from '../context/contextState'
 import { parseConfigFileTextToJson } from 'typescript'
 import EmptyTicketState from './EmptyTicketState'
+import EmptySpaceLottie from './EmptySpaceLottie'
 
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
@@ -54,6 +55,12 @@ function AllTickets({session}) {
         <>
         <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
         <EmptyTicketState fromAllTicketsPage={true}/>
+        <div className='h-full flex justify-center '>
+          <div className='max-w-lg m-auto'>
+            <EmptySpaceLottie />
+          </div>
+
+        </div>
         </>
       }
 
