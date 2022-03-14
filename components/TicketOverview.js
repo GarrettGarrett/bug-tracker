@@ -38,25 +38,25 @@ function parseTickets(tickets){
             title: "Low",
             count: low,
             percent: low == 0 ? 0 : Math.floor((low / tickets.length) * 100),
-            color: "bg-yellow-400"
+            color: "bg-Timberwolf"
         },
        {
             title: "Medium",
             count: medium,
             percent: medium == 0 ? 0 : Math.floor((medium / tickets.length) * 100),
-            color: "bg-blue-400"
+            color: "bg-Tan"
         },
         {
             title: "High",
             count: high,
             percent: high == 0 ? 0 : Math.floor((high / tickets.length) * 100),
-            color: "bg-red-400"
+            color: "bg-Verdigris"
         },
         {
             title: "Emergency",
             count: emergency,
             percent: emergency == 0 ? 0 : Math.floor((emergency / tickets.length) * 100),
-            color: "bg-red-600"
+            color: "bg-FuzzyWuzzy"
         },
     ]
 }
@@ -93,9 +93,9 @@ if (tickets) return (
               <p className="text-2xl font-semibold text-gray-900">{item.count}</p>
               <p
                 className={classNames(
-                  item.percent < 33 ? 'text-green-600' 
+                  item.percent < 33 ? 'text-Verdigris' 
                   : 
-                  item.percent > 33 && item.percent < 66 ? 'text-purple-600' 
+                  item.percent > 33 && item.percent < 66 ? 'text-indigo-800' 
                   :
                   'text-red-600' ,
                   'ml-2 flex items-baseline text-sm font-semibold'

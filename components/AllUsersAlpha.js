@@ -26,7 +26,7 @@ function getNameFromEmail(str){
       <nav className="h-full overflow-y-auto" aria-label="Directory">
         {Object.keys(users).map((letter) => (
           <div key={letter} className="relative">
-            <div className="z-10 sticky top-0 border-t border-b border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500">
+            <div className="z-10 sticky top-0 border-t border-b border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500 rounded-md">
               <h3>{letter}</h3>
             </div>
             <ul role="list" className="relative z-0 divide-y divide-gray-200">
@@ -52,13 +52,13 @@ function getNameFromEmail(str){
                     
                 }}
                 key={person.id} className="bg-white">
-                  <div className={`${selectedUserID.includes(person._id) ? "bg-slate-300" : ""} relative px-6 py-5 flex space-x-3 `}>
+                  <div className={`${selectedUserID.includes(person._id) ? "bg-Tan bg-opacity-70" : ""} relative px-6 py-5 flex space-x-3 rounded-md`}>
                     <div className="flex-shrink-0">
                         {
                             person?.image ? 
                             <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
                             :
-                            <span className="h-10 w-10 rounded-full text-black bg-purple-200 py-3 px-4 font-bold "  >{person?.email[0].toLocaleUpperCase()}</span>
+                            <span className="h-10 w-10 rounded-full text-black bg-Timberwolf py-3 px-4 font-bold "  >{person?.email[0].toLocaleUpperCase()}</span>
                         }
                       
                     </div>

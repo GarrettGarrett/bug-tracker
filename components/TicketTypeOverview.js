@@ -135,11 +135,11 @@ if (tickets) return (
 
               <div
                 className={classNames(
-                    item.percent < 33 ? 'text-green-600' 
+                    item.percent < 33 ? 'text-Verdigris' 
                     : 
-                    item.percent > 33 && item.percent < 66 ? 'text-purple-600' 
+                    item.percent > 33 && item.percent < 66 ? 'text-indigo-800' 
                     :
-                    'text-red-600' ,
+                    'text-FuzzyWuzzy' ,
                     'ml-2 flex items-baseline text-sm font-semibold'
                 )}
               >

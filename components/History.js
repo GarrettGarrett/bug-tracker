@@ -37,17 +37,17 @@ export default function History({ticket, project}) {
                 <div>
                   <span
                     className={`${
-                        eventIdx == 0 ? "bg-red-400" : 
-                        eventIdx == 1 ? "bg-blue-400" : 
-                        eventIdx == 2 ? "bg-yellow-400" : 
-                        eventIdx == 3 ? "bg-purple-400" : 
-                        eventIdx == 4 ? "bg-orange-400" : 
-                        eventIdx == 5 ? "bg-pink-400" : 
-                        eventIdx == 6 ? "bg-emerald-400" : 
-                        eventIdx == 7 ? "bg-fuchsia-400" : 
-                        eventIdx == 8 ? "bg-gray-400" : 
-                        eventIdx == 9 ? "bg-amber-400" : 
-                        "bg-cyan-300-400" } h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white`
+                        eventIdx == 0 ? "bg-FuzzyWuzzy" : 
+                        eventIdx == 1 ? "bg-Verdigris" : 
+                        eventIdx == 2 ? "bg-Timberwolf" : 
+                        eventIdx == 3 ? "bg-Tan" : 
+                        eventIdx == 4 ? "bg-FuzzyWuzzy" : 
+                        eventIdx == 5 ? "bg-Verdigris" : 
+                        eventIdx == 6 ? "bg-Timberwolf" : 
+                        eventIdx == 7 ? "bg-Tan" : 
+                        eventIdx == 8 ? "bg-FuzzyWuzzy": 
+                        eventIdx == 9 ? "bg-Verdigris" : 
+                        "bg-FrenchViolet" } h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white`
                     }
                   >
                     <CheckIcon className="h-5 w-5 text-white" aria-hidden="true" />

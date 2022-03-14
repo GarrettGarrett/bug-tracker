@@ -152,7 +152,7 @@ export default function AllProjectsGrid({session}) {
                               return (
                                 <span 
                                 key={getRandomID()}
-                                className="inline-block h-6 w-6 rounded-full text-sm text-black bg-purple-200 pl-1.5 pt-px font-bold "  >{member?.email[0].toLocaleUpperCase()}</span>
+                                className="inline-block h-6 w-6 rounded-full text-sm text-black bg-Timberwolf pl-1.5 pt-px font-bold "  >{member?.email[0].toLocaleUpperCase()}</span>
                               )
                             }
                           })}

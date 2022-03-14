@@ -128,7 +128,7 @@ function RoleAssignment({session}) {
                         disabled={buttonMessage != "Submit"}
                         onClick={()=> handleSubmit()}
                         type="button"
-                        className=" w-full items-center text-center py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className=" w-full items-center text-center py-3 border border-transparent text-base font-medium rounded-md text-white bg-Verdigris  hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Verdigris"
                     >
                         {
                             !loading ? 

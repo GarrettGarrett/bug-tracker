@@ -42,25 +42,25 @@ function parseTickets  (tickets) {
             title: "Open",
             count: Open,
             percent: Open == 0 ? 0 : Math.floor((Open / tickets.length) * 100),
-            color: "bg-red-400"
+            color: "bg-Timberwolf"
         },
         {
             title: "In Progress",
             count: InProgress,
             percent: InProgress == 0 ? 0 : Math.floor((InProgress / tickets.length) * 100),
-            color: "bg-orange-400"
+            color: "bg-Tan"
         },
         {
             title: "Resolved",
             count: Resolved,
             percent: Resolved == 0 ? 0 : Math.floor((Resolved / tickets.length) * 100),
-            color: "bg-purple-400"
+            color: "bg-Verdigris"
         },
         {
             title: "Info Required",
             count: AdditionalInfoRequired,
             percent: AdditionalInfoRequired == 0 ? 0 : Math.floor((AdditionalInfoRequired / tickets.length) * 100),
-            color: "bg-yellow-400"
+            color: "bg-FuzzyWuzzy"
         },
 
     ]

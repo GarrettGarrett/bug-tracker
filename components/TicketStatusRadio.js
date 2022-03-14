@@ -31,7 +31,7 @@ const notificationMethods = [
                   name="notification-method"
                   type="radio"
                   defaultChecked={notificationMethod.id === 'email'}
-                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                  className="m-1 focus:ring-FuzzyWuzzy h-4 w-4 text-FuzzyWuzzy border-gray-300"
                 />
                 <label htmlFor={notificationMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
                   {notificationMethod.title}

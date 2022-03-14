@@ -31,7 +31,7 @@ export default function Comments({project, ticket, mutateNewComment, setMutateNe
                             activityItem?.Owner?.image ? 
                             <img className="h-10 w-10 rounded-full" src={activityItem?.Owner?.image} alt="" />
                             :
-                            <span className="h-10 w-10 rounded-full text-black bg-purple-200 pt-2 pl-3.5 font-bold "  >{activityItem?.Owner?.name[0].toLocaleUpperCase()}</span>
+                            <span className="h-10 w-10 rounded-full text-black bg-Timberwolf pt-2 pl-3.5 font-bold "  >{activityItem?.Owner?.name[0].toLocaleUpperCase()}</span>
           }
 
             <div className="flex-1 space-y-1">

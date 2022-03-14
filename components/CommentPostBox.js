@@ -84,7 +84,7 @@ async function handleSubmit(){
         <div className="pt-2 w-full flex-shrink-0 flex justify-end">
               <button
                onClick={()=> handleSubmit()}
-                className=" inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className=" inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-Verdigris hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Verdigris"
               >
                  {
                         !loading ? 
