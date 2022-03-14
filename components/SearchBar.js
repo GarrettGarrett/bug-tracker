@@ -35,7 +35,7 @@ function SearchBar({data, setSearchBarSelectedProject}) {
         </div>
         {
             filteredItems.length > 0 &&  (
-                <div className='h-auto bg-white p-8 rounded-md shadow-sm'>
+                <div className='h-auto bg-white p-8 rounded-md shadow-md'>
                     {filteredItems.map(item =>{ 
                         return (
                             <div 
