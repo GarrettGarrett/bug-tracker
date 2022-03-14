@@ -82,7 +82,7 @@ function SideBarHeader() {
     <>
                {/* Narrow sidebar */}
           <div className="hidden w-28 bg-indigo-700 overflow-y-auto md:block">
-            <div className="absolute inset-0 w-full py-6 flex flex-col items-center">
+            <div className="w-full py-6 flex flex-col items-center">
               <div className="flex-shrink-0 flex items-center">
               <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -280,7 +280,7 @@ function SideBarHeader() {
           </Transition.Root>
 
           {/* Content area */}
-          <div className="absolute inset-0 flex-1 flex flex-col overflow-hidden">
+          <div className=" flex-1 flex flex-col overflow-hidden">
             <header className="w-full">
               <div className="relative z-10 flex-shrink-0 h-16 bg-white border-b border-gray-200 shadow-sm flex">
                 <button
@@ -292,7 +292,8 @@ function SideBarHeader() {
                   <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
                 <div className="flex-1 flex justify-between px-4 sm:px-6">
-                  <div className="w-full pt-3">
+ 
+                  <div className="opacity-0 md:w-full md:pt-3 md:opacity-100">
                     {
                       // data?.ProjectsForUser?.length > 0 &&
                       <SearchBar  
