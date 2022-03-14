@@ -7,7 +7,7 @@ function dashboard() {
 
 
     return (
-      <>
+      <div className='absolute inset-0'>
         <html className="h-screen bg-gray-50">
           <body className="h-screen overflow-hidden">
              <div className=" max-h-screen flex">
@@ -19,7 +19,7 @@ function dashboard() {
              </div>
           </body>
         </html>
-      </>
+      </div>
     )
     }
       
