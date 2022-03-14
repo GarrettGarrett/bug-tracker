@@ -8,6 +8,7 @@ import TicketPriorityDrop from './TicketPriorityDrop'
 import TicketTypeDrop from './TicketTypeDrop'
 import ComboBox from './ComboBox'
 import moment from 'moment'
+import EmptyProjectState from './EmptyProjectState'
 
 
 function getRandomID() {
@@ -82,7 +83,6 @@ function createAlphaObject(data){
     }).forEach(function(key) {
         sortedAlphaObject[key] = alphaObject[key];
     });
-    console.log("🚀 ~ file: NewTicket.js ~ line 88 ~ createAlphaObject ~ sortedAlphaObject", sortedAlphaObject)
     return sortedAlphaObject
     
 }
@@ -97,13 +97,14 @@ function getData(endpoint){
     
 
 
-export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
+export default function NewTicket({session, showNewTicket, setShowNewTicket, _projects}) {
       
 
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
-    console.log("🚀 ~ file: NewTicket.js ~ line 102 ~ NewTicket ~ data", data)
-    const projects = getData('/api/getProjects')
-    const [selectedProjectMyID, setSelectedProjectMyID] = useState(projects ? projects[0].My_ID : null)
+    const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
+    const [selectedProjectMyID, setSelectedProjectMyID] = useState(
+        _projects?.length > 0 ? _projects[0].My_ID :
+        projects?.length > 0 ? projects[0].My_ID : null)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
@@ -128,18 +129,26 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState([])
     const [visibleErrorString, setVisibleErrorString] = useState(null)
-    const [selectedProjectID, setSelectedProjectID] = useState(projects ? projects[0]._id : null)
+    const [selectedProjectID, setSelectedProjectID] = useState(
+        _projects?.length > 0 ? _projects[0]._id :
+        projects?.length > 0 ? projects[0]._id : null)
     
-    console.log("🚀 ~ file: NewTicket.js ~ line 114 ~ NewTicket ~ selectedProjectID", selectedProjectID)
     
 
 
     useEffect(() => {
+
+        if (_projects?.length > 0){
+            setSelectedProjectID(_projects[0]._id)
+            setSelectedProjectMyID(_projects[0].My_ID)
+        }
         if (projects?.length){
             setSelectedProjectID(projects[0]._id)
             setSelectedProjectMyID(projects[0].My_ID)
         }
+
     }, [projects])
+
     
 
 
@@ -164,7 +173,6 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
             && key != "Images"
             && key != "ParentProjectID"
             && key!= "History") {
-                console.log("77", key, value)
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
             }
@@ -179,7 +187,6 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
                 errorMsgArray.push(key)
             }
         }
-        console.log(errorMsgArray)
         return errorMsgArray
         
     }
@@ -211,7 +218,7 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
 
 
             if (newTicket.ok) {
-                console.log("🚀 ~ file: NewTicket.js ~ line 163 ~ handleSubmit ~ newTicket", newTicket)
+                //console.log("🚀 ~ file: NewTicket.js ~ line 163 ~ handleSubmit ~ newTicket", newTicket)
                 setButtonMessage("Added")
             } else {
                 setButtonMessage(newTicket.statusText)
@@ -265,11 +272,146 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
     function removeFilter(){
         setAlphaUsersFiltered(alphaUsers)
     }
-    
 
     if (error) return <>error</>
     if (!data) return <NewProjectSkeleton/>
     if (typeof data?.length == "undefined") return <>Loading...</>
+    if (data?.length && _projects?.length > 0) return (
+        (
+            <>
+            <div className='pb-3 border-b border-gray-200 mb-1 '>
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">New Ticket</h3>
+                    <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
+                        Use this form to create a new ticket.
+                    </p>
+    
+    
+            </div>
+    
+    
+            <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
+    {/* First Column */}
+                <div>
+                        
+                        <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
+                            
+                            {
+                                typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
+                                <ComboBox projects={
+                                _projects?.length > 0 ? _projects
+                                : projects }
+                                 ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}
+                                setSelectedProjectMyID={setSelectedProjectMyID}
+                                />
+                                </div>
+                            }
+                            
+                          
+                            
+                            <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                                <input
+                                    type="text"
+                                    value={ticket.Title}
+                                    onChange={(e) => setTicket({...ticket, Title: e.target.value})}
+                                    name="first-name"
+                                    id="first-name"
+                                    autoComplete="given-name"
+                                    className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-sm border-gray-300 rounded-md"
+                                    placeholder='Ticket Title'
+                                />
+                             </div>
+    
+    
+       
+                            <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
+                                <textarea
+                                    value={ticket.Description}
+                                    onChange={(e) => setTicket({...ticket, Description: e.target.value})}
+                                    id="description"
+                                    name="description"
+                                    rows={3}
+                                    className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                                    defaultValue={''}
+                                    placeholder='Ticket Description'
+                                />
+                            </div>
+    
+                            
+    
+                            <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                               <TicketTypeDrop type={type} ticket={ticket} setTicket={setTicket} />
+                             </div>
+    
+                             <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                               <TicketPriorityDrop ticket={ticket} setTicket={setTicket} priorities={priorities}/>
+                             </div>
+                               
+                              
+                            </div>
+                            
+                            <div className='hidden md:block'>
+                                 <NewProjectSubmitButtons
+                                    setShowNewTicket={setShowNewTicket ? setShowNewTicket : null}
+                                    showNewTicket={showNewTicket ? showNewTicket : null}
+                                    buttonMessage={buttonMessage} 
+                                    loading={loading} 
+                                    visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}
+                                 />
+                            </div>
+    
+                </div>
+                
+    {/* Second Column */}
+                 <div className=" ">
+                    <div>
+                        <h3 className="pt-6 block text-sm font-medium text-gray-700">Assign to User</h3>
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
+                            Who will receive this ticket?
+                        </p>
+                    </div>
+                    {
+                        alphaUsersFiltered ?
+                        <>
+                        <div>
+                             <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
+                            <AllUsersAlpha 
+                            users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
+    
+                        </div>
+                           
+                        </>
+                        : null
+                    }
+                 </div>
+    
+    
+    
+    
+    
+                
+                 <div className='pb-36 block md:hidden md:pb-0'>
+                        <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                </div>
+             
+    
+    
+            </div>
+    
+            
+            </>
+           
+    
+           
+      
+         
+        )
+    )
+    if (data?.length && selectedProjectMyID == null) return (
+        <>
+         <h3 className="flex justify-center pb-3 text-lg leading-6 font-medium text-gray-900">You Must Create a Project Before Creating a Ticket</h3>
+            <EmptyProjectState />
+        </>
+    )
     if (data?.length) return (
         <>
         <div className='pb-3 border-b border-gray-200 mb-1 '>
@@ -289,8 +431,11 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
                     <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
                         
                         {
-                            typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
-                            <ComboBox projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}
+                            <div className="sm:mt-0 sm:col-span-2 text-black">
+                            <ComboBox projects={
+                                _projects?.length > 0 ? _projects
+                                : projects }
+                                ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID}
                             setSelectedProjectMyID={setSelectedProjectMyID}
                             />
                             </div>
@@ -396,4 +541,5 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket}) {
      
     )
   }
+
   

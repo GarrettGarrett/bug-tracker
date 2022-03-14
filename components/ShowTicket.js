@@ -20,7 +20,6 @@ function getNameFromEmail(str){
   }
 
 function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit, mutateProject, setMutateProject}) {
-  console.log("🚀 ~ file: ShowTicket.js ~ line 23 ~ ShowTicket ~ project", project)
   const [mutateNewComment, setMutateNewComment] = useState(false)
   const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
   const { mutate } = useSWRConfig()
@@ -39,7 +38,6 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
     function stringifyMembers(membersArray){
         let returnString = ''
         membersArray.forEach(function (member, i) {
-            console.log("55", i, membersArray.length)
             let name = member?.name ? member.name : getNameFromEmail(member.email)
             if (i == (membersArray.length - 1)){
                 returnString += name

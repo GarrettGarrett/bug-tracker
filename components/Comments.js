@@ -16,13 +16,11 @@ export default function Comments({project, ticket, mutateNewComment, setMutateNe
   }, [mutateNewComment])
   
 
-  console.log("🚀 ~ file: Comments.js ~ line 23 ~ Comments ~ data", data)
-  console.log("🚀 ~ file: Comments.js ~ line 23 ~ Comments ~ data", data?.length)
 
 
   if (error) return <>error</>
-  if (!data) return <h1>Loading...</h1>
-  if (typeof data?.length == "undefined") return <h1>No Comments</h1>
+  if (!data) return <span className='text-gray-400 text-sm'>Loading Comments...</span>
+  if (typeof data?.length == "undefined") return <span className='text-gray-400 text-sm'>No Comments</span>
   if (data?.length > 0) return (
     <div>
     <ul role="list" className="divide-y divide-gray-200">

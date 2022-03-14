@@ -1,6 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { CalendarIcon, UsersIcon, MailIcon } from '@heroicons/react/solid'
 
+function getRandomID() {
+  return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
+}
+
 function getNameFromEmail(str){
   if (str){
     let indexOfAt = str.indexOf("@")
@@ -43,8 +47,8 @@ export default function AllUsersGrid({users}) {
     <div className="bg-white shadow overflow-hidden sm:rounded-md">
       <ul role="list" className="divide-y divide-gray-200">
         {users.map((user) => (
-          <li key={user.id}>
-            <a href="#" className="block hover:bg-gray-50">
+          <li key={getRandomID()}>
+            <span className="block hover:bg-gray-50">
               <div className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-medium text-indigo-600 truncate">{user.name ? user.name : getNameFromEmail(user.email)}</p>
@@ -78,7 +82,7 @@ export default function AllUsersGrid({users}) {
                   </div>
                 </div>
               </div>
-            </a>
+            </span>
           </li>
         ))}
       </ul>

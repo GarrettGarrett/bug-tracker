@@ -5,6 +5,12 @@ import ShowProject from './ShowProject'
 import EditProject from './EditProject'
 import { useAppContext } from '../context/contextState'
 import ProjectsSkeleton from './ProjectsSkeleton'
+import EmptyProjectState from './EmptyProjectState'
+
+
+function getRandomID() {
+  return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
+}
 
 function getNameFromEmail(str){
   if (str){
@@ -19,16 +25,8 @@ const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched d
 
 export default function AllProjectsGrid({session}) {
   let context = useAppContext()
-  const { data, error, isValidating } = useSWR('/api/getProjects', fetcher)
-  // const [showProject, setShowProject] = useState(
-  //   false
-  //   )
-  // const [showProject, setShowProject] = useState(
-  //   context.searchBarSelectedProject == null ?
-  //   false
-  //   :
-  //   true
-  //   )
+  const { data, error, isValidating } = useSWR(`/api/getProjectsByUser/${session?.user?.email}`, fetcher)
+
   const [currentProject, setCurrentProject] = useState(null)
   const [showTicket, setShowTicket] = useState(false) //ticket edit
   const [selectedTicket, setSelectedTicket] = useState(null)
@@ -46,6 +44,7 @@ export default function AllProjectsGrid({session}) {
   if (!data) return <ProjectsSkeleton />
   if (data) return (
     <>
+
 
 
       {
@@ -67,6 +66,7 @@ export default function AllProjectsGrid({session}) {
           data[currentProject]?.Title != null) &&
 
         <ShowProject 
+          projects={data}
           showEditProject={context.showEditProject}
           setShowEditProject={context.setShowEditProject}
           mutateProject={mutateProject} 
@@ -92,11 +92,23 @@ export default function AllProjectsGrid({session}) {
         !context.showEditProject && !context.showProject ?
           
         <>
-          <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Projects</h3>
+        {
+          data?.length == 0 &&
+          <>
+            <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
+            <EmptyProjectState />
+          </>
+        }
+        { 
+        data?.length > 0 &&
+<>
+<h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
             <ul role="list" className="divide-y divide-gray-200">
+              
             {data.map((project, i) => (
               <li 
+              key={getRandomID()}
               onClick={() => {
                 context.setShowProject(true)
                 setCurrentProject(i)
@@ -131,9 +143,9 @@ export default function AllProjectsGrid({session}) {
                                   />        
                               )
                             } else {
-                              console.log("no image")
                               return (
                                 <span 
+                                key={getRandomID()}
                                 className="inline-block h-6 w-6 rounded-full text-sm text-black bg-purple-200 pl-1.5 pt-px font-bold "  >{member?.email[0].toLocaleUpperCase()}</span>
                               )
                             }
@@ -151,6 +163,9 @@ export default function AllProjectsGrid({session}) {
             ))}
           </ul>
         </div>
+</>
+        }
+         
       </>
 
       :

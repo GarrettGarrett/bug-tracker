@@ -11,7 +11,6 @@ export default async (req, res) => {
 
         const { db } = await connectToDatabase('myFirstDatabase');
         const allProjectsArray = await db.collection('projects').find().toArray()
-        //console.log("//🚀 ~ file: getProjects.js ~ line 14 ~ allProjectsArray", allProjectsArray)
         if (allProjectsArray) {
             return res.status(200).json(allProjectsArray)    
         }     

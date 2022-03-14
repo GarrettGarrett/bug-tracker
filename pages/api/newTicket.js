@@ -21,10 +21,8 @@ export default async (req, res) => {
                             Tickets: req.body.TicketObject, 
                             
                         }})
-                        console.log("🚀 ~ file: newTicket.js ~ line 22 ~ TicketObject", req.body.TicketObject)
                 
                 if (newTicket){
-                    console.log("🚀 ~ file: newTicket.js ~ line 33 ~ newProject", newTicket)
                     return res.status(200).json(newTicket)   
                 }
             }

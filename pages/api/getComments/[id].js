@@ -21,7 +21,6 @@ export default async (req, res) => {
             if (session) {
                 const { db } = await connectToDatabase('myFirstDatabase');
                 const project = await db.collection("projects").findOne({"My_ID": parseInt(projectID)})
-                // console.log("🚀 ~ file: [id].js ~ line 22 ~ project", project)
 
                 // only return comments for requested ticket
                 let targetTicketComments = {}

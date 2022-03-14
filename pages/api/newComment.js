@@ -8,10 +8,8 @@ const ObjectId = require('mongodb').ObjectId
 
 export default async (req, res) => {
     if (req.method === 'POST') { 
-        console.log("🚀 ~ file: newComment.js ~ line 12 ~ req.body", req.body)
             var id = req.body.projectID
             var md_id = new ObjectId(id);
-            console.log("🚀 ~ file: newComment.js ~ line 13 ~ md_id", md_id)
     
 
             const session = await getSession({ req })
@@ -26,7 +24,6 @@ export default async (req, res) => {
                     
                 
                 if (newComment){
-                    console.log("🚀 ~ file: newComment.js ~ line 33 ~ newProject", newComment)
                     return res.status(200).json(newComment)   
                 }
             }

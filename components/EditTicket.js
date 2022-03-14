@@ -163,7 +163,6 @@ function getSelectedUserIDs(Members){
         for (const [key, value] of Object.entries(ticket)) {
             // applies to title, description, type, priority
             if (value.length < 1 && key != "Tickets" && key != "Members" && key!="Comments" && key != "Images" && key!= "History") {
-                console.log("77", key, value)
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
             }
@@ -178,7 +177,6 @@ function getSelectedUserIDs(Members){
                 errorMsgArray.push(key)
             }
         }
-        console.log(errorMsgArray)
         return errorMsgArray
     }
 
@@ -217,12 +215,9 @@ function getSelectedUserIDs(Members){
                 body: JSON.stringify({editedValues, selectedUserObjects: selectedUserObjects, existingTicket: existingTicket, ProjectID: existingProject.My_ID })
 
             }) 
-            console.log("🚀 ~ file: EditTicket.js ~ line 232 ~ handleSubmit ~ existingProject", existingProject)
-            console.log("🚀 ~ file: EditTicket.js ~ line 232 ~ handleSubmit ~ newHistory", newHistory)
 
 
             if (editTicket.ok) {
-                console.log("🚀 ~ file: editTicket.js ~ line 163 ~ handleSubmit ~ editTicket", editTicket)
                 setButtonMessage("Added")
             } else {
                 setButtonMessage(editTicket.statusText)

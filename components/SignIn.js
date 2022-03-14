@@ -12,14 +12,12 @@ export default function SignIn({csrfToken}) {
 
   async function myFunction() {
     const csrfToken = await getCsrfToken()
-    console.log("🚀 ~ file: SignIn.js ~ line 10 ~ myFunction ~ csrfToken", csrfToken)
     
     setToken(csrfToken)
   }
 
   async function providersGet(){
     const providers = await getProviders()
-    console.log("🚀 ~ file: SignIn.js ~ line 17 ~ providersGet ~ providers", providers)
     
   }
 

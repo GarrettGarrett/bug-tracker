@@ -62,55 +62,55 @@ function parseTickets (tickets) {
         {
             title: "Bug",
             count: Bug,
-            percent:Math.floor((Bug / tickets.length) * 100),
+            percent: Bug == 0 ? 0 : Math.floor((Bug / tickets.length) * 100),
             color: "bg-blue-400"
         },
         {
             title: "Documentation",
             count: Documentation,
-            percent:Math.floor((Documentation / tickets.length) * 100),
+            percent: Documentation == 0 ? 0 : Math.floor((Documentation / tickets.length) * 100),
             color: "bg-yellow-400"
         },
         {
             title: "Duplicate",
             count: Duplicate,
-            percent:Math.floor((Duplicate / tickets.length) * 100),
+            percent: Duplicate == 0 ? 0 : Math.floor((Duplicate / tickets.length) * 100),
             color: "bg-red-400"
         },
         {
             title: "Enhancement",
             count: Enhancement,
-            percent:Math.floor((Enhancement / tickets.length)  * 100),
+            percent: Enhancement == 0 ? 0 : Math.floor((Enhancement / tickets.length)  * 100),
             color: "bg-orange-400"
         },
         {
             title: "Good First Issue",
             count: GoodFirstIssue,
-            percent:Math.floor((GoodFirstIssue / tickets.length) * 100),
+            percent: GoodFirstIssue == 0 ? 0 : Math.floor((GoodFirstIssue / tickets.length) * 100),
             color: "bg-purple-400"
         },
         {
             title: "Help Wanted",
             count: HelpWanted,
-            percent:Math.floor((HelpWanted / tickets.length) * 100),
+            percent: HelpWanted == 0 ? 0 : Math.floor((HelpWanted / tickets.length) * 100),
             color: "bg-green-400"
         },
         {
             title: "Invalid",
             count: Invalid,
-            percent:Math.floor((Invalid / tickets.length) * 100),
+            percent: Invalid == 0 ? 0 : Math.floor((Invalid / tickets.length) * 100),
             color: "bg-gray-400"
         },
         {
             title: "Question",
             count: Question,
-            percent:Math.floor((Question / tickets.length) * 100),
+            percent: Question == 0 ? 0 : Math.floor((Question / tickets.length) * 100),
             color: "bg-pink-400"
         },
         {
             title: "Wont    Fix",
             count: WontFix,
-            percent:Math.floor((WontFix / tickets.length) * 100),
+            percent: WontFix == 0 ? 0 : Math.floor((WontFix / tickets.length) * 100),
             color: "bg-blue-400"
         },
        
@@ -118,10 +118,9 @@ function parseTickets (tickets) {
 }
 
 export default function TicketTypeOverview({tickets}) {
-const [typeStats, setTypeStats] = useState(parseTickets(tickets))
-console.log("🚀 ~ file: TicketTypeOverview.js ~ line 122 ~ TicketTypeOverview ~ typeStats", typeStats)
-
-  return (
+const [typeStats, setTypeStats] = useState(tickets ? parseTickets(tickets) : null)
+if (!tickets) return <h1>Loading....</h1>
+if (tickets) return (
     <div>
       <h3 className="text-lg leading-6 font-medium text-gray-900">Tickets by Type</h3>
       <dl className="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">

@@ -18,13 +18,11 @@ export default function History({ticket, project}) {
     const { mutate } = useSWRConfig()
     const [mutateHistory, setMutateHistory] = useState(false)
 
-  console.log("🚀 ~ file: History.js ~ line 62 ~ History ~ ticket", ticket)
-  console.log("🚀 ~ file: History.js ~ line 62 ~ History ~ data", data)
 
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  if (typeof data?.length == "undefined") return <h1>No History</h1>
+  if (!data) return <span className='text-gray-400 text-sm'>Loading History...</span>
+  if (typeof data?.length == "undefined") return<span className='text-gray-400 text-sm'>No History</span>
   if (data?.length > 0) return (
     <div className="flow-root">
     

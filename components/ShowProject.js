@@ -12,7 +12,7 @@ import NewTicket from '../components/NewTicket'
 
 
 
-function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit, mutateProject, setMutateProject, setShowEditProject, showEditProject}) {
+function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit, mutateProject, setMutateProject, setShowEditProject, showEditProject, projects}) {
 
   const [showNewTicket, setShowNewTicket] = useState(false)
 
@@ -27,6 +27,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
       <NewTicket 
         setShowNewTicket={setShowNewTicket}
         showNewTicket={showNewTicket}
+        _projects={projects}
       />
     }
 
@@ -34,7 +35,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
     {
       showTicket && !showNewTicket && 
       <>
-      <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
+      <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
       <ShowTicket 
       mutateProject={mutateProject} 
       setMutateProject={setMutateProject} 
@@ -100,7 +101,8 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                   !showNewTicket && !project?.Tickets?.length &&
                   <div className=''>
                     <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900"> Tickets</h3>
-                    <EmptyTicketState 
+                    <EmptyTicketState
+                      projects={projects} 
                       session={session}
                       showNewTicket={showNewTicket}
                       setShowNewTicket={setShowNewTicket}

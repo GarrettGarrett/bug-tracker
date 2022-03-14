@@ -36,7 +36,6 @@ function findSelectedTypeByExistingTicket(existingType){
 
 export default function TicketTypeDrop({ticket, setTicket, type, existingTicket, editedValues, setEditedValues}) {
   const [selected, setSelected] = useState(!existingTicket ? type[0] : findSelectedTypeByExistingTicket(existingTicket.Type))
-  console.log("🚀 ~ file: TicketTypeDrop.js ~ line 24 ~ TicketTypeDrop ~ selected", selected)
 
   return (
     <Listbox value={selected} onChange={(e)=>{

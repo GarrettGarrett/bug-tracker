@@ -15,7 +15,6 @@ const stats = [
 ]
 
 function parseTickets(tickets){
-    console.log("🚀 ~ file: TicketOverview.js ~ line 44 ~ parseTickets ~ tickets", tickets)
     let low = 0
     let medium = 0
     let high = 0
@@ -38,25 +37,25 @@ function parseTickets(tickets){
         {
             title: "Low",
             count: low,
-            percent:Math.floor((low / tickets.length) * 100),
+            percent: low == 0 ? 0 : Math.floor((low / tickets.length) * 100),
             color: "bg-yellow-400"
         },
        {
             title: "Medium",
             count: medium,
-            percent:Math.floor((medium / tickets.length) * 100),
+            percent: medium == 0 ? 0 : Math.floor((medium / tickets.length) * 100),
             color: "bg-blue-400"
         },
         {
             title: "High",
             count: high,
-            percent:Math.floor((high / tickets.length) * 100),
+            percent: high == 0 ? 0 : Math.floor((high / tickets.length) * 100),
             color: "bg-red-400"
         },
         {
             title: "Emergency",
             count: emergency,
-            percent:Math.floor((emergency / tickets.length) * 100),
+            percent: emergency == 0 ? 0 : Math.floor((emergency / tickets.length) * 100),
             color: "bg-red-600"
         },
     ]
@@ -71,11 +70,10 @@ function classNames(...classes) {
 }
 
 export default function TicketOverView({tickets}) {
-    const [priorityStats, setPriorityState] = useState(parseTickets(tickets))
-    console.log("🚀 ~ file: TicketOverview.js ~ line 72 ~ TicketOverView ~ priorityStats", priorityStats)
+    const [priorityStats, setPriorityState] = useState(tickets ? parseTickets(tickets) : null)
    
-    
-return (
+if (!tickets) return <h1>Loading...</h1>
+if (tickets) return (
     <div>
       <h3 className="text-lg leading-6 font-medium text-gray-900">Tickets by Priority</h3>
 

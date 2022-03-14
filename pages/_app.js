@@ -12,12 +12,14 @@ export default function MyApp({
 
 
   return (
-    <AppWrapper>
+    
       <ThemeProvider attribute="class" >
         <SessionProvider session={session}>
+        <AppWrapper>
           <Component {...pageProps} />
+          </AppWrapper>
         </SessionProvider>
       </ThemeProvider>
-    </AppWrapper>
+   
   )
 }

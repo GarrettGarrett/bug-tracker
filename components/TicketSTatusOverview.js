@@ -41,25 +41,25 @@ function parseTickets  (tickets) {
         {
             title: "Open",
             count: Open,
-            percent:Math.floor((Open / tickets.length) * 100),
+            percent: Open == 0 ? 0 : Math.floor((Open / tickets.length) * 100),
             color: "bg-red-400"
         },
         {
             title: "In Progress",
             count: InProgress,
-            percent:Math.floor((InProgress / tickets.length) * 100),
+            percent: InProgress == 0 ? 0 : Math.floor((InProgress / tickets.length) * 100),
             color: "bg-orange-400"
         },
         {
             title: "Resolved",
             count: Resolved,
-            percent:Math.floor((Resolved / tickets.length) * 100),
+            percent: Resolved == 0 ? 0 : Math.floor((Resolved / tickets.length) * 100),
             color: "bg-purple-400"
         },
         {
             title: "Info Required",
             count: AdditionalInfoRequired,
-            percent:Math.floor((AdditionalInfoRequired / tickets.length) * 100),
+            percent: AdditionalInfoRequired == 0 ? 0 : Math.floor((AdditionalInfoRequired / tickets.length) * 100),
             color: "bg-yellow-400"
         },
 
@@ -69,10 +69,9 @@ function parseTickets  (tickets) {
 
 
 export default function TicketStatusOverview({tickets}) {
-    const [ticketStatus, setTicketStatus] = useState(parseTickets(tickets))
-    console.log("🚀 ~ file: TicketSTatusOverview.js ~ line 78 ~ TicketStatusOverview ~ ticketStatus", ticketStatus)
-
-  return (
+    const [ticketStatus, setTicketStatus] = useState(tickets ? parseTickets(tickets) : null)
+if (!tickets) return <h1>Loading...</h1>
+  if (tickets) return (
     <div className='w-full '>
       <h3 className="py-1 text-lg leading-6 font-medium text-gray-900">Tickets by Status</h3>
       <ul role="list" className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">

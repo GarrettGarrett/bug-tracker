@@ -15,7 +15,6 @@ function getUserNameFromUserID(userID, allUserObjects, type){
     }
     }
     if (type = "newValue" && typeof allUserObjects != "undefined") {
-        console.log("🚀 ~ file: newHistory.js ~ line 23 ~ getUserNameFromUserID ~ allUserObjects", allUserObjects)
 
         allUserObjects.forEach(userObject => {
             if(userObject._id == userID){
@@ -45,7 +44,6 @@ function getNameFromEmail(str){
 
 export default async (req, res) => {
     if (req.method === 'POST') { 
-        console.log("🚀 ~ file: newHistory.js ~ line 18 ~ req.body", req.body)
             const session = await getSession({ req })
             if (session) {
                 const fieldsToUpdate = []
@@ -68,8 +66,6 @@ export default async (req, res) => {
 
 
                 const { db } = await connectToDatabase('myFirstDatabase');
-                console.log("🚀 ~ file: newHistory.js ~ line 20 ~ fieldsToUpdate", fieldsToUpdate)
-                console.log("🚀 ~ file: newHistory.js ~ line 34 ~ fieldsToUpdateMembersOnly", fieldsToUpdateMembersOnly)
 
                 // for each field that has been updated (not null),
                 // find the old value in the old object
@@ -93,7 +89,6 @@ export default async (req, res) => {
         
                         
                         if (newHistory){
-                            console.log("🚀 ~ file: newHistory.js ~ line 33 ~ newProject", newHistory)
                             if (!fieldsToUpdateMembersOnly?.MembersRemoved) { //if no member updates, then send the return response
                                 return res.status(200).json(newHistory)   
                             }
@@ -108,7 +103,6 @@ export default async (req, res) => {
         
 
                 if (fieldsToUpdateMembersOnly?.MembersRemoved || fieldsToUpdateMembersOnly?.MembersAdded){ //this is for updating members only
-                    console.log("🚀 ~ file: newHistory.js ~ line 34 ~ fieldsToUpdateMembersOnly######", fieldsToUpdateMembersOnly)
                     const newHistory = await db.collection("projects").updateOne({My_ID: req.body.ProjectID}, 
                             {$push: {
                                 [`History-${req.body.existingTicket.TicketID}`]: 
@@ -125,7 +119,6 @@ export default async (req, res) => {
     
                     
                     if (newHistory){
-                        console.log("🚀 ~ file: newHistory.js ~ line 33 ~ newProject", newHistory)
                         return res.status(200).json(newHistory)   
                     }
            

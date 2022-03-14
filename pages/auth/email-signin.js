@@ -8,7 +8,6 @@ export default function SignIn({ csrfToken }) {
   const [guestMode, setGuestMode] = useState(false)
 
   let context = useAppContext()
-  console.log("🚀 ~ file: email-signin.js ~ line 11 ~ SignIn ~ test", context)
 
 return (
     <>

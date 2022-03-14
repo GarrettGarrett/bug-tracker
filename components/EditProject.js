@@ -63,7 +63,6 @@ function createAlphaObject(data){
    
 
 export default function EditProject({session, existingProject, setShowEditProject, setShowProject}) {
-    console.log("🚀 ~ file: EditProject.js ~ line 444 ~ EditProject ~ existingProject", existingProject)
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
@@ -88,13 +87,11 @@ export default function EditProject({session, existingProject, setShowEditProjec
 
       if (existingProject?.Members) {
         existingProject?.Members.forEach(member => {
-            console.log("444", member)
             selectedUserIDs.push(member._id)
           })
           
       }
       setSelectedUserID(selectedUserIDs)
-      console.log("🚀 ~ file: EditProject.js ~ line 87 ~ useEffect ~ selectedUserIDs", selectedUserIDs)
     }, [])
     
 
@@ -116,17 +113,14 @@ export default function EditProject({session, existingProject, setShowEditProjec
         let errorMsgArray = []
         for (const [key, value] of Object.entries(project)) {
             if (value.length < 1 && key != "Tickets" && key != "Members") {
-                console.log("33", key, value.length)
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
             }
             if (selectedUserID.length < 1 && key != "Tickets" ) {
-                console.log("33", key, value.length)
                 setVisibleErrorString(`Select at least 1 member`)
                 errorMsgArray.push(key)
             }
         }
-        console.log(errorMsgArray)
         return errorMsgArray
         
     }

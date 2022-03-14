@@ -16,7 +16,6 @@ function SearchBar({data, setSearchBarSelectedProject}) {
           return item.Title.toLowerCase().includes(query.toLowerCase())
         })
 
-        console.log("🚀 ~ file: SearchBar.js ~ line 999 ~ SearchBar ~ filteredItems", filteredItems)
 
   return (
       <>
@@ -29,7 +28,7 @@ function SearchBar({data, setSearchBarSelectedProject}) {
             value={query}
                 name="search-field"
                 id="search-field"
-                className="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400"
+                className="text-md h-full w-full border-transparent py-2 pl-8 pr-3  text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400"
                 placeholder="Search Projects..."
                 type="search"
             />

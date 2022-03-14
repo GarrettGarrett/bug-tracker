@@ -9,7 +9,6 @@ export default async (req, res) => {
             query: { id },
             method
         } = req
-
             // for guest accounts, use email
             // for all other accounts, use _id
             const userID = id
@@ -26,38 +25,24 @@ export default async (req, res) => {
                 
                 if (allProjects){
                 
-                    let TicketsForUser = []
                     let ProjectsForUser = []
                     allProjects.forEach(project => {
-                        project?.Tickets.forEach(ticket => {
-                            ticket.Members.forEach( member => {
+                        project?.Members.forEach(member => {
+                           
                                 if (id.includes("@")) { //guest account, use email to lookup
                                     if (member.email == userID) {
-                                        TicketsForUser.push(ticket)
                                         ProjectsForUser.push(project)
                                     }
-                                } 
-                                if (!userID.includes("@")){
-                                    if (member._id == userID) {
-                                        TicketsForUser.push(ticket)
-                                        ProjectsForUser.push(project)
-                                    }
-                                }
-                                
+                                }                                 
                             })
-                            
-                        })
-                    })
-
-                    return res.status(200).json({TicketsForUser:TicketsForUser, ProjectsForUser:ProjectsForUser})   
+                        })                   
+                    return res.status(200).json(ProjectsForUser)   
                 } 
-                
-                
+
             }
             else {
                 return res.json({ error: "Invalid Credentials"})  
             }
-           
         }
 }
 

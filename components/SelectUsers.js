@@ -60,7 +60,11 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
                     className={({ active }) =>
                       classNames(
                         active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                        'cursor-default select-none relative py-2 pl-3 pr-9'
+                        'cursor-default select-none relative py-2 pl-3 pr-9',
+                        `${person.email == "admin@email.com" ? "hidden" : null}`,
+                        `${person.email == "user@email.com" ? "hidden" : null}`,
+                        `${person.email == "manager@email.com" ? "hidden" : null}`,
+                        `${person.email == "developer@email.com" ? "hidden" : null}`,
                       )
                     }
                     value={person}

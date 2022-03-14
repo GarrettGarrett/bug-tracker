@@ -68,7 +68,6 @@ export default function NewProject() {
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
     const [selectedUserID, setSelectedUserID] = useState([])
-    console.log("🚀 ~ file: NewProject.js ~ line 67 ~ NewProject ~ selectedUserID", selectedUserID)
     const [project, setProject] = useState({
         My_ID: getRandomID(),
         Title: '',
@@ -102,17 +101,14 @@ export default function NewProject() {
         let errorMsgArray = []
         for (const [key, value] of Object.entries(project)) {
             if (value.length < 1 && key != "Tickets" && key != "Members") {
-                console.log("33", key, value.length)
                 setVisibleErrorString(`${key} is required`)
                 errorMsgArray.push(key)
             }
             if (selectedUserID.length < 1 && key != "Tickets" ) {
-                console.log("33", key, value.length)
                 setVisibleErrorString(`Select at least 1 member`)
                 errorMsgArray.push(key)
             }
         }
-        console.log(errorMsgArray)
         return errorMsgArray
         
     }

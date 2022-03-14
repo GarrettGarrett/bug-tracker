@@ -5,6 +5,8 @@ import ShowTicket from './ShowTicket'
 import { useState, useEffect } from 'react'
 import EditTicket from './EditTicket'
 import { useAppContext } from '../context/contextState'
+import { parseConfigFileTextToJson } from 'typescript'
+import EmptyTicketState from './EmptyTicketState'
 
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
@@ -46,11 +48,19 @@ function AllTickets({session}) {
 
   return (
     <>
+    
+      {
+        data?.TicketsForUser?.length == 0 && !context.showTicket && 
+        <>
+        <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
+        <EmptyTicketState fromAllTicketsPage={true}/>
+        </>
+      }
 
       {
-        data && !context.showTicket && 
+        data?.TicketsForUser?.length > 0 && !context.showTicket && 
         <>
-        <h3 className="pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
+        <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
         <TicketList
           selectedTicket={selectedTicket}
           setSelectedTicket={setSelectedTicket}
