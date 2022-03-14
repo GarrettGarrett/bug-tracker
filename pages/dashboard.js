@@ -12,6 +12,7 @@ function dashboard() {
           <body className="h-full overflow-hidden">
              <div className="h-full flex">
                 <SideBarHeader />
+
              </div>
           </body>
         </html>
