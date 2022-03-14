@@ -95,7 +95,7 @@ export default function AllProjectsGrid({session}) {
         {
           data?.length == 0 &&
           <>
-            <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
+            <h3 className="pb-4 pl-1  text-lg leading-6 font-medium text-gray-900">My Projects</h3>
             <EmptyProjectState />
             <div className='h-full flex justify-center '>
           <div className='max-w-lg m-auto'>
@@ -108,7 +108,7 @@ export default function AllProjectsGrid({session}) {
         { 
         data?.length > 0 &&
 <>
-<h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
+<h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
             <ul role="list" className="divide-y divide-gray-200">
               

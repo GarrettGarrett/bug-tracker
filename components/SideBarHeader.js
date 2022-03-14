@@ -8,7 +8,8 @@ import {
   XIcon,
   MailIcon,
   UserGroupIcon,
-  CollectionIcon
+  CollectionIcon,
+  MenuIcon
 } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
 import React from 'react'
@@ -289,7 +290,7 @@ function SideBarHeader() {
                   onClick={() => setMobileMenuOpen(true)}
                 >
                   <span className="sr-only">Open sidebar</span>
-                  <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
+                  <MenuIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
                 <div className="flex-1 flex justify-between px-4 sm:px-6">
  
