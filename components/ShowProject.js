@@ -35,7 +35,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
     {
       showTicket && !showNewTicket && 
       <>
-      <h3 className="pl-1 pb-1 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
+      
       <ShowTicket 
       mutateProject={mutateProject} 
       setMutateProject={setMutateProject} 
