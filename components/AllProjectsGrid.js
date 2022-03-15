@@ -113,7 +113,7 @@ export default function AllProjectsGrid({session}) {
         data?.length > 0 &&
 <>
 <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
-          <div className="bg-white shadow overflow-hidden sm:rounded-md">
+          <div className="bg-white shadow overflow-hidden sm:rounded-md mb-28">
             <ul role="list" className="divide-y divide-gray-200">
               
             {data.map((project, i) => (
