@@ -58,7 +58,7 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
 
       <div className='grid-cols-1 grid md:grid-cols-2 gap-4'>
       {/* first column */}
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg rounded-md">
           <div className="flex justify-between px-4 py-5 sm:px-6">
             <div>
               <h3 className="text-lg leading-6 font-medium text-gray-900">{ticket.Title}</h3>
@@ -150,18 +150,18 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
       {/* second column */}
       <div className='text-black pt-12 md:pt-0'>
       
-      <div className='bg-white shadow overflow-hidden sm:rounded-lg p-4'>
+      <div className='bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
         <h3 className="text-lg leading-6 font-medium text-gray-900">Comments</h3>
         <Comments project={project} session={session} ticket={ticket} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
         <CommmentPostBox project={project} ticket={ticket} session={session} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
       </div>
       
       
-      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4'>
+      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
         <ImageUploader ticket={ticket} project={project} mutateImage={mutateImage} setMutateImage={setMutateImage}/>
       </div>
          
-      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4'>
+      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
       <h3 className="pb-1 bg-transparent text-lg leading-6 font-medium text-gray-900">History</h3>
         <History ticket={ticket} project={project}/>
       </div>
