@@ -44,7 +44,7 @@ const users = [
 
 export default function AllUsersGrid({users}) {
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-md">
+    <div className="bg-white shadow overflow-hidden sm:rounded-md rounded-md">
       <ul role="list" className="divide-y divide-gray-200">
         {users.map((user) => (
           <li key={getRandomID()}>

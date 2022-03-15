@@ -23,7 +23,7 @@ export default function TicketList({selectedTicket, tickets, showTicket, setShow
   return (
     <>
 
-    <div className="bg-white shadow overflow-hidden sm:rounded-md">
+    <div className="bg-white shadow overflow-hidden sm:rounded-md rounded-md">
       
       <ul role="list" className="divide-y divide-gray-200">
         {tickets.map((Ticket, i) => (

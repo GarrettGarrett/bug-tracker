@@ -53,8 +53,8 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
 
       {
         !showTicket && !showNewTicket &&
-        <>
-            <div className="bg-white shadow overflow-hidden sm:rounded-md flex justify-between px-4 py-5 sm:px-6 ">
+        <div className='pb-28'>
+            <div className="bg-white shadow overflow-hidden sm:rounded-md flex justify-between px-4 py-5 sm:px-6 rounded-md">
                 <div>
                     <h3 className="pt-6 pb-1 text-lg leading-6 font-medium text-gray-900">{project.Title}</h3>
                     <p className='pb-3 text-black pt-1 text-sm'>{project.Description}</p>
@@ -76,7 +76,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
               {
                 !showTicket && !showNewTicket &&
                 <>
-                    <h3 className="pl-1 pt-9 pb-1 text-lg leading-6 font-medium text-gray-900"> Users</h3>
+                    <h3 className="pl-1 pt-9 pb-1 text-lg leading-6 font-medium text-gray-900"> Members</h3>
                     <AllUsersGrid users={project.Members}/>
                 </>
               }
@@ -112,7 +112,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
               
               </div>
           </div>
-        </>
+        </div>
       }
     </>
   )
