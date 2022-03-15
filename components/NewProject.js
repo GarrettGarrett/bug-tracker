@@ -145,6 +145,7 @@ export default function NewProject() {
             // clear form values
 
             setProject({
+                My_ID: getRandomID(),
                 Title: '',
                 Description: '',
                 // Members: [],
@@ -202,7 +203,7 @@ export default function NewProject() {
                             name="first-name"
                             id="first-name"
                             autoComplete="given-name"
-                            className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-lg border-gray-300 rounded-md"
+                            className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s md:text-sm border-gray-300 rounded-md text-lg"
                             placeholder='Title'
                         />
                     </div>
@@ -216,7 +217,7 @@ export default function NewProject() {
                                 id="description"
                                 name="description"
                                 rows={3}
-                                className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg border border-gray-300 rounded-md"
+                                className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 md:text-sm border border-gray-300 rounded-md text-lg"
                                 defaultValue={''}
                                 placeholder='Description'
                             />

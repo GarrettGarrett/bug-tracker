@@ -16,6 +16,7 @@ function AllTickets({session}) {
   let context = useAppContext()
 
     const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
+    console.log("🚀 ~ file: AllTickets.js ~ line 19 ~ AllTickets ~ data", data)
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [selectedProject, setSelectedProject] = useState(null)
     const { mutate } = useSWRConfig()
@@ -28,6 +29,8 @@ function AllTickets({session}) {
 
 
     function findProjectByProjectID(projectsArray, projectID){
+      console.log("🚀 ~ file: AllTickets.js ~ line 31 ~ findProjectByProjectID ~ projectID", projectID)
+      console.log("🚀 ~ file: AllTickets.js ~ line 31 ~ findProjectByProjectID ~ projectsArray", projectsArray)
       let returnObject
       projectsArray.forEach(project  => {
   
@@ -39,6 +42,9 @@ function AllTickets({session}) {
     }
 
     useEffect(() => {
+      console.log("888 use effect for seelected ticket is triggerdd")
+      console.log("88888.projectsforuser", data?.ProjectsForUser)
+      console.log("88888.ticketsforuser", data?.TicketsForUser)
       if (data?.ProjectsForUser && data?.TicketsForUser[selectedTicket]?.ParentProjectID){
         const selectedProjectObject = findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[selectedTicket].ParentProjectID)
         setSelectedProject(selectedProjectObject)
@@ -46,7 +52,9 @@ function AllTickets({session}) {
 
     }, [selectedTicket])
     
-
+console.log("88888data", data)
+console.log("88888context.showticket", context.showTicket)
+console.log("88888.selectedproject", selectedProject)
   return (
     <>
     
@@ -69,6 +77,9 @@ function AllTickets({session}) {
         <>
         <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
         <TicketList
+          setSelectedProject={setSelectedProject}
+          data={data}
+          findProjectByProjectID={findProjectByProjectID}
           selectedTicket={selectedTicket}
           setSelectedTicket={setSelectedTicket}
           showTicket={context.showTicket}

@@ -4,6 +4,7 @@ import AllUsersAlpha from './AllUsersAlpha'
 import AlphaUsersSearch from './AlphaUsersSearch'
 import NewProjectSubmitButtons from './NewProjectSubmitButtons'
 import NewProjectSkeleton from './NewProjectSkeleton'
+import { useAppContext } from '../context/contextState'
 
 
 function getRandomID() {
@@ -62,7 +63,9 @@ function createAlphaObject(data){
 
    
 
-export default function EditProject({session, existingProject, setShowEditProject, setShowProject}) {
+export default function EditProject({session, existingProject, setShowEditProject, setShowProject, mutateProject, setMutateProject, mutate}) {
+    let context = useAppContext()
+
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
@@ -149,6 +152,14 @@ export default function EditProject({session, existingProject, setShowEditProjec
 
             if (newPost.ok) {
                 setButtonMessage("Added")
+                mutate(`/api/getProjectsByUser/${session?.user?.email}`)
+                // setMutateProject(!mutateProject)
+                // go back  to projects main page:
+                    context.setShowTicket(false)
+                    context.setShowProject(false)
+                    context.setSearchBarSelectedProject(null)
+                    context.setTab(3)
+                    context.setShowEditProject(false)
             } else {
                 setButtonMessage(newPost.statusText)
 
@@ -163,6 +174,8 @@ export default function EditProject({session, existingProject, setShowEditProjec
                 Tickets: []
             })
             setSelectedUserID([]) //clear selected users 
+           
+
         }   
     }
 
@@ -238,7 +251,10 @@ export default function EditProject({session, existingProject, setShowEditProjec
                         </div>
                         
                         <div className='hidden md:block'>
-                             <NewProjectSubmitButtons 
+                             <NewProjectSubmitButtons
+                                mutateProject={mutateProject}
+                                setMutateProject={setMutateProject}
+                                setShowEditProject={setShowEditProject} 
                                 setShowProject={setShowProject}
                                 setShowEditProject={setShowEditProject}
                                 buttonMessage={buttonMessage} 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function NewProjectSubmitButtons({buttonMessage, loading, visibleErrorString, handleSubmit, setShowNewTicket, showNewTicket, setShowEditProject,setShowProject}) {
+function NewProjectSubmitButtons({buttonMessage, loading, visibleErrorString, handleSubmit, setShowNewTicket, showNewTicket, setShowEditProject,setShowProject, mutateProject, setMutateProject}) {
   return (
     <>
     <div className="flex justify-end pt-5">

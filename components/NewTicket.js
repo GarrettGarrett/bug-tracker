@@ -48,45 +48,48 @@ function getNameFromEmail(str){
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
 function createAlphaObject(data){
-    let alphaObject = { //returns this format of data
-        // A: [{user object with name starting with a}, {another user object with name starting with a}], 
-        // B: [{etc}, {etc}],
-    }
-    let firstLetterArray = [] //first letters used in alpha categorize list
-    // Create list of first letters in user names 
-    data.forEach(user => {
-       // if non email user, use name field for name:
-        if (user?.name) {
-            if (!firstLetterArray.includes(user.name[0])) { //if 1st first letter, add letter and user
-                firstLetterArray.push(user.name[0])
-                alphaObject[user.name[0].toUpperCase()] = [user]
-            } else { //if not 1st first letter, add user but not letter 
-                alphaObject[user.name[0]].push(user)
-                
-            }
-            
-        } else { // if email user, treat email as name:
-            if (!firstLetterArray.includes(user.email[0])) {
-                firstLetterArray.push(user.email[0])
-                alphaObject[user.email[0].toUpperCase()] = [user]
-            } else { //if not 1st first letter, add user but not letter 
-                alphaObject[user.email[0]].push(user)
-                
-            }
-        }
-    })
    
-
-    // now sort a-z
-    let sortedAlphaObject = {};
-    Object.keys(alphaObject).sort((a, b) => {
-    return a.toLowerCase().localeCompare(b.toLowerCase());
-    }).forEach(function(key) {
-        sortedAlphaObject[key] = alphaObject[key];
-    });
-    return sortedAlphaObject
+        let alphaObject = { //returns this format of data
+            // A: [{user object with name starting with a}, {another user object with name starting with a}], 
+            // B: [{etc}, {etc}],
+        }
+        let firstLetterArray = [] //first letters used in alpha categorize list
+        // Create list of first letters in user names 
+        data.forEach(user => {
+           // if non email user, use name field for name:
+            if (user?.name) {
+                if (!firstLetterArray.includes(user.name[0])) { //if 1st first letter, add letter and user
+                    firstLetterArray.push(user.name[0])
+                    alphaObject[user.name[0].toUpperCase()] = [user]
+                } else { //if not 1st first letter, add user but not letter 
+                    alphaObject[user.name[0]].push(user)
+                    
+                }
+                
+            } else { // if email user, treat email as name:
+                if (!firstLetterArray.includes(user.email[0])) {
+                    firstLetterArray.push(user.email[0])
+                    alphaObject[user.email[0].toUpperCase()] = [user]
+                } else { //if not 1st first letter, add user but not letter 
+                    alphaObject[user.email[0]].push(user)
+                    
+                }
+            }
+        })
+       
     
-}
+        // now sort a-z
+        let sortedAlphaObject = {};
+        Object.keys(alphaObject).sort((a, b) => {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+        }).forEach(function(key) {
+            sortedAlphaObject[key] = alphaObject[key];
+        });
+        return sortedAlphaObject
+    }
+    
+    
+
 
 
 
@@ -101,11 +104,12 @@ function getData(endpoint){
 export default function NewTicket({session, showNewTicket, setShowNewTicket, _projects}) {
       
 
-    const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
+   
     const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
     const [selectedProjectMyID, setSelectedProjectMyID] = useState(
         _projects?.length > 0 ? _projects[0].My_ID :
         projects?.length > 0 ? projects[0].My_ID : null)
+    const { data, error, isValidating } = useSWR(`/api/getUsersByProjectID/${selectedProjectMyID}`, fetcher)
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
     const [searchBar, setSearchBar] = useState(null)
@@ -126,6 +130,8 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket, _pr
         Type: type[0].name,
         Priority: priorities[0].name,
     })
+    const { mutate } = useSWRConfig()
+
     const [buttonMessage, setButtonMessage] = useState("Submit")
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState([])
@@ -135,6 +141,9 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket, _pr
         projects?.length > 0 ? projects[0]._id : null)
     
     
+useEffect(() => {
+    mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
+}, [selectedProjectMyID])
 
 
     useEffect(() => {
@@ -250,10 +259,14 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket, _pr
 
     useEffect(() => {
       if (data) {
-          let createdAlphaObj = createAlphaObject(data)
+          console.log("🚀 ~ file: NewTicket.js ~ line 511 ~ useEffect ~ data", data)
+          if (data?.data != "no results"){
+            let createdAlphaObj = createAlphaObject(data)
             setAlphaUsers(createdAlphaObj)
             setAlphaUsersFiltered(createdAlphaObj)
            
+          }
+         
       }
     }, [data])
 

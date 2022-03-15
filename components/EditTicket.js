@@ -113,7 +113,8 @@ function getSelectedUserIDs(Members){
         TicketID: existingTicket.TicketID,
     })
 
-    const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
+    // const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
+    const { data, error, isValidating } = useSWR(`/api/getUsersByProjectID/${existingProject.My_ID}`, fetcher)
     const projects = getData('/api/getProjects')
     const [alphaUsers, setAlphaUsers] = useState(data ? createAlphaObject(data) : null)
     const [alphaUsersFiltered, setAlphaUsersFiltered] = useState(alphaUsers)
@@ -288,11 +289,12 @@ function getSelectedUserIDs(Members){
 {/* First Column */}
             <div>   
                     <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
-                        {
+                        {/* dont allow tickets to change projects */}
+                        {/* {
                             typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
                             <ComboBox setEditedValues={setEditedValues} editedValue={editedValues} projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID} existingProject={existingProject}/>
                             </div>
-                        }
+                        } */}
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
                             <input
                                 type="text"

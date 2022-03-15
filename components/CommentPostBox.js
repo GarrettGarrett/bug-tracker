@@ -39,7 +39,7 @@ if (buttonMessage != "Post") {
 
 
 async function handleSubmit(){
-    if (comment.value?.length > 1){
+    if (comment.value?.length > 0){
         const newComment = await fetch ('/api/newComment', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },

@@ -50,6 +50,10 @@ export default function AllProjectsGrid({session}) {
       {
         context.showEditProject && 
         <EditProject 
+          mutate={mutate}
+          mutateProject={mutateProject}
+          setMutateProject={setMutateProject}
+          setShowEditProject={context.setShowEditProject}
           session={session}
           existingProject={
             context.searchBarSelectedProject == null ?

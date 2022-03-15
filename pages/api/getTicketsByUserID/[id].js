@@ -28,27 +28,39 @@ export default async (req, res) => {
                 
                     let TicketsForUser = []
                     let ProjectsForUser = []
+
                     allProjects.forEach(project => {
+                        project?.Members.forEach(memb => {
+                            if (memb.email == userID) {
+                                ProjectsForUser.push(project)
+                            }
+                        })
+                       
                         project?.Tickets.forEach(ticket => {
                             ticket.Members.forEach( member => {
                                 if (id.includes("@")) { //guest account, use email to lookup
                                     if (member.email == userID) {
                                         TicketsForUser.push(ticket)
-                                        ProjectsForUser.push(project)
                                     }
-                                } 
-                                if (!userID.includes("@")){
-                                    if (member._id == userID) {
+                                    // admins get full access
+                                    if (userID == "admin@email.com") {
                                         TicketsForUser.push(ticket)
                                         ProjectsForUser.push(project)
                                     }
-                                }
+                                    
+                                } 
+                                // if (!userID.includes("@")){
+                                //     if (member._id == userID) {
+                                //         TicketsForUser.push(ticket)
+                                //         ProjectsForUser.push(project)
+                                //     }
+                                // }
                                 
                             })
                             
                         })
                     })
-
+                    console.log("🚀 ~ file: [id].js ~ line 31 ~ ProjectsForUser", ProjectsForUser)
                     return res.status(200).json({TicketsForUser:TicketsForUser, ProjectsForUser:ProjectsForUser})   
                 } 
                 

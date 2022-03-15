@@ -27,12 +27,17 @@ export default async (req, res) => {
                 
                     let ProjectsForUser = []
                     allProjects.forEach(project => {
+                         // admins get full access
+                         if (userID == "admin@email.com") {
+                            ProjectsForUser.push(project)
+                        }
                         project?.Members.forEach(member => {
                            
                                 if (id.includes("@")) { //guest account, use email to lookup
                                     if (member.email == userID) {
                                         ProjectsForUser.push(project)
                                     }
+                                    
                                 }                                 
                             })
                         })                   
