@@ -4,7 +4,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 const fallBackItem = [
-    { id: 1, name: 'Loading...' },
+    { id: 1, name: 'Loading...', Title: 'Loading...' },
   ]
 
 function classNames(...classes) {
@@ -15,15 +15,17 @@ export default function SelectProjectBox({
     projects,
     setSelectedProjectID,
     setSelectedProjectMyID,
+    _projects
 }) {
+    console.log("🚀 ~ file: SelectProjectBox.js ~ line 211 ~ projects", _projects)
 
-  const [selected, setSelected] = useState(projects ? projects[0] : fallBackItem[0])
+  const [selected, setSelected] = useState(projects?.length > 0 ? projects[0] : fallBackItem[0])
 
   return (
     <Listbox value={selected} onChange={
         (e) => {
             setSelected(e)
-            // setSelectedProjectID(e._id)
+            setSelectedProjectID(e._id)
             setSelectedProjectMyID(e.My_ID)
         }
         

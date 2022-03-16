@@ -11,6 +11,7 @@ import moment from 'moment'
 import EmptyProjectState from './EmptyProjectState'
 import EmptySpaceLottie from './EmptySpaceLottie'
 import SelectProjectBox from './SelectProjectBox'
+import { useSession, signIn, signOut } from "next-auth/react"
 
 
 function getRandomID() {
@@ -102,11 +103,10 @@ function getData(endpoint){
     
 
 
-export default function NewTicket({session, showNewTicket, setShowNewTicket, _projects}) {
-     
+export default function NewTicket({ showNewTicket, setShowNewTicket, _projects}) {
+    const { data: session, status } = useSession()
     const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
     const [selectedProjectMyID, setSelectedProjectMyID] = useState(
-
         _projects?.length > 0 ? _projects[0].My_ID :
         projects?.length > 0 ? projects[0].My_ID : null)
     const { data, error, isValidating } = useSWR(`/api/getUsersByProjectID/${selectedProjectMyID}`, fetcher)
@@ -144,33 +144,46 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket, _pr
 //     mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
 // }, [selectedProjectMyID])
 
+console.log("🚀 ~ file: NewTicket.js ~ line 110 ~ NewTicket ~ selectedProjectMyID", selectedProjectMyID)
+
+useEffect(() => {
+    if (data) {
+        if (data?.data != "no results"){
+          let createdAlphaObj = createAlphaObject(data)
+          setAlphaUsers(createdAlphaObj)
+          setAlphaUsersFiltered(createdAlphaObj)
+         
+        }
+    }
+  }, [data])
+
+
 useEffect(() => {
     setTicket({...ticket, ParentProjectID:selectedProjectMyID})
+    mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
 }, [selectedProjectMyID])
 
-
-
-    useEffect(() => {
-        if (_projects?.length > 0){
-            setSelectedProjectID(_projects[0]._id)
-            setSelectedProjectMyID(_projects[0].My_ID)
-        }
-        if (projects?.length){
-            setSelectedProjectID(projects[0]._id)
-            setSelectedProjectMyID(projects[0].My_ID)
-        }
-    }, [projects])
-
-    useEffect(() => {
-        async function sleep(){
-            setTimeout(() => {
-                setButtonMessage("Submit")
-            }, 5000);
-        }
-    if (buttonMessage != "Submit") {
-        sleep()
+useEffect(() => {
+    if (_projects?.length > 0){
+        setSelectedProjectID(_projects[0]._id)
+        setSelectedProjectMyID(_projects[0].My_ID)
     }
-    }, [buttonMessage])
+    if (projects?.length){
+        setSelectedProjectID(projects[0]._id)
+        setSelectedProjectMyID(projects[0].My_ID)
+    }
+}, [projects])
+
+useEffect(() => {
+    async function sleep(){
+        setTimeout(() => {
+            setButtonMessage("Submit")
+        }, 5000);
+    }
+if (buttonMessage != "Submit") {
+    sleep()
+}
+}, [buttonMessage])
 
     function handleInputErrors() {
         // input error control
@@ -250,22 +263,12 @@ useEffect(() => {
                
             })
             setSelectedUserID([]) //clear selected users 
-           
+            mutate(`/api/getProjectsByUser/${session?.user?.email}`)
         }   
     }
 
 
-    useEffect(() => {
-      if (data) {
-          if (data?.data != "no results"){
-            let createdAlphaObj = createAlphaObject(data)
-            setAlphaUsers(createdAlphaObj)
-            setAlphaUsersFiltered(createdAlphaObj)
-           
-          }
-         
-      }
-    }, [data])
+
 
     function filterUsers(filterTerm) {
         
@@ -479,6 +482,7 @@ useEffect(() => {
                                     projects={projects}
                                     setSelectedProjectID={setSelectedProjectID}
                                     setSelectedProjectMyID={setSelectedProjectMyID}
+                                    _projects={_projects}
                                 />
                                 </div>
                             </>                        
