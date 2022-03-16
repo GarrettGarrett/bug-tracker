@@ -28,6 +28,8 @@ import AllTickets from './AllTickets'
 import Home from './Home'
 import SearchBar from './SearchBar'
 import useSWR, { useSWRConfig } from 'swr'
+import Image from 'next/image'
+
 
 function getRandomID() {
   return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
@@ -315,12 +317,22 @@ function SideBarHeader() {
                           <span className="sr-only">Open user menu</span>
                           {
                             session?.user?.image ? 
+                            <div className='relative h-8 w-8 rounded-full object-cover'>
+                                  <Image
+                                  className='rounded-full'
+                                  
+                                  src={session?.user?.image}
+                                  layout="fill"
+                                  objectFit="cover"
+                                  />
+                            </div>
+
                             // If image, use here
-                              <img
-                              className="h-8 w-8 rounded-full"
-                              src={session?.user?.image  }
-                              alt=""
-                              />
+                              // <img
+                              // className="h-8 w-8 rounded-full"
+                              // src={session?.user?.image  }
+                              // alt=""
+                              // />
                               :
                             // if no image, use first letter of name 
                             <span className='font-bold text-black text-2xl mx-auto'>{session?.user?.name[0].toLocaleUpperCase()}</span>

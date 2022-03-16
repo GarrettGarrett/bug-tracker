@@ -3,6 +3,8 @@ import { Fragment } from 'react'
 import { ChatAltIcon, TagIcon, UserCircleIcon } from '@heroicons/react/solid'
 import moment from 'moment'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
+
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
@@ -29,7 +31,16 @@ export default function Comments({project, ticket, mutateNewComment, setMutateNe
           <div className="flex space-x-3">
           {
                             activityItem?.Owner?.image ? 
-                            <img className="h-10 w-10 rounded-full" src={activityItem?.Owner?.image} alt="" />
+                            <div className='relativeh-10 w-10 rounded-full'>
+                                <Image
+                                className='rounded-full'
+                                
+                                src={activityItem?.Owner?.image}
+                                layout="fill"
+                                objectFit="cover"
+                                />
+                            </div>
+                            // <img className="h-10 w-10 rounded-full" src={activityItem?.Owner?.image} alt="" />
                             :
                             <span className="h-10 w-10 rounded-full text-black bg-Timberwolf pt-2 pl-3.5 font-bold "  >{activityItem?.Owner?.name[0].toLocaleUpperCase()}</span>
           }

@@ -27,7 +27,6 @@ export default function ComboBox({projects, setSelectedProjectID, existingProjec
   return (
     <Combobox  as="div" value={selectedProject} onChange={
         (e)=>{
-          console.log("21", e)
           setItems(e)
             // setSelectedProject(e)
             // setSelectedProjectID(e._id)

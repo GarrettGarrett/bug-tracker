@@ -17,7 +17,6 @@ export default function SelectProjectBox({
     setSelectedProjectMyID,
     _projects
 }) {
-    console.log("🚀 ~ file: SelectProjectBox.js ~ line 211 ~ projects", _projects)
 
   const [selected, setSelected] = useState(projects?.length > 0 ? projects[0] : fallBackItem[0])
 

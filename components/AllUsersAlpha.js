@@ -1,5 +1,7 @@
 import { getEventListeners } from "events"
 import { useState } from 'react'
+import Image from 'next/image'
+
 
 function getNameFromEmail(str){
     if (str){
@@ -56,7 +58,16 @@ function getNameFromEmail(str){
                     <div className="flex-shrink-0">
                         {
                             person?.image ? 
-                            <img className="h-10 w-10 rounded-full object-cover" src={person.image} alt="" />
+                            // <img className="h-10 w-10 rounded-full object-cover" src={person.image} alt="" />
+                                   <div className='relative h-10 w-10 rounded-full object-cover'>
+                                        <Image
+                                        className='rounded-full'
+                                       
+                                        src={person.image}
+                                        layout="fill"
+                                        objectFit="cover"
+                                        />
+                                    </div>
                             :
                             <span className="h-10 w-10 rounded-full text-black bg-Timberwolf py-3 px-4 font-bold "  >{person?.email[0].toLocaleUpperCase()}</span>
                         }

@@ -18,7 +18,6 @@ function AllTickets({session}) {
     const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [selectedProject, setSelectedProject] = useState(null)
-    console.log("🚀 ~ file: AllTickets.js ~ line 21 ~ AllTickets ~ selectedProject", selectedProject)
     const { mutate } = useSWRConfig()
     const [mutateProject, setMutateProject] = useState(false)
     const [showEdit, setShowEdit] = useState(false)

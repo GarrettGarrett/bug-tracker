@@ -31,9 +31,8 @@ export default function TicketList({selectedTicket, tickets, showTicket, setShow
           onClick={()=> {
             setShowTicket(true)
             setSelectedTicket(i)
-            setTheParentProjectID(Ticket.ParentProjectID)
+            // setTheParentProjectID(Ticket.ParentProjectID)
             if (data?.ProjectsForUser){
-              console.log("21")
               setSelectedProject(findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[i].ParentProjectID))
             }
            

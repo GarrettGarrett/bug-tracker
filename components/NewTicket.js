@@ -144,7 +144,6 @@ export default function NewTicket({ showNewTicket, setShowNewTicket, _projects})
 //     mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
 // }, [selectedProjectMyID])
 
-console.log("🚀 ~ file: NewTicket.js ~ line 110 ~ NewTicket ~ selectedProjectMyID", selectedProjectMyID)
 
 useEffect(() => {
     if (data) {

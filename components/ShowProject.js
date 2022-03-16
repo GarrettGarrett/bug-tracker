@@ -93,6 +93,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                     setShowTicket={setShowTicket} 
                     setShowProject={setShowProject} 
                     setSelectedTicket={setSelectedTicket} 
+                    // setTheParentProjectID={setTheParentProjectID}
                   />
                 </>
               }

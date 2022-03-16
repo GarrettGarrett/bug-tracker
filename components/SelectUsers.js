@@ -2,6 +2,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import Image from 'next/image'
 
 
 function classNames(...classes) {
@@ -22,8 +23,18 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
               <span className="flex items-center">
               {
                                 selected?.image ?
+                                <div className='relative h-8 w-8 rounded-full object-cover'>
+                                  <Image
+                                  className='rounded-full'
+                                
+                                  src={selected.image}
+                                  layout="fill"
+                                  objectFit="cover"
+                                  />
+                                </div>
+
                                 // if image, use image
-                                <img src={selected.image} alt="" className=" h-8 w-8 rounded-full object-cover" />
+                                // <img src={selected.image} alt="" className=" h-8 w-8 rounded-full object-cover" />
                                 :
                                 // if no image, use first letter of name
                                 <span className='font-bold text-black text-2xl  pl-1'>{selected?.email[0].toLocaleUpperCase()}</span>
@@ -74,8 +85,18 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
                         <div className="flex items-center">
                             {
                                 person?.image ?
+                                <div className='relative flex-shrink-0 h-8 w-8 rounded-full object-cover'>
+                                  <Image
+                                  className='rounded-full'
+                                
+                                  src={person.image}
+                                  layout="fill"
+                                  objectFit="cover"
+                                  />
+                                </div>
+
                                 // if image, use image
-                                <img src={person.image} alt="" className="flex-shrink-0 h-8 w-8 rounded-full object-cover" />
+                                // <img src={person.image} alt="" className="flex-shrink-0 h-8 w-8 rounded-full object-cover" />
                                 :
                                 // if no image, use first letter of name
                                 <span className='h-6 w-6 flex-shrink-0 font-bold text-black text-2xl  pl-1'>{person.email[0].toLocaleUpperCase()}</span>
