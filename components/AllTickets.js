@@ -9,6 +9,16 @@ import { parseConfigFileTextToJson } from 'typescript'
 import EmptyTicketState from './EmptyTicketState'
 import EmptySpaceLottie from './EmptySpaceLottie'
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getNameFromEmail(str){
+  if (str){
+    let indexOfAt = str.indexOf("@")
+    return str.substring(0, indexOfAt)
+  }
+}
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
@@ -69,7 +79,7 @@ function AllTickets({session}) {
       {
         data?.TicketsForUser?.length > 0 && !context.showTicket && 
         <>
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
+        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Open Tickets`}</h3>
         <TicketList
           setTheParentProjectID={setTheParentProjectID}
           setSelectedProject={setSelectedProject}
@@ -79,7 +89,21 @@ function AllTickets({session}) {
           setSelectedTicket={setSelectedTicket}
           showTicket={context.showTicket}
           setShowTicket={context.setShowTicket}
-          tickets={data.TicketsForUser}
+          tickets={data.TicketsForUser.filter(ticket => ticket.Status != "Resolved")}
+          // tickets={data.TicketsForUser pilots.filter(pilot => pilot.faction === "Rebels")}
+        />
+        <h3 className="pt-8 pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Closed Tickets`}</h3>
+        <TicketList
+          setTheParentProjectID={setTheParentProjectID}
+          setSelectedProject={setSelectedProject}
+          data={data}
+          findProjectByProjectID={findProjectByProjectID}
+          selectedTicket={selectedTicket}
+          setSelectedTicket={setSelectedTicket}
+          showTicket={context.showTicket}
+          setShowTicket={context.setShowTicket}
+          tickets={data.TicketsForUser.filter(ticket => ticket.Status == "Resolved")}
+          // tickets={data.TicketsForUser pilots.filter(pilot => pilot.faction === "Rebels")}
         />
         </>
         

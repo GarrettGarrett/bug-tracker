@@ -46,7 +46,8 @@ export function AppWrapper({ children }) {
         setShowTicket,
         showEditProject,
         setShowEditProject,
-        role
+        role,
+        
     }
   
 

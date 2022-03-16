@@ -13,6 +13,10 @@ import EmptySpaceLottie from './EmptySpaceLottie'
 import SelectProjectBox from './SelectProjectBox'
 import { useSession, signIn, signOut } from "next-auth/react"
 
+const fallBackItem = [
+    { id: 1, name: 'Loading...', Title: 'Loading...' },
+  ]
+  
 
 function getRandomID() {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
@@ -139,6 +143,9 @@ export default function NewTicket({ showNewTicket, setShowNewTicket, _projects})
     const [selectedProjectID, setSelectedProjectID] = useState(
         _projects?.length > 0 ? _projects[0]._id :
         projects?.length > 0 ? projects[0]._id : null)
+    const [selected, setSelected] = useState(projects?.length > 0 ? projects[0] : fallBackItem[0])
+    console.log("🚀 ~ file: NewTicket.js ~ line 200 ~ NewTicket ~ projects", projects)
+
     
 // useEffect(() => {
 //     mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
@@ -170,6 +177,7 @@ useEffect(() => {
     if (projects?.length){
         setSelectedProjectID(projects[0]._id)
         setSelectedProjectMyID(projects[0].My_ID)
+        setSelected(projects[0])
     }
 }, [projects])
 
@@ -322,12 +330,14 @@ if (buttonMessage != "Submit") {
 {
                             projects &&
                             <>
-                            <div className="sm:mt-0 sm:col-span-2 text-black">
-                                <SelectProjectBox 
-                                    projects={projects}
-                                    setSelectedProjectID={setSelectedProjectID}
-                                    setSelectedProjectMyID={setSelectedProjectMyID}
-                                />
+                                <div className="sm:mt-0 sm:col-span-2 text-black">
+                                    <SelectProjectBox 
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                        projects={projects}
+                                        setSelectedProjectID={setSelectedProjectID}
+                                        setSelectedProjectMyID={setSelectedProjectMyID}
+                                    />
                                 </div>
                             </>                        
                         }
@@ -478,6 +488,8 @@ if (buttonMessage != "Submit") {
                             <>
                             <div className="sm:mt-0 sm:col-span-2 text-black">
                                 <SelectProjectBox 
+                                    selected={selected}
+                                    setSelected={setSelected}
                                     projects={projects}
                                     setSelectedProjectID={setSelectedProjectID}
                                     setSelectedProjectMyID={setSelectedProjectMyID}
