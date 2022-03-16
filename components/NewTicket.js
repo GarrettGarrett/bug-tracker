@@ -317,14 +317,18 @@ useEffect(() => {
                                 </div>
                             } */}
 
-                            {
-                                projects && <SelectProjectBox 
+{
+                            projects &&
+                            <>
+                            <div className="sm:mt-0 sm:col-span-2 text-black">
+                                <SelectProjectBox 
                                     projects={projects}
                                     setSelectedProjectID={setSelectedProjectID}
                                     setSelectedProjectMyID={setSelectedProjectMyID}
-                                    setSelectedProject={setSelectedProject}
                                 />
-                            }
+                                </div>
+                            </>                        
+                        }
                             
                           
                             

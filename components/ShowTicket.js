@@ -20,7 +20,6 @@ function getNameFromEmail(str){
   }
 
 function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit, mutateProject, setMutateProject, theParentProjectID}) {
-  console.log("🚀 ~ file: ShowTicket.js ~ line ---21 ~ ShowTicket ~ project", project)
   const [mutateNewComment, setMutateNewComment] = useState(false)
   const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
   const { mutate } = useSWRConfig()
