@@ -23,7 +23,7 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
               {
                                 selected?.image ?
                                 // if image, use image
-                                <img src={selected.image} alt="" className=" h-8 w-8 rounded-full" />
+                                <img src={selected.image} alt="" className=" h-8 w-8 rounded-full object-cover" />
                                 :
                                 // if no image, use first letter of name
                                 <span className='font-bold text-black text-2xl  pl-1'>{selected?.email[0].toLocaleUpperCase()}</span>
