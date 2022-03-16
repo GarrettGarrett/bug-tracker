@@ -148,7 +148,7 @@ export default function AllProjectsGrid({session}) {
                               return (
                                   <img
                                     key={member.email}
-                                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover"
                                     src={member.image}
                                   />        
                               )

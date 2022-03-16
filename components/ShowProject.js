@@ -86,8 +86,8 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
               {
                 project?.Tickets?.length > 0 && !showNewTicket &&
                 <>
-                  <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900"> Tickets</h3>
-                  <TicketList 
+                  <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
+                  <TicketList
                     tickets={project.Tickets} 
                     showTicket={showTicket} 
                     setShowTicket={setShowTicket} 
@@ -100,7 +100,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                 {
                   !showNewTicket && !project?.Tickets?.length &&
                   <div className=''>
-                    <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900"> Tickets</h3>
+                    <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
                     <EmptyTicketState
                       projects={projects} 
                       session={session}

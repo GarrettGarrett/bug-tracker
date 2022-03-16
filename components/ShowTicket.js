@@ -19,7 +19,8 @@ function getNameFromEmail(str){
     }
   }
 
-function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit, mutateProject, setMutateProject}) {
+function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit, mutateProject, setMutateProject, theParentProjectID}) {
+  console.log("🚀 ~ file: ShowTicket.js ~ line ---21 ~ ShowTicket ~ project", project)
   const [mutateNewComment, setMutateNewComment] = useState(false)
   const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
   const { mutate } = useSWRConfig()
@@ -103,7 +104,7 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{ticket.Status}</dd>
               </div>
               <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Lsst Updated</dt>
+                <dt className="text-sm font-medium text-gray-500">Last Updated</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(ticket.UpdatedAt).fromNow()}</dd>
               </div>
       

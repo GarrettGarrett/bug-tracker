@@ -10,6 +10,7 @@ import ComboBox from './ComboBox'
 import moment from 'moment'
 import EmptyProjectState from './EmptyProjectState'
 import EmptySpaceLottie from './EmptySpaceLottie'
+import SelectProjectBox from './SelectProjectBox'
 
 
 function getRandomID() {
@@ -102,11 +103,10 @@ function getData(endpoint){
 
 
 export default function NewTicket({session, showNewTicket, setShowNewTicket, _projects}) {
-      
-
-   
+     
     const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
     const [selectedProjectMyID, setSelectedProjectMyID] = useState(
+
         _projects?.length > 0 ? _projects[0].My_ID :
         projects?.length > 0 ? projects[0].My_ID : null)
     const { data, error, isValidating } = useSWR(`/api/getUsersByProjectID/${selectedProjectMyID}`, fetcher)
@@ -140,14 +140,17 @@ export default function NewTicket({session, showNewTicket, setShowNewTicket, _pr
         _projects?.length > 0 ? _projects[0]._id :
         projects?.length > 0 ? projects[0]._id : null)
     
-    
+// useEffect(() => {
+//     mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
+// }, [selectedProjectMyID])
+
 useEffect(() => {
-    mutate(`/api/getUsersByProjectID/${selectedProjectMyID}`)
+    setTicket({...ticket, ParentProjectID:selectedProjectMyID})
 }, [selectedProjectMyID])
 
 
-    useEffect(() => {
 
+    useEffect(() => {
         if (_projects?.length > 0){
             setSelectedProjectID(_projects[0]._id)
             setSelectedProjectMyID(_projects[0].My_ID)
@@ -156,11 +159,7 @@ useEffect(() => {
             setSelectedProjectID(projects[0]._id)
             setSelectedProjectMyID(projects[0].My_ID)
         }
-
     }, [projects])
-
-    
-
 
     useEffect(() => {
         async function sleep(){
@@ -228,7 +227,6 @@ useEffect(() => {
 
 
             if (newTicket.ok) {
-                //console.log("🚀 ~ file: NewTicket.js ~ line 163 ~ handleSubmit ~ newTicket", newTicket)
                 setButtonMessage("Added")
             } else {
                 setButtonMessage(newTicket.statusText)
@@ -259,7 +257,6 @@ useEffect(() => {
 
     useEffect(() => {
       if (data) {
-          console.log("🚀 ~ file: NewTicket.js ~ line 511 ~ useEffect ~ data", data)
           if (data?.data != "no results"){
             let createdAlphaObj = createAlphaObject(data)
             setAlphaUsers(createdAlphaObj)
@@ -309,7 +306,7 @@ useEffect(() => {
                         
                         <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
                             
-                            {
+                            {/* {
                                 typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
                                 <ComboBox projects={
                                 _projects?.length > 0 ? _projects
@@ -318,6 +315,15 @@ useEffect(() => {
                                 setSelectedProjectMyID={setSelectedProjectMyID}
                                 />
                                 </div>
+                            } */}
+
+                            {
+                                projects && <SelectProjectBox 
+                                    projects={projects}
+                                    setSelectedProjectID={setSelectedProjectID}
+                                    setSelectedProjectMyID={setSelectedProjectMyID}
+                                    setSelectedProject={setSelectedProject}
+                                />
                             }
                             
                           
@@ -450,7 +456,7 @@ useEffect(() => {
                     
                     <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
                         
-                        {
+                        {/* {
                             <div className="sm:mt-0 sm:col-span-2 text-black">
                             <ComboBox projects={
                                 _projects?.length > 0 ? _projects
@@ -459,8 +465,21 @@ useEffect(() => {
                             setSelectedProjectMyID={setSelectedProjectMyID}
                             />
                             </div>
+                        } */}
+
+                        {
+                            projects &&
+                            <>
+                            <div className="sm:mt-0 sm:col-span-2 text-black">
+                                <SelectProjectBox 
+                                    projects={projects}
+                                    setSelectedProjectID={setSelectedProjectID}
+                                    setSelectedProjectMyID={setSelectedProjectMyID}
+                                />
+                                </div>
+                            </>                        
                         }
-                        
+                                                
                       
                         
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">

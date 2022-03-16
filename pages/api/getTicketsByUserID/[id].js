@@ -60,7 +60,6 @@ export default async (req, res) => {
                             
                         })
                     })
-                    console.log("🚀 ~ file: [id].js ~ line 31 ~ ProjectsForUser", ProjectsForUser)
                     return res.status(200).json({TicketsForUser:TicketsForUser, ProjectsForUser:ProjectsForUser})   
                 } 
                 

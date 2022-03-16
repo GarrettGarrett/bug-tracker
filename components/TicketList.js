@@ -19,7 +19,7 @@ function colorBadgeByPriority(priority) {
   return color
 }
 
-export default function TicketList({selectedTicket, tickets, showTicket, setShowTicket, setShowProject, setSelectedTicket, showEdit, setShowEdit, findProjectByProjectID, data, setSelectedProject}) {
+export default function TicketList({selectedTicket, tickets, showTicket, setShowTicket, setShowProject, setSelectedTicket, showEdit, setShowEdit, findProjectByProjectID, data, setSelectedProject, setTheParentProjectID}) {
   return (
     <>
 
@@ -30,12 +30,14 @@ export default function TicketList({selectedTicket, tickets, showTicket, setShow
           <li 
           onClick={()=> {
             setShowTicket(true)
-            console.log("8888 clicked ticket", i)
             setSelectedTicket(i)
-
-            const selectedProjectObject = findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[i].ParentProjectID)
-            console.log("🚀 ~ file: TicketList.js ~ line 37 ~ TicketList ~ selectedProjectObject", selectedProjectObject)
-            setSelectedProject(selectedProjectObject)
+            setTheParentProjectID(Ticket.ParentProjectID)
+            if (data?.ProjectsForUser){
+              console.log("21")
+              setSelectedProject(findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[i].ParentProjectID))
+            }
+           
+            
 
           }
         }

@@ -16,7 +16,6 @@ export default async (req, res) => {
             method
         } = req
 
-        console.log("%%%%%%%%%%%%%%%", id)
 
             const session = await getSession({ req })
             if (session) {
