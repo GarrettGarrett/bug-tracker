@@ -54,7 +54,7 @@ function getNameFromEmail(str){
                     
                 }}
                 key={person.id} className="bg-white">
-                  <div className={`${selectedUserID.includes(person._id) ? "bg-Tan bg-opacity-70" : ""} relative px-6 py-5 flex space-x-3 rounded-md`}>
+                  <div className={`${selectedUserID.includes(person._id) ? "bg-Tan bg-opacity-70" : ""} relative px-6 py-5 flex space-x-3 rounded-md `}>
                     <div className="flex-shrink-0">
                         {
                             person?.image ? 
