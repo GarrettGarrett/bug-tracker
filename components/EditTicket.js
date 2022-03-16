@@ -1,4 +1,4 @@
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR, { mutate, useSWRConfig } from 'swr'
 import { useState, useEffect } from 'react'
 import AllUsersAlpha from './AllUsersAlpha'
 import AlphaUsersSearch from './AlphaUsersSearch'
@@ -244,6 +244,7 @@ function getSelectedUserIDs(Members){
             setSelectedUserID([]) //clear selected users 
             setShowEdit(false) //close edit component
             setMutateProject(!mutateProject) //refresh the project object
+            mutate('/api/getProjects')
         }   
     }
 

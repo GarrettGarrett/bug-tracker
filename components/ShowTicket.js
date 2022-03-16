@@ -148,7 +148,7 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
         </div>
       
       {/* second column */}
-      <div className='text-black pt-12 md:pt-0'>
+      <div className='text-black pt-2 sm:pt-12 md:pt-0'>
       
       <div className='bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
         <h3 className="text-lg leading-6 font-medium text-gray-900">Comments</h3>

@@ -20,7 +20,7 @@ export default function Comments({project, ticket, mutateNewComment, setMutateNe
 
 
 
-  if (error) return <>error</>
+  if (error) return <span className='text-gray-400 text-sm'>Error</span>
   if (!data) return <span className='text-gray-400 text-sm'>Loading Comments...</span>
   if (typeof data?.length == "undefined") return <span className='text-gray-400 text-sm'>No Comments</span>
   if (data?.length > 0) return (
