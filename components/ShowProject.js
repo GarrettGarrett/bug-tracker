@@ -8,13 +8,19 @@ import ShowTicket from './ShowTicket'
 import EmptyTicketState from './EmptyTicketState'
 import { useState } from 'react'
 import NewTicket from '../components/NewTicket'
-
+import AllTicketsFilter from './AllTicketsFilter'
 
 
 
 function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit, mutateProject, setMutateProject, setShowEditProject, showEditProject, projects}) {
 
   const [showNewTicket, setShowNewTicket] = useState(false)
+  const [selectedArray, setSelectedArray] = useState([
+    "Additional Info Required",
+    "Resolved",
+    "In Progress",
+    "Open"
+  ])
 
 
 
@@ -87,13 +93,18 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                 project?.Tickets?.length > 0 && !showNewTicket &&
                 <>
                   <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
+                  <AllTicketsFilter 
+                    selectedArray={selectedArray}
+                    setSelectedArray={setSelectedArray}
+                  />
                   <TicketList
                     tickets={project.Tickets} 
                     showTicket={showTicket} 
                     setShowTicket={setShowTicket} 
                     setShowProject={setShowProject} 
                     setSelectedTicket={setSelectedTicket} 
-                    // setTheParentProjectID={setTheParentProjectID}
+                    selectedArray={selectedArray}
+                    setSelectedArray={setSelectedArray}
                   />
                 </>
               }

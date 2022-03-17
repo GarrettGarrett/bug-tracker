@@ -115,6 +115,8 @@ function AllTickets({session}) {
         <>
 
         <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
+ 
+        
         <AllTicketsFilter 
           selectedArray={selectedArray}
           setSelectedArray={setSelectedArray}
