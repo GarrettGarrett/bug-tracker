@@ -94,6 +94,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                 <>
                   <h3 className="md:pt-9 pb-1 pl-1pb-1 text-lg leading-6 font-medium text-gray-900">All Tickets</h3>
                   <AllTicketsFilter 
+                    session={session}
                     selectedArray={selectedArray}
                     setSelectedArray={setSelectedArray}
                   />

@@ -3,8 +3,18 @@ import { CalendarIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import { useAppContext } from '../context/contextState'
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
-function getRandomID() {
+  function getNameFromEmail(str){
+    if (str){
+      let indexOfAt = str.indexOf("@")
+      return str.substring(0, indexOfAt)
+    }
+  }
+
+function getRandomID({session}) {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
   }
 
@@ -14,7 +24,8 @@ function ProjectsListed({projects, setCurrentProject}) {
 
   return (
     <>
-    <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Projects</h3>
+    <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Projects`}</h3>
+    {/* <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Projects</h3> */}
           <div className="bg-white shadow overflow-hidden sm:rounded-md mb-28">
             <ul role="list" className="divide-y divide-gray-200">
               
