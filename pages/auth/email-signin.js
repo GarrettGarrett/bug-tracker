@@ -17,8 +17,8 @@ export default function SignIn({ csrfToken }) {
 
 return (
     <>
-        <html className="h-screen bg-Timberwolf">
-            <body className="h-full">
+        <div className="h-screen bg-Timberwolf">
+            <div className="h-full">
                 <div className="min-h-screen flex flex-col py-auto py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md 0">
                     <div className="w-1/3 md:w-1/2 flex items-center mx-auto">
@@ -162,8 +162,8 @@ return (
                     </div>
                 </div>
                 </div>
-        </body>
-    </html>
+        </div>
+    </div>
   </>
 
 )
