@@ -79,7 +79,7 @@ return (
                         </div>
 
                         <div className="mt-6 grid grid-cols-1 gap-3">
-
+{/* 
                         <div
                         onClick={() => signIn('github')}
                         >
@@ -98,7 +98,7 @@ return (
                             </svg>
                             <span className="text-white px-5">Sign in with GitHub</span>
                             </a>
-                        </div>
+                        </div> */}
 
                         
 
