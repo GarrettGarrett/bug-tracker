@@ -1,20 +1,41 @@
 import React from 'react'
 import PartyLottie from './PartyLottie'
+import { useState, useEffect } from 'react'
 
 function NewProjectSubmitButtons({buttonMessage, loading, visibleErrorString, handleSubmit, setShowNewTicket, showNewTicket, setShowEditProject,setShowProject, mutateProject, setMutateProject}) {
+
+    const [party, setParty] = useState(false)
+
+    useEffect(() => {
+        async function sleep(){
+            setTimeout(() => {
+                setParty(false)
+               
+            }, 1000);
+        }
+        sleep()
+    }, [party])
+
   return (
     <>
     <div className="relative flex justify-end pt-5">
-    {/* <div className='absolute w-30'>
-    <PartyLottie />
-    </div> */}
+        
+        {
+
+            party &&
+            <div className='absolute w-40 -mt-14 pl-8'>
+                 <PartyLottie />
+            </div>
+        }
    
 
                 <button
                     disabled={buttonMessage != "Submit"}
-                    onClick={() => {handleSubmit()}}
+                    onClick={() => {
+                        setParty(true)
+                        handleSubmit()}}
                     type="submit"
-                    className="w-32 ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-Verdigris hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Verdigris"
+                    className="z-10 w-32 ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-Verdigris hover:bg-opacity-90 focus:outline-none "
                 >
                     {
                         !loading ? 

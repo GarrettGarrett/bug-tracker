@@ -5,6 +5,7 @@ function PartyLottie() {
 
   const ref = useRef(null);
   const [lottie, setLottie] = useState(null);
+  
 
   useEffect(() => {
     import('lottie-web').then((Lottie) => setLottie(Lottie.default));
@@ -19,7 +20,8 @@ function PartyLottie() {
         autoplay: true,
         // path to your animation file, place it inside public folder
         path: '/images/party.json',
-      });
+      })
+      lottie.setSpeed(2);
 
       return () => animation.destroy();
     }
