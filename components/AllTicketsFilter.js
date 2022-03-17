@@ -33,7 +33,7 @@ const notificationMethods = [
                   name="notification-method"
                   type="checkbox"
                   defaultChecked={notificationMethod.id === 'email'}
-                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                  className="focus:ring-indigo-500 h-6 w-6 rounded-md my-1 sm:my-0 sm:h-4 sm:w-4 text-indigo-600 border-gray-300"
                 />
                 <label htmlFor={notificationMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
                   {notificationMethod.title}
