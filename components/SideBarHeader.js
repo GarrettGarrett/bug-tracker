@@ -62,7 +62,6 @@ function SideBarHeader() {
     let context = useAppContext()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
       const { data: session, status } = useSession()
-      console.log("🚀 ~ file: SideBarHeader.js ~ line 65 ~ SideBarHeader ~ session", session)
       const loading = status === "loading"
       const Router = useRouter()
       const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
@@ -253,6 +252,11 @@ function SideBarHeader() {
                             <Link href={item.href} key={getRandomID()}>
                             <a
                               onClick={() => {
+                                context.setShowTicket(false)
+                                context.setShowProject(false)
+                                context.setSearchBarSelectedProject(null)
+                                context.setShowEditProject(false)
+
                                 setMobileMenuOpen(false)
                                 context.setTab(item.index)
                               }}
