@@ -33,7 +33,6 @@ const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched d
 
 function AllTickets({session}) {
   let context = useAppContext()
-
     const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [selectedProject, setSelectedProject] = useState(null)

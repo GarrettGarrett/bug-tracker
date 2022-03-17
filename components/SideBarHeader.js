@@ -32,12 +32,12 @@ import Image from 'next/image'
 
 
 
-function getNameFromEmail(str){
-  if (str){
-    let indexOfAt = str.indexOf("@")
-    return str.substring(0, indexOfAt)
-  }
+function getData(endpoint){
+  const { data, error, isValidating } = useSWR(endpoint, fetcher)
+  const data1 =  { data :data}
+  return data1.data
 }
+  
 
 function getRandomID() {
   return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
@@ -65,6 +65,7 @@ function SideBarHeader() {
       const loading = status === "loading"
       const Router = useRouter()
       const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
+      const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
       
 
       const sidebarNavigation = [
@@ -389,7 +390,7 @@ function SideBarHeader() {
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                    <NewBtnDropDown context={context}/>                
+                    <NewBtnDropDown context={context} projects={projects}/>                
                    
                   </div>
                 </div>
@@ -443,7 +444,7 @@ function SideBarHeader() {
                     // New Ticket = -2
                     context.tab == -2 ? 
                         <>
-                            <div className="px-5 py-5">
+                            <div className={`px-5 py-5`}>
                                 <NewTicket session={session}/>
                             </div>
 

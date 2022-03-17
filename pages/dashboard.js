@@ -11,9 +11,7 @@ function dashboard() {
         <html className="absolute inset-0 h-screen bg-gray-50">
           <body className="absolute inset-0 h-screen overflow-hidden">
              <div className="absolute inset-0 max-h-screen flex">
-
                 <SideBarHeader />
-
              </div>
           </body>
         </html>
