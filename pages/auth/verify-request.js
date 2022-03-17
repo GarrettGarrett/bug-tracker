@@ -8,7 +8,7 @@ function verifyrequest() {
         <div className="h-screen bg-Timberwolf">
             <div className="h-full">
                 <div className="min-h-screen flex flex-col py-auto pb-12 sm:px-6 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-md 0">
+                <div className="mx-auto sm:mx-auto sm:w-full sm:max-w-md 0">
                     <div className=" flex items-center mx-auto ">
                       <EmailLottie />
                     </div>
