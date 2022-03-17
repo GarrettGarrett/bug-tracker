@@ -14,17 +14,17 @@ function capitalizeFirstLetter(string) {
     }
   }
 
-function getRandomID({session}) {
+function getRandomID() {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
   }
 
 
-function ProjectsListed({projects, setCurrentProject}) {
+function ProjectsListed({projects, setCurrentProject, session}) {
     let context = useAppContext()
 
   return (
     <>
-    <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Projects`}</h3>
+    <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session?.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Projects`}</h3>
     {/* <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Projects</h3> */}
           <div className="bg-white shadow overflow-hidden sm:rounded-md mb-28">
             <ul role="list" className="divide-y divide-gray-200">

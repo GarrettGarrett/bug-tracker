@@ -100,8 +100,10 @@ export default function AllProjectsGrid({session}) {
           }
 
           { 
-            data?.length > 0 && <ProjectsListed projects={data} 
+            data?.length > 0 && <ProjectsListed 
+            projects={data} 
             setCurrentProject={setCurrentProject}
+            session={session}
             />
             
           }
