@@ -10,7 +10,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   session: { strategy: "jwt" }, //this is what enables credentials user/pass to work
-
+  maxAge: 30 * 24 * 60 * 60, // 30 days
   callbacks: {
 
     redirect({ url, baseUrl   }) {
@@ -26,6 +26,7 @@ export default NextAuth({
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
+      maxAge: 30 * 24 * 60 * 60, // 30 days
     }),
 
     EmailProvider({
