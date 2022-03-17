@@ -109,7 +109,7 @@ return (
                                     <div className="flex -my-3 pt-3 hover:cursor-pointer" >
                                             <a
                                             onClick={()=> signIn("credentials", { username: "developer", password: "" })}
-                                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-FrenchViolet text-sm font-medium text-gray-500 hover:bg-opacity-90"
+                                            className="mr-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-FrenchViolet bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90 "
                                             >
                                                 
                                                 <span className="text-white px-2.5">Developer</span>
@@ -117,24 +117,24 @@ return (
                                 
                                             <a
                                             onClick={()=> signIn("credentials", { username: "admin", password: "" })}
-                                            className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-Verdigris text-sm font-medium text-gray-500 hover:bg-opacity-90"
+                                            className="ml-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-Verdigris bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90"
                                             >
                                                 <span className="text-white px-6">Admin</span>
                                             </a>
                                     </div>
 
 
-                                    <div className="flex hover:cursor-pointer" >
+                                    <div className="flex hover:cursor-pointer " >
                                         <a
                                         onClick={()=> signIn("credentials", { username: "user", password: "" })}
-                                        className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-Tan text-sm font-medium text-gray-500 hover:bg-opacity-90"
+                                        className="mr-1 mt-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-Tan bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90"
                                         >
                                             <span className="text-white px-6">User</span>
                                         </a>
 
                                         <a
                                         onClick={()=> signIn("credentials", { username: "manager", password: "" })}
-                                        className="w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-FuzzyWuzzy text-sm font-medium text-gray-500 hover:bg-opacity-90"
+                                        className="ml-1 mt-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-FuzzyWuzzy bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90"
                                         >
                                             <span className="text-white px-6">Manager</span>
                                         </a>
