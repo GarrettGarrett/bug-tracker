@@ -241,10 +241,10 @@ function getSelectedUserIDs(Members){
                 // Members: [], //added in on submit handle
                
             })
-            setSelectedUserID([]) //clear selected users 
-            setShowEdit(false) //close edit component
             setMutateProject(!mutateProject) //refresh the project object
             mutate('/api/getProjects')
+            setSelectedUserID([]) //clear selected users 
+            setShowEdit(false) //close edit component
         }   
     }
 
