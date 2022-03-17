@@ -4,6 +4,7 @@ import SelectUsers from './SelectUsers'
 import SelectRole from './SelectRole'
 import AllUsersGrid from './AllUsersGrid'
 import { useState, useEffect } from 'react'
+import PartyLottie from './PartyLottie'
 
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
@@ -36,6 +37,7 @@ const defaultUser = [{
   
 
 function RoleAssignment({session}) {
+    const [party, setParty] = useState(false)
     const { data, error, isValidating } = useSWR('/api/getUsersAdminRequired', fetcher)
     const { mutate } = useSWRConfig()
     const [selectedRole, setSelectedRole] = useState(roles[0])
@@ -43,6 +45,16 @@ function RoleAssignment({session}) {
     const [buttonMessage, setButtonMessage] = useState("Submit")
     const [loading, setLoading] = useState(false)
     const [reFetch, setRefetch] = useState(false)
+
+    useEffect(() => {
+        async function sleep(){
+            setTimeout(() => {
+                setParty(false)
+               
+            }, 1000);
+        }
+        sleep()
+    }, [party])
     
 
     useEffect(() => {
@@ -64,6 +76,7 @@ function RoleAssignment({session}) {
 
 
     async function handleSubmit(){
+        setParty(true)
         setLoading(true)
         let submitRole = await fetch ('/api/setRole', {
             method: 'POST',
