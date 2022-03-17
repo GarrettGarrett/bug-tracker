@@ -76,10 +76,11 @@ function SideBarHeader() {
       ]
 
       useEffect(() => { //once finished loading, if not authenticated then route to login
-        console.log("66", status)
+
         if (status != "loading"){
           if (status != "authenticated"){
-            Router.push("/auth/email-signin")
+            console.log(status)
+            // Router.push("/auth/email-signin")
           }
         }
         }, [status])
