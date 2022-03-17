@@ -50,7 +50,7 @@ return (
                             type="email"
                             autoComplete="email"
                             required
-                            className="text-black appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="text-black appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-FuzzyWuzzy focus:border-FuzzyWuzzy sm:text-sm"
                             />
                         </div>
                         </div>
@@ -68,7 +68,7 @@ return (
                         </div>
                     </form>
 
-                    <div className="mt-6">
+                    <div className="mt-4">
                         <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-gray-300" />
@@ -78,7 +78,7 @@ return (
                         </div>
                         </div>
 
-                        <div className="mt-6 grid grid-cols-1 gap-3">
+                        <div className="mt-2 grid grid-cols-1 gap-3">
 {/* 
                         <div
                         onClick={() => signIn('github')}

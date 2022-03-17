@@ -38,7 +38,8 @@ export default function TicketTypeDrop({ticket, setTicket, type, existingTicket,
   const [selected, setSelected] = useState(!existingTicket ? type[0] : findSelectedTypeByExistingTicket(existingTicket.Type))
 
   return (
-    <Listbox value={selected} onChange={(e)=>{
+    
+    <Listbox cvalue={selected} onChange={(e)=>{
       setSelected(e)
       setTicket({...ticket, Type: e.name})
       if (existingTicket) { //only true for edit Ticket page
@@ -49,7 +50,7 @@ export default function TicketTypeDrop({ticket, setTicket, type, existingTicket,
         <>
           <Listbox.Label className="block text-sm font-medium text-gray-700">Type</Listbox.Label>
           <div className="mt-1 relative">
-            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <Listbox.Button className="z-30 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <div className="flex items-center">
                 <span
                   
@@ -72,7 +73,7 @@ export default function TicketTypeDrop({ticket, setTicket, type, existingTicket,
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="z-30 absolute  mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                 {type.map((person) => (
                   <Listbox.Option
                     key={person.id}
@@ -122,5 +123,6 @@ export default function TicketTypeDrop({ticket, setTicket, type, existingTicket,
         </>
       )}
     </Listbox>
+ 
   )
 }
