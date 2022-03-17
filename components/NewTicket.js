@@ -144,7 +144,6 @@ export default function NewTicket({ showNewTicket, setShowNewTicket, _projects})
         _projects?.length > 0 ? _projects[0]._id :
         projects?.length > 0 ? projects[0]._id : null)
     const [selected, setSelected] = useState(projects?.length > 0 ? projects[0] : fallBackItem[0])
-    console.log("🚀 ~ file: NewTicket.js ~ line 200 ~ NewTicket ~ projects", projects)
 
     
 // useEffect(() => {

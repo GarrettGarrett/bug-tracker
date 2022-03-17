@@ -79,7 +79,6 @@ function SideBarHeader() {
 
         if (status != "loading"){
           if (status != "authenticated"){
-            console.log(status)
             Router.push("/auth/email-signin")
           }
         }

@@ -80,7 +80,7 @@ function AllTickets({session}) {
         
         data?.TicketsForUser?.length == 0 && !context.showTicket && projects?.length > 0 &&
         <>
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
+        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
         <EmptyTicketState fromAllTicketsPage={true}/>
         <div className='h-full flex justify-center '>
           <div className='max-w-lg m-auto'>
@@ -95,7 +95,7 @@ function AllTickets({session}) {
 
         data?.TicketsForUser?.length == 0 && !context.showTicket && projects?.length == 0 &&
         <>
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
+        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
         <EmptyProjectState 
           customTitle={"Create a Project Before Creating a Ticket"} 
           fromAllTicketsPage={true}
