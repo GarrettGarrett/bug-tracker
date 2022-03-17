@@ -31,6 +31,14 @@ import useSWR, { useSWRConfig } from 'swr'
 import Image from 'next/image'
 
 
+
+function getNameFromEmail(str){
+  if (str){
+    let indexOfAt = str.indexOf("@")
+    return str.substring(0, indexOfAt)
+  }
+}
+
 function getRandomID() {
   return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
@@ -54,6 +62,7 @@ function SideBarHeader() {
     let context = useAppContext()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
       const { data: session, status } = useSession()
+      console.log("🚀 ~ file: SideBarHeader.js ~ line 65 ~ SideBarHeader ~ session", session)
       const loading = status === "loading"
       const Router = useRouter()
       const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
@@ -335,7 +344,12 @@ function SideBarHeader() {
                               // />
                               :
                             // if no image, use first letter of name 
-                            <span className='font-bold text-black text-2xl mx-auto'>{session?.user?.name[0].toLocaleUpperCase()}</span>
+                            <span className='font-bold text-black text-2xl mx-auto'>{
+                              session?.user?.name ? 
+                              session.user.name[0].toLocaleUpperCase() : 
+                              session?.user?.email ? session.user.email[0].toLocaleUpperCase() :
+                              "N"
+                              }</span>
 
                           }
                           

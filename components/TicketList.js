@@ -19,7 +19,7 @@ function colorBadgeByPriority(priority) {
   return color
 }
 
-export default function TicketList({selectedTicket, tickets, showTicket, setShowTicket, setShowProject, setSelectedTicket, showEdit, setShowEdit, findProjectByProjectID, data, setSelectedProject, setTheParentProjectID}) {
+export default function TicketList({selectedTicket, tickets, showTicket, setShowTicket, setShowProject, setSelectedTicket, showEdit, setShowEdit, findProjectByProjectID, data, setSelectedProject, setTheParentProjectID, selectedArray}) {
   return (
     <>
 
@@ -28,6 +28,7 @@ export default function TicketList({selectedTicket, tickets, showTicket, setShow
       <ul role="list" className="divide-y divide-gray-200">
         {tickets.map((Ticket, i) => (
           <li 
+          className={`${selectedArray.includes(Ticket.Status) ? '' : 'hidden'}`}
           onClick={()=> {
             setShowTicket(true)
             setSelectedTicket(i)

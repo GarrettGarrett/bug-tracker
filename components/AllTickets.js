@@ -8,6 +8,8 @@ import { useAppContext } from '../context/contextState'
 import { parseConfigFileTextToJson } from 'typescript'
 import EmptyTicketState from './EmptyTicketState'
 import EmptySpaceLottie from './EmptySpaceLottie'
+import EmptyProjectState from './EmptyProjectState'
+import AllTicketsFilter from './AllTicketsFilter'
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -19,6 +21,13 @@ function getNameFromEmail(str){
     return str.substring(0, indexOfAt)
   }
 }
+
+function getData(endpoint){
+  const { data, error, isValidating } = useSWR(endpoint, fetcher)
+  const data1 =  { data :data}
+  return data1.data
+}
+  
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
@@ -32,11 +41,17 @@ function AllTickets({session}) {
     const [mutateProject, setMutateProject] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
     const [theParentProjectID, setTheParentProjectID] = useState(null)
+    const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
+    const [selectedArray, setSelectedArray] = useState([
+      "Additional Info Required",
+      "Resolved",
+      "In Progress",
+      "Open"
+    ])
 
     useEffect(() => {
       mutate(`api/getTicketsByUserID/${session?.user?.email}`)
     }, [mutateProject])
-
 
     function findProjectByProjectID(projectsArray, projectID){
       let returnObject
@@ -63,7 +78,8 @@ function AllTickets({session}) {
     <>
     
       {
-        data?.TicketsForUser?.length == 0 && !context.showTicket && 
+        
+        data?.TicketsForUser?.length == 0 && !context.showTicket && projects?.length > 0 &&
         <>
         <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
         <EmptyTicketState fromAllTicketsPage={true}/>
@@ -77,10 +93,32 @@ function AllTickets({session}) {
       }
 
       {
-        data?.TicketsForUser?.length > 0 && !context.showTicket && 
+
+        data?.TicketsForUser?.length == 0 && !context.showTicket && projects?.length == 0 &&
         <>
-        {/* open tickets */}
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Open Tickets`}</h3>
+        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Tickets</h3>
+        <EmptyProjectState 
+          customTitle={"Create a Project Before Creating a Ticket"} 
+          fromAllTicketsPage={true}
+        />
+        <div className='h-full flex justify-center '>
+          <div className='max-w-lg m-auto'>
+            <EmptySpaceLottie />
+          </div>
+
+        </div>
+        </>
+      }
+
+      {
+        data?.TicketsForUser.length > 0 && !context.showTicket && 
+        <>
+
+        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
+        <AllTicketsFilter 
+          selectedArray={selectedArray}
+          setSelectedArray={setSelectedArray}
+        />
         <TicketList
           setTheParentProjectID={setTheParentProjectID}
           setSelectedProject={setSelectedProject}
@@ -90,33 +128,16 @@ function AllTickets({session}) {
           setSelectedTicket={setSelectedTicket}
           showTicket={context.showTicket}
           setShowTicket={context.setShowTicket}
-          tickets={data.TicketsForUser.filter(ticket => ticket.Status != "Resolved")}
-          // tickets={data.TicketsForUser pilots.filter(pilot => pilot.faction === "Rebels")}
+          tickets={data.TicketsForUser}
+          selectedArray={selectedArray}
         />
-
-        {
-          data.TicketsForUser.filter(ticket => ticket.Status == "Resolved").length > 0 && 
-          <>
-          {/* closed tickets */}
-          <h3 className="pt-8 pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Closed Tickets`}</h3>
-                <TicketList
-                  setTheParentProjectID={setTheParentProjectID}
-                  setSelectedProject={setSelectedProject}
-                  data={data}
-                  findProjectByProjectID={findProjectByProjectID}
-                  selectedTicket={selectedTicket}
-                  setSelectedTicket={setSelectedTicket}
-                  showTicket={context.showTicket}
-                  setShowTicket={context.setShowTicket}
-                  tickets={data.TicketsForUser.filter(ticket => ticket.Status == "Resolved")}
-                  // tickets={data.TicketsForUser pilots.filter(pilot => pilot.faction === "Rebels")}
-                />
-          </>
-        }
-       
         </>
+    }
+
+       
+      
         
-      }
+      
       {
         data && context.showTicket && selectedProject &&       
         <ShowTicket
