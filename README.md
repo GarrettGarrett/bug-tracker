@@ -32,15 +32,23 @@
 
 ## Key Features
 
-* 
-* Convert inventory stored in Scout into Shopify's product.csv file format 
-* Convert inventory stored in Scout into Shopify's product.csv file format 
+* Authentication and Demo User Account Access with NextAuth.js.
+* User Permissions.
+* Create Projects, Tickets, and Assign User Roles.
+* Post comments.
+* Upload images with Cloudinary.
+* Ticket history tracking.
+* Responsive web design.
+
+
 
 ## Built With
-![screenshot](public/builtwith.png)
+![screenshot](public/images/stack.png)
 
 * JavaScript
+* NextAuth.js
 * Next.js
 * Tailwind CSS
 * Vercel
+* MongoDB
 
