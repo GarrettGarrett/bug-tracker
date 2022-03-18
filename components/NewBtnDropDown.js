@@ -35,7 +35,7 @@ export default function NewBtnDropDown({context, projects}) {
               {({ active }) => (
                 <a
                   onClick={() => {
-                    if (context?.user == "Admin" || context?.user == "Project Manager" ){
+                    if (context?.role == "Admin" || context?.role == "Project Manager" ){
                       context.setTab(-1)
                     } else {
                       toast({

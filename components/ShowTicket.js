@@ -74,9 +74,10 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
             </div>
             <div 
             onClick={()=> {
-              if (context?.user == "Admin" || context?.user == "Project Manager" || context?.user == "Developer") {
+              if (context?.role == "Admin" || context?.role == "Project Manager" || context?.role == "Developer") {
                 setShowEdit(!showEdit)
               } else {
+                console.log(context.role)
                 toast({
                   title: `You Need Permission to Perform This Action`,
                   status: 'error',

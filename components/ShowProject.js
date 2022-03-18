@@ -59,7 +59,7 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                 </div>
                 <div 
                   onClick={()=> {
-                    if (context?.user == "Admin" || context?.user == "Project Manager" ) {
+                    if (context?.role == "Admin" || context?.role == "Project Manager" ) {
                       setShowEditProject(true)
                     } else {
                       toast({
