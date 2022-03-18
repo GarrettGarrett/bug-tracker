@@ -11,7 +11,7 @@
       <div>
         <fieldset className="mb-5 pl-1">
           <legend className="sr-only">Notification method</legend>
-            <div className="sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+            <div className="lg:flex lg:items-center lg:text-center lg:space-y-0 lg:space-x-10">
              {notificationMethods.map((notificationMethod) => (
               <div key={notificationMethod.id} className="flex items-center">
                 <input
