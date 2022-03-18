@@ -23,11 +23,11 @@ export default function AlphaUsersSearch({searchBar , setSearchBar, filterUsers,
         </div>
         <input
             onChange={(e) => setSearchBar(e.target.value)}
-            type="search"
+            // type="search"
             value={searchBar}
             name="search"
             id="search"
-            className="text-black focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 md:text-sm border-gray-300 rounded-md text-sm"
+            className="bg-white text-black focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 md:text-sm border-gray-300 rounded-md text-sm"
             placeholder="Search Users"
         />
       </div>
