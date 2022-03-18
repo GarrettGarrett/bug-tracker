@@ -30,9 +30,9 @@
 * View [here](https://bug-tracker-tau.vercel.app/)
 
 
-<!-- ## Key Features
+## Key Features
 
-*  
+* 
 * Convert inventory stored in Scout into Shopify's product.csv file format 
 * Convert inventory stored in Scout into Shopify's product.csv file format 
 
@@ -42,5 +42,5 @@
 * JavaScript
 * Next.js
 * Tailwind CSS
-* Vercel -->
+* Vercel
 
