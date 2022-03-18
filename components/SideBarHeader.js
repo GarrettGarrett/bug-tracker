@@ -287,7 +287,7 @@ function SideBarHeader() {
                 </button>
                 <div className="flex-1 flex justify-between px-4 sm:px-6">
  
-                  <div className="invisible md:w-full md:pt-3 md:visible">
+                  <div className="mt-1 invisible md:w-full md:pt-3 md:visible">
                     {
                       <SearchBar  
                         setSearchBarSelectedProject={context.setSearchBarSelectedProject}

@@ -443,7 +443,7 @@ if (buttonMessage != "Submit") {
                             id="description"
                             name="description"
                             rows={3}
-                            className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                            className="pl-3 pt-1.5 w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                             defaultValue={''}
                             placeholder='Ticket Description'
                         />

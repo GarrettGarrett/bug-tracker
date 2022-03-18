@@ -189,7 +189,7 @@ export default function NewProject() {
                         id="description"
                         name="description"
                         rows={3}
-                        className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 md:text-sm border border-gray-300 rounded-md text-lg"
+                        className="pl-3 pt-1.5 w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 md:text-sm border border-gray-300 rounded-md text-lg"
                         defaultValue={''}
                         placeholder='Description'
                     />
