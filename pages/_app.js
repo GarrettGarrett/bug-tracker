@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import {ThemeProvider} from 'next-themes'
 import { SessionProvider } from "next-auth/react"
 import { AppWrapper } from '../context/contextState'
+import { ChakraProvider } from '@chakra-ui/react'
 
 export default function MyApp({
   Component,
@@ -12,7 +13,9 @@ export default function MyApp({
       <ThemeProvider attribute="class" >
         <SessionProvider session={session}>
         <AppWrapper>
-          <Component {...pageProps} />
+          <ChakraProvider>
+              <Component {...pageProps} />
+            </ChakraProvider>
           </AppWrapper>
         </SessionProvider>
       </ThemeProvider>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useAppContext } from '../../context/contextState'
 import BugSearchLogo from '../../components/BugSearchLogo'
 import LoginLogo from '../../components/LoginLogo'
+import { Tooltip } from '@chakra-ui/react'
 
 
 export default function SignIn({ csrfToken }) {
@@ -69,6 +70,7 @@ return (
                             <>
                                         
                                     <div className="flex -my-3 pt-3 hover:cursor-pointer" >
+                                        <Tooltip label='Create & Edit Tickets' placement='top-start'>
                                             <a
                                             onClick={()=> signIn("credentials", { username: "developer", password: "" })}
                                             className="mr-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-FrenchViolet bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90 "
@@ -76,30 +78,38 @@ return (
                                                 
                                                 <span className="text-white px-2.5">Developer</span>
                                             </a>
+                                        </Tooltip>
                                 
+                                        <Tooltip label='All Permissions' placement='top-end'>
                                             <a
                                             onClick={()=> signIn("credentials", { username: "admin", password: "" })}
                                             className="ml-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-Verdigris bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90"
                                             >
                                                 <span className="text-white px-6">Admin</span>
                                             </a>
+                                        </Tooltip>
                                     </div>
 
 
                                     <div className="flex hover:cursor-pointer " >
+                                        
+                                    <Tooltip label='Create Tickets' placement='bottom-start'>
                                         <a
                                         onClick={()=> signIn("credentials", { username: "user", password: "" })}
                                         className="mr-1 mt-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-Tan bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90"
                                         >
                                             <span className="text-white px-6">User</span>
                                         </a>
+                                    </Tooltip>
 
+                                    <Tooltip label='Create Tickets, Edit Tickets, Create Projects, Edit Projects, and Assign Roles' placement='bottom-end'>
                                         <a
                                         onClick={()=> signIn("credentials", { username: "manager", password: "" })}
                                         className="ml-1 mt-1 w-full inline-flex justify-center py-1.5 px-4 border border-gray-300 rounded-md shadow-sm bg-FuzzyWuzzy bg-opacity-80 text-sm font-medium text-gray-500 hover:bg-opacity-90"
                                         >
                                             <span className="text-white px-6">Manager</span>
                                         </a>
+                                    </Tooltip>
                                     </div>
                                 
                         

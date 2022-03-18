@@ -29,6 +29,8 @@ import Home from './Home'
 import SearchBar from './SearchBar'
 import useSWR, { useSWRConfig } from 'swr'
 import Image from 'next/image'
+import { useToast, Wrap, WrapItem, Button } from '@chakra-ui/react'
+
 
 function getData(endpoint){
   const { data, error, isValidating } = useSWR(endpoint, fetcher)
@@ -73,8 +75,9 @@ function SideBarHeader() {
       if (typeof window !== "undefined" && loading) return null
   return (
     <>
-    {/* Narrow sidebar */}
+      {/* Narrow sidebar */}
       <div className="hidden w-28 bg-indigo-700 overflow-y-auto md:block">
+
         <div className="w-full py-6 flex flex-col items-center">
           <div className="flex-shrink-0 flex items-center">
           <svg
@@ -426,6 +429,7 @@ function SideBarHeader() {
             </section>
           </main>          
         </div>
+
       </div>
     </>
   )

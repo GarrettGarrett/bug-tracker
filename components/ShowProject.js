@@ -9,9 +9,12 @@ import EmptyTicketState from './EmptyTicketState'
 import { useState } from 'react'
 import NewTicket from '../components/NewTicket'
 import AllTicketsFilter from './AllTicketsFilter'
+import { useAppContext } from '../context/contextState'
+import { useToast } from '@chakra-ui/react'
 
 function ShowProject({project, setShowProject, showTicket, setShowTicket, selectedTicket, setSelectedTicket, session, showEdit, setShowEdit, mutateProject, setMutateProject, setShowEditProject, showEditProject, projects}) {
-
+  const toast = useToast()
+  let context = useAppContext()
   const [showNewTicket, setShowNewTicket] = useState(false)
   const [selectedArray, setSelectedArray] = useState([
     "Additional Info Required",
@@ -55,7 +58,18 @@ function ShowProject({project, setShowProject, showTicket, setShowTicket, select
                     <p className='pb-3 text-black pt-1 text-sm'>{project.Description}</p>
                 </div>
                 <div 
-                  onClick={()=> setShowEditProject(true)}
+                  onClick={()=> {
+                    if (context?.user == "Admin" || context?.user == "Project Manager" ) {
+                      setShowEditProject(true)
+                    } else {
+                      toast({
+                        title: `You Need Permission to Perform This Action`,
+                        status: 'error',
+                        isClosable: true,
+                      })
+                    }
+                    
+                  }}
                   className='pt-8'>
                     <PencilAltIcon className='hover:cursor-pointer text-black h-5 pl-4'/>
                     <h1 className='text-gray-500 pl-3 text-sm'>Edit</h1>

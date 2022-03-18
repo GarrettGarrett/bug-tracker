@@ -8,6 +8,8 @@ import ImageUploader from './ImageUploader'
 import useSWR, { useSWRConfig } from 'swr'
 import EditTicket from './EditTicket'
 import History from './History'
+import { useAppContext } from '../context/contextState'
+import { useToast } from '@chakra-ui/react'
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
@@ -19,6 +21,8 @@ function getNameFromEmail(str){
   }
 
 function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEdit, setShowEdit, mutateProject, setMutateProject, theParentProjectID}) {
+  const toast = useToast()
+  let context = useAppContext()
   const [mutateNewComment, setMutateNewComment] = useState(false)
   const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
   const { mutate } = useSWRConfig()
@@ -48,7 +52,16 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
   return (
     <div className='mb-28'>
     {
-      showEdit ? <EditTicket mutateProject={mutateProject} setMutateProject={setMutateProject} session={session} showEdit={showEdit} setShowEdit={setShowEdit} existingTicket={ticket} existingProject={project}/>
+      showEdit ? 
+      <EditTicket 
+        mutateProject={mutateProject} 
+        setMutateProject={setMutateProject} 
+        session={session} 
+        showEdit={showEdit} 
+        setShowEdit={setShowEdit} 
+        existingTicket={ticket} 
+        existingProject={project}
+      />
       :
 
       <div className='grid-cols-1 grid md:grid-cols-2 gap-4'>
@@ -60,7 +73,17 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
               <p className="mt-1 max-w-2xl text-sm text-gray-500">{ticket.Description}</p>
             </div>
             <div 
-            onClick={()=> {setShowEdit(!showEdit)}}
+            onClick={()=> {
+              if (context?.user == "Admin" || context?.user == "Project Manager" || context?.user == "Developer") {
+                setShowEdit(!showEdit)
+              } else {
+                toast({
+                  title: `You Need Permission to Perform This Action`,
+                  status: 'error',
+                  isClosable: true,
+                })
+              }
+            }}
             className='pt-1'>
               <PencilAltIcon className='hover:cursor-pointer text-black h-5 pl-4'/>
               <h1 className='text-gray-500 pl-3 text-sm'>Edit</h1>

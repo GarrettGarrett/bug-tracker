@@ -2,12 +2,15 @@
 import { Fragment } from 'react'
 import { Menu, Transition,  } from '@headlessui/react'
 import { PlusSmIcon } from '@heroicons/react/solid'
+import { useToast } from '@chakra-ui/react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function NewBtnDropDown({context, projects}) {
+  const toast = useToast()
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -31,7 +34,18 @@ export default function NewBtnDropDown({context, projects}) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                   onClick={() => context.setTab(-1)}
+                  onClick={() => {
+                    if (context?.user == "Admin" || context?.user == "Project Manager" ){
+                      context.setTab(-1)
+                    } else {
+                      toast({
+                        title: `You Need Permission to Perform This Action`,
+                        status: 'error',
+                        isClosable: true,
+                      })
+                      
+                    }
+                  }}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -44,8 +58,10 @@ export default function NewBtnDropDown({context, projects}) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                onClick={() => context.setTab(-2)}
-                  href="#"
+                onClick={() => {
+                  context.setTab(-2)
+                }}
+                 
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     `block px-4 py-2 text-sm ${projects?.length > 0 ? '' : "hidden"}`

@@ -1,8 +1,9 @@
 import { createContext, useContext } from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 const AppContext = createContext();
 import useSWR, { useSWRConfig } from 'swr'
 import { useSession, signIn, signOut } from "next-auth/react"
+
 
 export function AppWrapper({ children }) {
   const { data: session, status } = useSession()
@@ -12,6 +13,9 @@ export function AppWrapper({ children }) {
   const [showProject, setShowProject] = useState(false)
   const [showTicket, setShowTicket] = useState(false)
   const [showEditProject, setShowEditProject] = useState(false)
+  
+
+
 
   useEffect(() => {
     if (session) {

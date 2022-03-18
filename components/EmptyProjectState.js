@@ -1,9 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { PlusIcon } from '@heroicons/react/solid'
 import { useAppContext } from '../context/contextState'
+import { useToast } from '@chakra-ui/react'
 
 export default function EmptyProjectState({customTitle}) {
   let context = useAppContext()
+  const toast = useToast()
 
   return (
     <div className="py-6 bg-white shadow overflow-hidden sm:rounded-md rounded-md">
@@ -16,7 +18,16 @@ export default function EmptyProjectState({customTitle}) {
       <div className="mt-6">
         <button
         onClick={()=> {
+          if (context?.user == "Admin" || context?.user == "Project Manager" ) {
             context.setTab(-1)
+          } else {
+            toast({
+              title: `You Need Permission to Perform This Action`,
+              status: 'error',
+              isClosable: true,
+            })
+          }
+            
         }}
           type="button"
           className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
