@@ -12,10 +12,9 @@ function getUserNameFromUserID(userID, allUserObjects, type){
             if(value == userID){
                 name = allUserObjects.name
             }
-    }
+        }
     }
     if (type = "newValue" && typeof allUserObjects != "undefined") {
-
         allUserObjects.forEach(userObject => {
             if(userObject._id == userID){
                 name = userObject.name
@@ -48,7 +47,6 @@ export default async (req, res) => {
             if (session) {
                 const fieldsToUpdate = []
                 const fieldsToUpdateMembersOnly = {}
-
                 for (const [key, value] of Object.entries(req.body.editedValues)) {
                     if (value != null 
                     && key != 'selectedProjectID' 
@@ -62,11 +60,7 @@ export default async (req, res) => {
                         }
                     }
                   }
-    
-
-
                 const { db } = await connectToDatabase('myFirstDatabase');
-
                 // for each field that has been updated (not null),
                 // find the old value in the old object
                 // track the updated field name, old value, new value
@@ -85,23 +79,14 @@ export default async (req, res) => {
                                         CreatedAt: moment()
                                     }
                                 }},{upsert: true})
-        
-        
-                        
                         if (newHistory){
                             if (!fieldsToUpdateMembersOnly?.MembersRemoved) { //if no member updates, then send the return response
                                 return res.status(200).json(newHistory)   
-                            }
-                            
+                            } 
                         }
                     }
-                        }
-                        
-                }
-                
-           
-        
-
+                }      
+            }
                 if (fieldsToUpdateMembersOnly?.MembersRemoved || fieldsToUpdateMembersOnly?.MembersAdded){ //this is for updating members only
                     const newHistory = await db.collection("projects").updateOne({My_ID: req.body.ProjectID}, 
                             {$push: {
@@ -115,16 +100,10 @@ export default async (req, res) => {
                                     CreatedAt: moment()
                                 }
                             }},{upsert: true})
-    
-    
-                    
                     if (newHistory){
                         return res.status(200).json(newHistory)   
                     }
-           
                 }
-                
-           
         }
     }
 }

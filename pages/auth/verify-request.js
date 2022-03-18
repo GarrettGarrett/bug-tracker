@@ -12,36 +12,24 @@ function verifyrequest() {
                     <div className=" flex items-center mx-auto ">
                       <EmailLottie />
                     </div>
-                    
-
                     <h2 className="-mt-16 text-center text-3xl font-extrabold text-gray-900">Check Your Email</h2>
-                
                 </div>
-
                 <div className=" mt-8 sm:mx-auto sm:w-5/6 sm:max-w-md">
                     <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    
           <div className="w-56 m-auto pb-2">
             <LoginLogo />
           </div>
-
-
                     <div className="mt-6">
                         <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                         </div>
                         <div className="relative flex justify-center text-sm">
-                        
                         <span className='text-FuzzyWuzzy text-xl text-center'>
                         A sign in link has been sent to your email address.
-
                         </span>
                         </div>
                         </div>
-
-                        <div className="mt-6 grid grid-cols-1 gap-3">
-
-                     
+                        <div className="mt-6 grid grid-cols-1 gap-3">      
                         </div>
                     </div>
                     </div>
@@ -50,7 +38,6 @@ function verifyrequest() {
         </div>
     </div>
   </>
-
 )
 }
 

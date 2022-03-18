@@ -1,11 +1,7 @@
 import React from 'react'
 import SideBarHeader from '../components/SideBarHeader'
 
-
 function dashboard() {
-
-
-
     return (
       <div className='absolute inset-0'>
         <div className="absolute inset-0 h-screen bg-gray-50">
@@ -17,6 +13,6 @@ function dashboard() {
         </div>
       </div>
     )
-    }
+  }
       
 export default dashboard
