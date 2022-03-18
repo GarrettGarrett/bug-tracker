@@ -2,27 +2,20 @@ import { getEventListeners } from "events"
 import { useState } from 'react'
 import Image from 'next/image'
 
-
 function getNameFromEmail(str){
     if (str){
       let indexOfAt = str.indexOf("@")
       return str.substring(0, indexOfAt)
     }
   }
-
   
-  export default function AllUsersAlpha({users, selectedUserID, setSelectedUserID, editedValues, setEditedValues, existingProject}) {
-      
-    
+  export default function AllUsersAlpha({users, selectedUserID, setSelectedUserID, editedValues, setEditedValues, existingProject}) {    
       function handleRemove(id) {
         setSelectedUserID(selectedUserID.filter(function(e) { return e !== id }))
       }
-
       function handleSelect(id){
         setSelectedUserID([...selectedUserID, id])
-      }
-
-   
+      }   
 
     return (
       <nav className="h-full overflow-y-auto" aria-label="Directory">
@@ -49,29 +42,25 @@ function getNameFromEmail(str){
                         if (existingProject){ //only true for edit ticket
                           setEditedValues({...editedValues, MembersRemoved: person._id})
                         }
-                        
                     }
-                    
                 }}
                 key={person.id} className="bg-white">
                   <div className={`${selectedUserID.includes(person._id) ? "bg-Tan bg-opacity-70" : ""} relative px-6 py-5 flex space-x-3 rounded-md `}>
                     <div className="flex-shrink-0">
                         {
                             person?.image ? 
-                            // <img className="h-10 w-10 rounded-full object-cover" src={person.image} alt="" />
-                                   <div className='relative h-10 w-10 rounded-full object-cover'>
-                                        <Image
-                                        className='rounded-full'
-                                       
-                                        src={person.image}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        />
-                                    </div>
+                            <div className='relative h-10 w-10 rounded-full object-cover'>
+                                <Image
+                                className='rounded-full'
+                                
+                                src={person.image}
+                                layout="fill"
+                                objectFit="cover"
+                                />
+                            </div>
                             :
                             <span className="h-10 w-10 rounded-full text-black bg-Timberwolf py-3 px-4 font-bold "  >{person?.email[0].toLocaleUpperCase()}</span>
                         }
-                      
                     </div>
                     <div className="flex-1 min-w-0">
                       <a href="#" className="focus:outline-none">
@@ -83,7 +72,6 @@ function getNameFromEmail(str){
                             :
                             <p className="text-sm font-medium text-gray-900">{getNameFromEmail(person?.email)}</p>
                         }
-                        
                         <p className="text-sm text-gray-500 truncate">{person.role}</p>
                       </a>
                     </div>

@@ -5,13 +5,7 @@ import TicketOverView from './TicketOverview'
 import TicketStatusOverview from './TicketSTatusOverview'
 import TicketTypeOverview from './TicketTypeOverview'
 
-
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
-
-function parseTickets (tickets) {
-
-}
-
 
 function Home({session}) {
     const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
@@ -29,14 +23,10 @@ if (data) return (
                 <div className='pt-5'>
                     <TicketStatusOverview tickets={data.TicketsForUser}/>
                 </div>
-               
             </>
-            
         }
     </div>
-)
-   
-
+    )
 }
 
 export default Home

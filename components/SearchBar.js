@@ -3,19 +3,15 @@ import { SearchIcon } from '@heroicons/react/solid'
 import {useState} from 'react'
 import { useAppContext } from '../context/contextState'
 
-
 function SearchBar({data, setSearchBarSelectedProject}) {
     let context = useAppContext()
     const [query, setQuery] = useState('')
-
     const filteredItems =
-
     query === ''
       ? []
       : data.filter((item) => {
           return item.Title.toLowerCase().includes(query.toLowerCase())
         })
-
 
   return (
       <>
@@ -53,9 +49,7 @@ function SearchBar({data, setSearchBarSelectedProject}) {
                 </div>
             )
         }
-
       </>
-   
   )
 }
 

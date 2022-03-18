@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
 
 function parseTickets  (tickets) {
     let New = 0
@@ -32,12 +30,6 @@ function parseTickets  (tickets) {
         }
     })
     return [
-        // {
-        //     title: "New",
-        //     count: New,
-        //     percent:(New / tickets.length),
-        //     color: "bg-blue-400"
-        // },
         {
             title: "Open",
             count: Open,
@@ -62,11 +54,8 @@ function parseTickets  (tickets) {
             percent: AdditionalInfoRequired == 0 ? 0 : Math.floor((AdditionalInfoRequired / tickets.length) * 100),
             color: "bg-FuzzyWuzzy"
         },
-
     ]
 }
-
-
 
 export default function TicketStatusOverview({tickets}) {
     const [ticketStatus, setTicketStatus] = useState(tickets ? parseTickets(tickets) : null)

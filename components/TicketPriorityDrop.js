@@ -2,15 +2,12 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-
-
 function findSelectedPriorityByExistingTicket(existingPriority){
   const priorities = [
     { id: 1, name: 'Low', color: "bg-yellow-400" },
     { id: 2, name: 'Medium', color: "bg-blue-400" },
     { id: 3, name: 'High', color: "bg-red-400" },
     { id: 4, name: 'Emergency', color: "bg-red-600 animate-ping" },
-  
   ]
   let returnObj = {}
   priorities.forEach(priority => {
@@ -25,16 +22,12 @@ function findSelectedPriorityByExistingTicket(existingPriority){
   return returnObj
 }
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function TicketPriorityDrop({ticket, setTicket, priorities, existingTicket, editedValues, setEditedValues}) {
   const [selected, setSelected] = useState(!existingTicket ? priorities[0] : findSelectedPriorityByExistingTicket(existingTicket.Priority))
-
-
   return (
     <Listbox value={selected}onChange={(e)=>{
         setSelected(e)
@@ -62,7 +55,6 @@ export default function TicketPriorityDrop({ticket, setTicket, priorities, exist
                 <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
-
             <Transition
               show={open}
               as={Fragment}

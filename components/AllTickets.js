@@ -27,7 +27,6 @@ function getData(endpoint){
   const data1 =  { data :data}
   return data1.data
 }
-  
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
@@ -47,7 +46,6 @@ function AllTickets({session}) {
       "In Progress",
       "Open"
     ])
-
     useEffect(() => {
       mutate(`api/getTicketsByUserID/${session?.user?.email}`)
     }, [mutateProject])
@@ -64,96 +62,78 @@ function AllTickets({session}) {
     }
 
     useEffect(() => {
-     
       if (data?.ProjectsForUser && data?.TicketsForUser[selectedTicket]?.ParentProjectID){
         const selectedProjectObject = findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[selectedTicket].ParentProjectID)
         setSelectedProject(selectedProjectObject)
       }
-
     }, [selectedTicket])
-    
 
   return (
     <>
-    
       {
-        
         data?.TicketsForUser?.length == 0 && !context.showTicket && projects?.length > 0 &&
         <>
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
-        <EmptyTicketState fromAllTicketsPage={true}/>
-        <div className='h-full flex justify-center '>
-          <div className='max-w-lg m-auto'>
-            <EmptySpaceLottie />
+          <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
+          <EmptyTicketState fromAllTicketsPage={true}/>
+          <div className='h-full flex justify-center '>
+            <div className='max-w-lg m-auto'>
+              <EmptySpaceLottie />
+            </div>
           </div>
-
-        </div>
         </>
       }
-
       {
-
         data?.TicketsForUser?.length == 0 && !context.showTicket && projects?.length == 0 &&
         <>
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
-        <EmptyProjectState 
-          customTitle={"Create a Project Before Creating a Ticket"} 
-          fromAllTicketsPage={true}
-        />
-        <div className='h-full flex justify-center '>
-          <div className='max-w-lg m-auto'>
-            <EmptySpaceLottie />
+          <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
+          <EmptyProjectState 
+            customTitle={"Create a Project Before Creating a Ticket"} 
+            fromAllTicketsPage={true}
+          />
+          <div className='h-full flex justify-center '>
+            <div className='max-w-lg m-auto'>
+              <EmptySpaceLottie />
+            </div>
           </div>
-
-        </div>
         </>
       }
-
       {
         data?.TicketsForUser.length > 0 && !context.showTicket && 
         <>
-
-        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
- 
-        
-        <AllTicketsFilter 
-          selectedArray={selectedArray}
-          setSelectedArray={setSelectedArray}
-        />
-        <TicketList
-          setTheParentProjectID={setTheParentProjectID}
-          setSelectedProject={setSelectedProject}
-          data={data}
-          findProjectByProjectID={findProjectByProjectID}
-          selectedTicket={selectedTicket}
-          setSelectedTicket={setSelectedTicket}
-          showTicket={context.showTicket}
-          setShowTicket={context.setShowTicket}
-          tickets={data.TicketsForUser}
-          selectedArray={selectedArray}
-        />
+          <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Tickets`}</h3>
+          <AllTicketsFilter 
+            selectedArray={selectedArray}
+            setSelectedArray={setSelectedArray}
+          />
+          <TicketList
+            setTheParentProjectID={setTheParentProjectID}
+            setSelectedProject={setSelectedProject}
+            data={data}
+            findProjectByProjectID={findProjectByProjectID}
+            selectedTicket={selectedTicket}
+            setSelectedTicket={setSelectedTicket}
+            showTicket={context.showTicket}
+            setShowTicket={context.setShowTicket}
+            tickets={data.TicketsForUser}
+            selectedArray={selectedArray}
+          />
         </>
-    }
-
-       
-      
-        
-      
-      {
-        data && context.showTicket && selectedProject &&       
-        <ShowTicket
-          theParentProjectID={theParentProjectID} 
-          ticket={data.TicketsForUser[selectedTicket]}
-          showTicket={context.showTicket} 
-          setShowTicket={context.setShowTicket}
-          project={selectedProject}
-          session={session}
-          mutateProject={mutateProject} 
-          setMutateProject={setMutateProject}
-          showEdit={showEdit} 
-          setShowEdit={setShowEdit}
-        />
-      }       
+        }    
+        {
+          data && context.showTicket && selectedProject &&       
+          <ShowTicket
+            theParentProjectID={theParentProjectID} 
+            ticket={data.TicketsForUser[selectedTicket]}
+            showTicket={context.showTicket} 
+            setShowTicket={context.setShowTicket}
+            project={selectedProject}
+            session={session}
+            mutateProject={mutateProject} 
+            setMutateProject={setMutateProject}
+            showEdit={showEdit} 
+            setShowEdit={setShowEdit}
+          />
+        }       
     </>
   )
 }

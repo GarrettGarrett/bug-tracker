@@ -3,18 +3,12 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
 export default function SelectRole({selected, setSelected, roles}) {
-  
-
-  return (
+    return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
@@ -22,11 +16,7 @@ export default function SelectRole({selected, setSelected, roles}) {
           <div className="mt-1 relative ">
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center ">
-             
-                               
-                                <span className='font-bold text-black text-2xl  pl-1'>{selected.name[0].toLocaleUpperCase()}</span>
-          
-
+                  <span className='font-bold text-black text-2xl  pl-1'>{selected.name[0].toLocaleUpperCase()}</span>
             {
                 //   some entries have a name, some only have an email. prase the name out of the email if needed.
                 selected?.name ? 
@@ -35,13 +25,11 @@ export default function SelectRole({selected, setSelected, roles}) {
                 <span className="ml-3 block truncate text-black">{selected.email}</span>
                 
             }
-                
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
-
             <Transition
               show={open}
               as={Fragment}
@@ -50,8 +38,6 @@ export default function SelectRole({selected, setSelected, roles}) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-
-
                 {roles.map((role) => (
                   <Listbox.Option
                     key={role.name}
@@ -65,19 +51,14 @@ export default function SelectRole({selected, setSelected, roles}) {
                   >
                     {({ selected, active }) => (
                       <>
-                        <div className="flex items-center">
-                            
+                        <div className="flex items-center"> 
                         <span className='font-bold text-black text-2xl  pl-1'>{role.name[0].toLocaleUpperCase()}</span>
-
                           <span
                             className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
-                          >
-                             
-                                {role.name}
-                              
+                          > 
+                                {role.name} 
                           </span>
                         </div>
-
                         {selected ? (
                           <span
                             className={classNames(
@@ -97,7 +78,6 @@ export default function SelectRole({selected, setSelected, roles}) {
           </div>
         </>
       )}
-     
     </Listbox>
   )
 }

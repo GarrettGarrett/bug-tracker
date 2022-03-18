@@ -2,8 +2,6 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -36,9 +34,7 @@ function findSelectedTypeByExistingTicket(existingType){
 
 export default function TicketTypeDrop({ticket, setTicket, type, existingTicket, editedValues, setEditedValues}) {
   const [selected, setSelected] = useState(!existingTicket ? type[0] : findSelectedTypeByExistingTicket(existingTicket.Type))
-
   return (
-    
     <Listbox cvalue={selected} onChange={(e)=>{
       setSelected(e)
       setTicket({...ticket, Type: e.name})
@@ -53,7 +49,6 @@ export default function TicketTypeDrop({ticket, setTicket, type, existingTicket,
             <Listbox.Button className="z-30 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <div className="flex items-center">
                 <span
-                  
                   className={classNames(
                     selected.color, 
                     'flex-shrink-0 inline-block h-2 w-2 rounded-full'

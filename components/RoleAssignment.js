@@ -6,7 +6,6 @@ import AllUsersGrid from './AllUsersGrid'
 import { useState, useEffect } from 'react'
 import PartyLottie from './PartyLottie'
 
-
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
 const roles = [
@@ -35,7 +34,6 @@ const defaultUser = [{
     email: "alex@email.com"
   }]
   
-
 function RoleAssignment({session}) {
     const [party, setParty] = useState(false)
     const { data, error, isValidating } = useSWR('/api/getUsersAdminRequired', fetcher)
@@ -73,8 +71,6 @@ function RoleAssignment({session}) {
         mutate('/api/getUsersAdminRequired')
     }, [reFetch])
 
-
-
     async function handleSubmit(){
         setParty(true)
         setLoading(true)
@@ -93,8 +89,6 @@ function RoleAssignment({session}) {
         setLoading(false) 
         setRefetch(!reFetch)  //triggers mutate to update swr data     
     }
-
-
    
     if (data?.error) return (
     <>
@@ -105,37 +99,40 @@ function RoleAssignment({session}) {
         </div>
     </>
     ) 
-    
-    
+        
     if (!data?.error) return (
         <>
             <div className='grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-10'>
-            
                 <div>
                     {/* first column */}
                     {
                         data ? 
                     
-                    <SelectUsers users={data} session={session} selected={selectedUser} setSelected={setSelectedUser}/>
+                    <SelectUsers 
+                        users={data} 
+                        session={session} 
+                        selected={selectedUser} 
+                        setSelected={setSelectedUser}
+                    />
                     :
                     <div className='h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
                     }
-
                 </div>
-            
                 <div>
                     {/* second column */}
                     {
                         data ? 
-                    <SelectRole selected={selectedRole} setSelected={setSelectedRole} roles={roles}/>
+                    <SelectRole 
+                        selected={selectedRole} 
+                        setSelected={setSelectedRole} 
+                        roles={roles}
+                    />
                     :
                     <div className='h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
                     }
                 </div>
-            
                 <div className='md:pt-8'>
                     {/* third column */}
-                   
                     {
                         data ? 
                     <button
@@ -153,23 +150,12 @@ function RoleAssignment({session}) {
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                         }
-                        {/* { 
-                   party &&
-                    <div className='absolute w-40 -mt-5 pl-32 '>
-                        <PartyLottie />
-                    </div>} */}
-
-                    
                     </button>
                     :
                     <div className='md:-mt-8 h-14 animate-pulse bg-gray-300 w-full rounded-lg'></div>
                     }
-    
                 </div>
-
-
                 </div>
-
                 <div className='pt-4 pb-32'>
                     {/* all users  */}
                     {
@@ -182,13 +168,9 @@ function RoleAssignment({session}) {
                     :
                     <div className='h-72 animate-pulse bg-gray-300 w-full rounded-lg'></div>
                     }
-                </div>
-                   
+                </div>  
         </>
-
-
     )
-   
 }
 
 export default RoleAssignment

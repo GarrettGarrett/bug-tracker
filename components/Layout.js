@@ -9,13 +9,10 @@ function Layout({ children }) {
         <div className="max-w-3xl mx-auto ">
           <Context />
               { children }
-          
         </div>
-    </div>
-    
+      </div>
     </>
   )
 }
-
 export default Layout;
 

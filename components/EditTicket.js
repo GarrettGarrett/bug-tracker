@@ -12,7 +12,6 @@ import { ArrowLeftIcon } from '@heroicons/react/solid'
 import Toggle from './Toggle'
 import TicketStatusRadio from './TicketStatusRadio'
 
-
 function getRandomID() {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
@@ -62,7 +61,6 @@ function createAlphaObject(data){
                 alphaObject[user.name[0]].push(user)
                 
             }
-            
         } else { // if email user, treat email as name:
             if (!firstLetterArray.includes(user.email[0])) {
                 firstLetterArray.push(user.email[0])
@@ -73,7 +71,6 @@ function createAlphaObject(data){
             }
         }
     })
-   
 
     // now sort a-z
     let sortedAlphaObject = {};
@@ -84,7 +81,6 @@ function createAlphaObject(data){
     });
     return sortedAlphaObject
 }
-
 
 function getData(endpoint){
     const { data, error, isValidating } = useSWR(endpoint, fetcher)
@@ -112,7 +108,6 @@ function getSelectedUserIDs(Members){
         MembersRemoved: null,
         TicketID: existingTicket.TicketID,
     })
-
     // const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
     const { data, error, isValidating } = useSWR(`/api/getUsersByProjectID/${existingProject.My_ID}`, fetcher)
     const projects = getData('/api/getProjects')
@@ -183,7 +178,6 @@ function getSelectedUserIDs(Members){
 
     async function handleSubmit(){
         let errorsArray = handleInputErrors()
-        
         if (errorsArray.length == 0) {
             setLoading(true) //for button loader icon
             // take list of selected user IDs, and add the full user object to project.members
@@ -201,32 +195,25 @@ function getSelectedUserIDs(Members){
                 ...ticket, 
                 Members: selectedUserObjects, 
             }
-            
             // updates ticket 
             const editTicket = await fetch ('/api/editTicket', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({editedValues, selectedUserObjects: selectedUserObjects, TicketID: existingTicket.TicketID})
             }) 
-
             // tracks changes for history
             const newHistory = await fetch ('/api/newHistory', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({editedValues, selectedUserObjects: selectedUserObjects, existingTicket: existingTicket, ProjectID: existingProject.My_ID })
-
             }) 
-
-
             if (editTicket.ok) {
                 setButtonMessage("Added")
             } else {
                 setButtonMessage(editTicket.statusText)
-
             }
             setLoading(false) //for button loader icon
             // clear form values
-
             setTicket({
                 Status: "Open",
                 SubmittedBy: session?.user?.name ? session?.user?.name : getNameFromEmail(session?.user?.email) ,
@@ -239,7 +226,6 @@ function getSelectedUserIDs(Members){
                 Title: '',
                 Description: '',
                 // Members: [], //added in on submit handle
-               
             })
             setMutateProject(!mutateProject) //refresh the project object
             mutate('/api/getProjects')
@@ -247,7 +233,6 @@ function getSelectedUserIDs(Members){
             setShowEdit(false) //close edit component
         }   
     }
-
 
     useEffect(() => {
       if (data) {
@@ -277,79 +262,73 @@ function getSelectedUserIDs(Members){
     if (data ) return (
         <>
         <div className='pb-3 border-b border-gray-200 mb-1 '>
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Edit Ticket</h3>
-                <div 
+            <h3 className="text-lg leading-6 font-medium text-gray-900">Edit Ticket</h3>
+            <div 
                 onClick={()=> setShowEdit(!showEdit)}
                 className=" flex text-center mt-1 max-w-2xl text-sm text-gray-500 pb-4 ">
                     <ArrowLeftIcon className='hover:cursor-pointer h-4 mt-px text-center pr-1'/>
                     Go Back
-                </div>
+            </div>
         </div>
 
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
 {/* First Column */}
             <div>   
-                    <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
-                        {/* dont allow tickets to change projects */}
-                        {/* {
-                            typeof projects != "undefined" && <div className="sm:mt-0 sm:col-span-2 text-black">
-                            <ComboBox setEditedValues={setEditedValues} editedValue={editedValues} projects={projects} ticket={ticket} setTicket={setTicket} selectedProjectID={selectedProjectID} setSelectedProjectID={setSelectedProjectID} existingProject={existingProject}/>
-                            </div>
-                        } */}
+                <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
+                
+                    <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                        <input
+                            type="text"
+                            value={ticket.Title}
+                            onChange={(e) => {
+                                setEditedValues({...editedValues, Title: e.target.value})
+                                setTicket({...ticket, Title: e.target.value})}}
+                            name="first-name"
+                            id="first-name"
+                            autoComplete="given-name"
+                            className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-sm border-gray-300 rounded-md"
+                            placeholder='Ticket Title'
+                        />
+                        </div>
+                    <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
+                        <textarea
+                            value={ticket.Description}
+                            onChange={(e) => {
+                                if (existingTicket){ //only if editing a ticket
+                                    setEditedValues({...editedValues, Description: e.target.value})
+                                }
+                                
+                                setTicket({...ticket, Description: e.target.value})}}
+                            id="description"
+                            name="description"
+                            rows={3}
+                            className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                            defaultValue={''}
+                            placeholder='Ticket Description'
+                        />
+                    </div>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                        <TicketTypeDrop editedValue={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} type={type} ticket={ticket} setTicket={setTicket} />
+                        </div>
+
                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                            <input
-                                type="text"
-                                value={ticket.Title}
-                                onChange={(e) => {
-                                    setEditedValues({...editedValues, Title: e.target.value})
-                                    setTicket({...ticket, Title: e.target.value})}}
-                                name="first-name"
-                                id="first-name"
-                                autoComplete="given-name"
-                                className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s sm:text-sm border-gray-300 rounded-md"
-                                placeholder='Ticket Title'
-                            />
-                         </div>
-                        <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
-                            <textarea
-                                value={ticket.Description}
-                                onChange={(e) => {
-                                    if (existingTicket){ //only if editing a ticket
-                                        setEditedValues({...editedValues, Description: e.target.value})
-                                    }
-                                    
-                                    setTicket({...ticket, Description: e.target.value})}}
-                                id="description"
-                                name="description"
-                                rows={3}
-                                className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                                defaultValue={''}
-                                placeholder='Ticket Description'
-                            />
+                        <TicketPriorityDrop editedValues={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} ticket={ticket} setTicket={setTicket} priorities={priorities}/>
                         </div>
-                        <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                           <TicketTypeDrop editedValue={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} type={type} ticket={ticket} setTicket={setTicket} />
-                         </div>
+                    </div>
 
-                         <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                           <TicketPriorityDrop editedValues={editedValues} setEditedValues={setEditedValues} existingTicket={existingTicket} ticket={ticket} setTicket={setTicket} priorities={priorities}/>
-                         </div>
-                        </div>
-
-                        <div className='pt-2'>
-                       
-                           {/* <Toggle ticket={ticket} setTicket={setTicket} editedValues={editedValues} setEditedValues={setEditedValues}/> */}
-                           <TicketStatusRadio 
-                            ticket={ticket}
-                            setTicket={setTicket}
-                            editedValues={editedValues}
-                            setEditedValues={setEditedValues}
-                           />
-                        </div>
-                        <div className='hidden md:block'>
-                             <NewProjectSubmitButtons  buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
-                        </div>
-
+                    <div className='pt-2'>
+                    
+                        {/* <Toggle ticket={ticket} setTicket={setTicket} editedValues={editedValues} setEditedValues={setEditedValues}/> */}
+                        <TicketStatusRadio 
+                        ticket={ticket}
+                        setTicket={setTicket}
+                        editedValues={editedValues}
+                        setEditedValues={setEditedValues}
+                        />
+                    </div>
+                    <div className='hidden md:block'>
+                            <NewProjectSubmitButtons  buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                    </div>
             </div>
             
 {/* Second Column */}
@@ -363,32 +342,37 @@ function getSelectedUserIDs(Members){
                 {
                     alphaUsersFiltered !== null ?
                     <>
-                    <div>
-                         <AlphaUsersSearch users={alphaUsers} filterUsers={filterUsers} searchBar={searchBar} setSearchBar={setSearchBar} removeFilter={removeFilter}/>
-                        <AllUsersAlpha editedValues={editedValues} setEditedValues={setEditedValues} existingProject={existingProject} users={alphaUsersFiltered} selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
-
-                    </div>
-                       
+                        <div>
+                            <AlphaUsersSearch 
+                                users={alphaUsers} 
+                                filterUsers={filterUsers} 
+                                searchBar={searchBar} 
+                                setSearchBar={setSearchBar} 
+                                removeFilter={removeFilter}
+                            />
+                            <AllUsersAlpha 
+                                editedValues={editedValues} 
+                                setEditedValues={setEditedValues} 
+                                existingProject={existingProject} 
+                                users={alphaUsersFiltered} 
+                                selectedUserID={selectedUserID} s
+                                etSelectedUserID={setSelectedUserID}
+                            />
+                        </div>
                     </>
                     : null
                 }
              </div>
-
-
-
-
-
-            
              <div className='pb-36 block md:hidden md:pb-0'>
-                    <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                <NewProjectSubmitButtons 
+                    buttonMessage={buttonMessage} 
+                    loading={loading} 
+                    visibleErrorString={visibleErrorString} 
+                    handleSubmit={handleSubmit}
+                />
             </div>
-         
-
-
         </div>
-
-        
-        </>
+    </>
        
 
        

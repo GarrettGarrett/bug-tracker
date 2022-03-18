@@ -21,7 +21,6 @@ export default function SignIn({csrfToken}) {
     
   }
 
-
   const [token, setToken] = useState('')
  
   useEffect(() => {
@@ -29,10 +28,8 @@ export default function SignIn({csrfToken}) {
     providersGet()
   }, [])
   
-  
     return (
       <>
-
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <img
@@ -68,9 +65,6 @@ export default function SignIn({csrfToken}) {
                     />
                   </div>
                 </div>
-  
-
-  
                 <div>
                   <button
                     type="submit"
@@ -78,10 +72,8 @@ export default function SignIn({csrfToken}) {
                   >
                     Sign in with Email
                   </button>
-
                 </div>
               </form>
-  
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
@@ -91,9 +83,7 @@ export default function SignIn({csrfToken}) {
                     <span className="px-2 bg-white text-gray-500">Or continue with</span>
                   </div>
                 </div>
-  
                 <div className="mt-6 grid grid-cols-1 gap-3">
-  
                   <div
                  onClick={() => signIn('github')}
                   >

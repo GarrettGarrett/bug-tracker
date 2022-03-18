@@ -11,7 +11,6 @@ import History from './History'
 
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
-
 function getNameFromEmail(str){
     if (str){
       let indexOfAt = str.indexOf("@")
@@ -24,8 +23,6 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
   const { data, error, isValidating } = useSWR(`/api/getImages/${project.My_ID}-${ticket.TicketID}`, fetcher)
   const { mutate } = useSWRConfig()
   const [mutateImage, setMutateImage] = useState(false)
-
-
 
   useEffect(() => {
     mutate(`/api/getComments/${project.My_ID}-${ticket.TicketID}`)
@@ -45,10 +42,8 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
                 returnString += name + ", "
             }
            })
-
         return returnString
     }
-
 
   return (
     <div className='mb-28'>
@@ -106,7 +101,6 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
                 <dt className="text-sm font-medium text-gray-500">Last Updated</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(ticket.UpdatedAt).fromNow()}</dd>
               </div>
-      
              
               <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="sm:col-span-3 text-sm font-medium text-gray-500">Attachments</dt>
@@ -120,11 +114,7 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
                                 <div className="w-0 flex-1 flex items-center">
                                 <PaperClipIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
                                 <span className="ml-2 flex-1 w-0 truncate">{image.title}</span>
-                                
-                                
                               </div>
-                              
-                  
                               <div className="ml-4 flex-shrink-0">
                                 <a target="_blank" href={image.image} className="font-medium text-indigo-600 hover:text-indigo-500">
                                   View
@@ -132,14 +122,10 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
                               </div>
                             </div>
                             <span className="text-gray-500">{image.Description}</span>
-                                
-                          
                         </li>
                         )
                       })
                     }
-      
-                   
                   </ul>
                 </dd>
               </div>
@@ -147,39 +133,29 @@ function ShowTicket({ShowTicket, setShowTicket, ticket, project, session, showEd
           </div>
         </div>
       
-      {/* second column */}
-      <div className='text-black pt-2 sm:pt-12 md:pt-0'>
-      
-      <div className='bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
-        <h3 className="text-lg leading-6 font-medium text-gray-900">Comments</h3>
-        <Comments project={project} session={session} ticket={ticket} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
-        <CommmentPostBox project={project} ticket={ticket} session={session} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
-      </div>
-      
-      
-      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
-        <ImageUploader ticket={ticket} project={project} mutateImage={mutateImage} setMutateImage={setMutateImage}/>
-      </div>
-         
-      <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
-      <h3 className="pb-1 bg-transparent text-lg leading-6 font-medium text-gray-900">History</h3>
-        <History ticket={ticket} project={project}/>
-      </div>
-      
-      
-      </div>
+        {/* second column */}
+          <div className='text-black pt-2 sm:pt-12 md:pt-0'>
+          
+            <div className='bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">Comments</h3>
+              <Comments project={project} session={session} ticket={ticket} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
+              <CommmentPostBox project={project} ticket={ticket} session={session} mutateNewComment={mutateNewComment} setMutateNewComment={setMutateNewComment}/>
+            </div>
+            
+            
+            <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
+              <ImageUploader ticket={ticket} project={project} mutateImage={mutateImage} setMutateImage={setMutateImage}/>
+            </div>
+              
+            <div className='mt-4 bg-white shadow overflow-hidden sm:rounded-lg p-4 rounded-md'>
+            <h3 className="pb-1 bg-transparent text-lg leading-6 font-medium text-gray-900">History</h3>
+              <History ticket={ticket} project={project}/>
+            </div>
           </div>
-
-    }
-    
-
+        </div>
+      }
     </div>
   )
-   
-
- 
-
-
 }
 
 export default ShowTicket

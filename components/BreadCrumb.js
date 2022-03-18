@@ -3,7 +3,6 @@ import { ChevronRightIcon, HomeIcon } from '@heroicons/react/solid'
 
 const pages = [
   { name: 'Projects', href: '#', current: false },
-//   { name: 'Project Nero', href: '#', current: true },
 ]
 
 export default function BreadCrumb({pages, current}) {

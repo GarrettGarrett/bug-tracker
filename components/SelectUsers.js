@@ -4,14 +4,12 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function SelectUsers({session, users, defaultUser, selected, setSelected}) {
   let loadedUsers = users?.length ? users : defaultUser //load default data while waiting for users to fetch
-
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -22,39 +20,35 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center">
               {
-                                selected?.image ?
-                                <div className='relative h-8 w-8 rounded-full object-cover'>
-                                  <Image
-                                  className='rounded-full'
-                                
-                                  src={selected.image}
-                                  layout="fill"
-                                  objectFit="cover"
-                                  />
-                                </div>
+                    selected?.image ?
+                    <div className='relative h-8 w-8 rounded-full object-cover'>
+                      <Image
+                      className='rounded-full'
+                    
+                      src={selected.image}
+                      layout="fill"
+                      objectFit="cover"
+                      />
+                    </div>
 
-                                // if image, use image
-                                // <img src={selected.image} alt="" className=" h-8 w-8 rounded-full object-cover" />
-                                :
-                                // if no image, use first letter of name
-                                <span className='font-bold text-black text-2xl  pl-1'>{selected?.email[0].toLocaleUpperCase()}</span>
+                    // if image, use image
+                    :
+                    // if no image, use first letter of name
+                    <span className='font-bold text-black text-2xl  pl-1'>{selected?.email[0].toLocaleUpperCase()}</span>
               }
-
-            {
-                //   some entries have a name, some only have an email. prase the name out of the email if needed.
-                selected?.name ? 
-                <span className="ml-3 block truncate text-black">{selected.name}</span>
-                :
-                <span className="ml-3 block truncate text-black">{selected.email}</span>
-                
-            }
-                
+              {
+                  //   some entries have a name, some only have an email. prase the name out of the email if needed.
+                  selected?.name ? 
+                  <span className="ml-3 block truncate text-black">{selected.name}</span>
+                  :
+                  <span className="ml-3 block truncate text-black">{selected.email}</span>
+                  
+              }
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
-
             <Transition
               show={open}
               as={Fragment}
@@ -63,8 +57,6 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-
-
                 {loadedUsers.map((person) => (
                   <Listbox.Option
                     key={person.name}
@@ -88,20 +80,16 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
                                 <div className='relative flex-shrink-0 h-8 w-8 rounded-full object-cover'>
                                   <Image
                                   className='rounded-full'
-                                
                                   src={person.image}
                                   layout="fill"
                                   objectFit="cover"
                                   />
                                 </div>
-
                                 // if image, use image
-                                // <img src={person.image} alt="" className="flex-shrink-0 h-8 w-8 rounded-full object-cover" />
                                 :
                                 // if no image, use first letter of name
                                 <span className='h-6 w-6 flex-shrink-0 font-bold text-black text-2xl  pl-1'>{person.email[0].toLocaleUpperCase()}</span>
                             }
-                         
                           <span
                             className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                           >
@@ -112,7 +100,6 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
                                 :
                                 person.email
                               }
-                            
                           </span>
                         </div>
 
@@ -135,7 +122,6 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
           </div>
         </>
       )}
-     
     </Listbox>
   )
 }

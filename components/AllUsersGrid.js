@@ -53,7 +53,6 @@ export default function AllUsersGrid({users}) {
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-medium text-indigo-600 truncate">{user.name ? user.name : getNameFromEmail(user.email)}</p>
                   <div className="ml-2 flex-shrink-0 flex">
-
                   </div>
                 </div>
                 <div className="mt-2 sm:flex sm:justify-between">
@@ -62,10 +61,8 @@ export default function AllUsersGrid({users}) {
                       <MailIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                       {user.email}
                     </p>
-
                   </div>
                   <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-              
                     {
                       user?.role ? 
                       <>
@@ -76,9 +73,7 @@ export default function AllUsersGrid({users}) {
                       </>
                       :
                       null
-                        
                     }
-                    
                   </div>
                 </div>
               </div>

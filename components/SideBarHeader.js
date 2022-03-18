@@ -30,24 +30,18 @@ import SearchBar from './SearchBar'
 import useSWR, { useSWRConfig } from 'swr'
 import Image from 'next/image'
 
-
-
 function getData(endpoint){
   const { data, error, isValidating } = useSWR(endpoint, fetcher)
   const data1 =  { data :data}
   return data1.data
 }
-  
 
 function getRandomID() {
   return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
-
   const userNavigation = [
-   
     { name: 'Sign out', href: '#', signOut: true },
   ]
-  
   
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -55,10 +49,7 @@ function getRandomID() {
 
   const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
-
-
 function SideBarHeader() {
-
     let context = useAppContext()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
       const { data: session, status } = useSession()
@@ -66,43 +57,32 @@ function SideBarHeader() {
       const Router = useRouter()
       const { data, error, isValidating } = useSWR(`api/getTicketsByUserID/${session?.user?.email}`, fetcher)
       const projects = getData(`/api/getProjectsByUser/${session?.user?.email}`)
-      
-
       const sidebarNavigation = [
         { name: 'Home', href: '#', icon: HomeIcon,  index: 1, visible: true},
         { name: 'Role Assignment', href:'#', icon: UserGroupIcon,  index: 2, visible: context?.role == "Admin" || context?.role == "Project Manager" },
         { name: 'Projects', href: '#', icon: CollectionIcon,  index: 3, visible: true },
         { name: 'Tickets', href: '#', icon: TicketIcon,  index: 4, visible: true },
       ]
-
       useEffect(() => { //once finished loading, if not authenticated then route to login
-
         if (status != "loading"){
           if (status != "authenticated"){
             Router.push("/auth/email-signin")
           }
         }
         }, [status])
-
-
       if (typeof window !== "undefined" && loading) return null
-
-
-
-
-
   return (
     <>
-               {/* Narrow sidebar */}
-          <div className="hidden w-28 bg-indigo-700 overflow-y-auto md:block">
-            <div className="w-full py-6 flex flex-col items-center">
-              <div className="flex-shrink-0 flex items-center">
-              <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className='w-9 mx-auto opacity-90'
-      version="1"
-      viewBox="0 0 810 810"
-    >
+    {/* Narrow sidebar */}
+      <div className="hidden w-28 bg-indigo-700 overflow-y-auto md:block">
+        <div className="w-full py-6 flex flex-col items-center">
+          <div className="flex-shrink-0 flex items-center">
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className='w-9 mx-auto opacity-90'
+          version="1"
+          viewBox="0 0 810 810"
+          >
       <defs>
         <clipPath id="id1">
           <path d="M372 259h403.27v545H372zm0 0"></path>
@@ -131,7 +111,6 @@ function SideBarHeader() {
               </div>
               <div className="flex-1 mt-6 w-full px-2 space-y-1">
                 {sidebarNavigation.map((item) => (
-                 
                   <Link 
                   key={getRandomID()}
                   href={item.href}>
@@ -148,8 +127,6 @@ function SideBarHeader() {
                         context.tab == item.index ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
                         'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium',
                         `${item.visible ? "" : "hidden"}`,
-
-                        
                       )}
                       aria-current={context.tab == item.index ? 'page' : undefined}
                     >
@@ -163,12 +140,10 @@ function SideBarHeader() {
                       <span className="mt-2 text-center">{item.name}</span>
                     </a>
                   </Link>
-                  
                 ))}
               </div>
             </div>
           </div>
-
           {/* Mobile menu */}
           <Transition.Root show={mobileMenuOpen} as={Fragment}>
             <Dialog as="div" className="md:hidden" onClose={setMobileMenuOpen}>
@@ -283,7 +258,6 @@ function SideBarHeader() {
                               <span>{item.name}</span>
                             </a>
                             </Link>
-
                           ))}
                         </div>
                       </nav>
@@ -296,7 +270,6 @@ function SideBarHeader() {
               </div>
             </Dialog>
           </Transition.Root>
-
           {/* Content area */}
           <div className=" flex-1 flex flex-col overflow-hidden">
             <header className="w-full">
@@ -313,16 +286,12 @@ function SideBarHeader() {
  
                   <div className="invisible md:w-full md:pt-3 md:visible">
                     {
-                      // data?.ProjectsForUser?.length > 0 &&
                       <SearchBar  
                         setSearchBarSelectedProject={context.setSearchBarSelectedProject}
                         data={data?.ProjectsForUser}
                        
                       />
                     }
-                    
-                  
-                  
                   </div>
                   <div className="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
                     {/* Profile dropdown */}
@@ -341,7 +310,6 @@ function SideBarHeader() {
                                   objectFit="cover"
                                   />
                             </div>
-
                             // If image, use here
                               // <img
                               // className="h-8 w-8 rounded-full"
@@ -356,9 +324,7 @@ function SideBarHeader() {
                               session?.user?.email ? session.user.email[0].toLocaleUpperCase() :
                               "N"
                               }</span>
-
                           }
-                          
                         </Menu.Button>
                       </div>
                       <Transition
@@ -380,7 +346,6 @@ function SideBarHeader() {
                                   className={classNames(
                                     active ? 'bg-gray-100' : '',
                                     'block px-4 py-2 text-sm text-gray-700',
-                                    
                                   )}
                                 >
                                   {item.name}
@@ -391,8 +356,10 @@ function SideBarHeader() {
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                    <NewBtnDropDown context={context} projects={projects}/>                
-                   
+                    <NewBtnDropDown 
+                      context={context} 
+                      projects={projects}
+                    />                
                   </div>
                 </div>
               </div>
@@ -403,73 +370,63 @@ function SideBarHeader() {
               <main className="flex-1 overflow-y-auto">
                 {/* Primary column */}
                 <section aria-labelledby="primary-heading" className="min-w-0 flex-1 h-full flex flex-col lg:order-last">
-                  
                   {/* Your content */}
-                  {
-                    context.tab == 1 ?  
-                        <>
-                            <div className="px-5 py-5">
-                              <Home session={session}/>
-                            </div>
-                        </>
-                   
-                    :
-                    context.tab == 2 ? 
-                        <>
-                            <div className="px-5 py-5">
-                                <RoleAssignment session={session}/>
-                            </div>
+              {
+                context.tab == 1 ?  
+                    <>
+                        <div className="px-5 py-5">
+                          <Home session={session}/>
+                        </div>
+                    </>
+                :
+                context.tab == 2 ? 
+                    <>
+                        <div className="px-5 py-5">
+                            <RoleAssignment session={session}/>
+                        </div>
 
-                        </>
-                    :
-                    context.tab == 4 ? 
-                        <>
-                            <div className="px-5 py-5">
-                                <AllTickets session={session}/>
-                            </div>
+                    </>
+                :
+                context.tab == 4 ? 
+                    <>
+                        <div className="px-5 py-5">
+                            <AllTickets session={session}/>
+                        </div>
 
-                        </>
+                    </>
+                :
+                // New Project = -1
+                context.tab == -1 ? 
+                    <>
+                        <div className="px-5 py-5">
+                            <NewProject session={session}/>
+                        </div>
 
-                    :
-                    // New Project = -1
-                    context.tab == -1 ? 
-                        <>
-                            <div className="px-5 py-5">
-                                <NewProject session={session}/>
-                            </div>
+                    </>
+                :
+                // New Ticket = -2
+                context.tab == -2 ? 
+                    <>
+                        <div className={`px-5 py-5`}>
+                            <NewTicket session={session}/>
+                        </div>
 
-                        </>
+                    </>
+                :
+                context.tab == 3 ? 
+                    <>
+                        <div className="px-5 py-5">
+                            <AllProjectsGrid session={session}/>
+                        </div>
 
-                    :
-                  
-                    // New Ticket = -2
-                    context.tab == -2 ? 
-                        <>
-                            <div className={`px-5 py-5`}>
-                                <NewTicket session={session}/>
-                            </div>
-
-                        </>
-
-                    :
-                    context.tab == 3 ? 
-                        <>
-                            <div className="px-5 py-5">
-                                <AllProjectsGrid session={session}/>
-                            </div>
-
-                        </>
-
-                    :
-                    null
-                    }
-                </section>
-              
-              </main>
-
-          
-            </div>
-            </div>
+                    </>
+                :
+                null
+                }
+            </section>
+          </main>          
+        </div>
+      </div>
     </>
   )
 }

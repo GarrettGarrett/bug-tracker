@@ -4,10 +4,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import { useState, useEffect } from 'react'
 import moment from 'moment'
 
-
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
-
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -18,14 +15,11 @@ export default function History({ticket, project}) {
     const { mutate } = useSWRConfig()
     const [mutateHistory, setMutateHistory] = useState(false)
 
-
-
   if (error) return <div>failed to load</div>
   if (!data) return <span className='text-gray-400 text-sm'>Loading History...</span>
   if (typeof data?.length == "undefined") return<span className='text-gray-400 text-sm'>No History</span>
   if (data?.length > 0) return (
     <div className="flow-root">
-    
       <ul role="list" className="-mb-8 pt-3">
         {data.map((event, eventIdx) => (
           <li key={event.CreatedAt._d}>
@@ -55,30 +49,19 @@ export default function History({ticket, project}) {
                 </div>
                 <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                   <div>
-                   
                       {
                         // if old value is null, then a member was added.
                         event.OldValue == null ? 
-
                         <p className="text-sm text-gray-500">{`${event.Owner} updated ${event.PropertyChanged} by adding ${event.NewValue}`}</p>
-
                         :
-
                         // if new value is null, then member was removed
                         event.NewValue == null ? 
-
                         <p className="text-sm text-gray-500">{`${event.Owner} updated ${event.PropertyChanged} by removing ${event.OldValue}`}</p>
-
                         :
                         <p className="text-sm text-gray-500">{`${event.Owner} updated ${event.PropertyChanged} from ${event.OldValue} to ${event.NewValue}`}</p>
-
                       }
-                      
-                     
-                  
                   </div>
                   <div className="text-right text-sm whitespace-nowrap text-gray-500">
-                    {/* <time dateTime={event.datetime}>{event.date}</time> */}
                     <time>{moment(event.CreatedAt._d).fromNow()}</time>
                   </div>
                 </div>

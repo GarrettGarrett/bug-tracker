@@ -1,7 +1,6 @@
 import moment from 'moment'
 import { InformationCircleIcon, LocationMarkerIcon, UsersIcon } from '@heroicons/react/solid'
 
-
 function colorBadgeByPriority(priority) {
   let color
   if (priority == "Low") {
@@ -22,23 +21,18 @@ function colorBadgeByPriority(priority) {
 export default function TicketList({selectedTicket, tickets, showTicket, setShowTicket, setShowProject, setSelectedTicket, showEdit, setShowEdit, findProjectByProjectID, data, setSelectedProject, setTheParentProjectID, selectedArray}) {
   return (
     <>
-
-    <div className="bg-white shadow overflow-hidden sm:rounded-md rounded-md mb-24">
-      
-      <ul role="list" className="divide-y divide-gray-200">
-        {tickets.map((Ticket, i) => (
-          <li 
-          className={`${selectedArray.includes(Ticket.Status) ? '' : 'hidden'}`}
-          onClick={()=> {
-            setShowTicket(true)
-            setSelectedTicket(i)
-            // setTheParentProjectID(Ticket.ParentProjectID)
-            if (data?.ProjectsForUser){
-              setSelectedProject(findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[i].ParentProjectID))
-            }
-           
-            
-
+      <div className="bg-white shadow overflow-hidden sm:rounded-md rounded-md mb-24">
+        <ul role="list" className="divide-y divide-gray-200">
+          {tickets.map((Ticket, i) => (
+            <li 
+            className={`${selectedArray.includes(Ticket.Status) ? '' : 'hidden'}`}
+            onClick={()=> {
+              setShowTicket(true)
+              setSelectedTicket(i)
+              // setTheParentProjectID(Ticket.ParentProjectID)
+              if (data?.ProjectsForUser){
+                setSelectedProject(findProjectByProjectID(data.ProjectsForUser, data.TicketsForUser[i].ParentProjectID))
+              }
           }
         }
           key={Ticket.TicketID}>
@@ -58,11 +52,9 @@ export default function TicketList({selectedTicket, tickets, showTicket, setShow
 
                       <InformationCircleIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                       {Ticket.Type}
-                    </p>
-                    
+                    </p>  
                   </div>
                   <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-
                     <p>
                      {moment(Ticket.CreatedAt).fromNow()}
                     </p>
@@ -74,8 +66,7 @@ export default function TicketList({selectedTicket, tickets, showTicket, setShow
         ))}
       </ul>
     </div>
-    
-    </>
+  </>
 
   )
 }

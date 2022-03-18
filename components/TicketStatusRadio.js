@@ -1,6 +1,5 @@
 import {useState} from 'react'
 
-
 const notificationMethods = [
     { id: 'Open', title: 'Open' },
     { id: 'In Progress', title: 'In Progress' },
@@ -13,7 +12,6 @@ const notificationMethods = [
     return (
       <div>
         <label className="text-sm text-gray-800">{'Status'}</label>
-        
         <fieldset className="mt-0">
           <legend className="sr-only">Notification method</legend>
           <div className="">
@@ -22,7 +20,6 @@ const notificationMethods = [
                 <input
                 onClick={(e) => {
                     setCheckValues(e.target.id)
-                   
                     setEditedValues({...editedValues, Status: e.target.id})
                       
                 }}

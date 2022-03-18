@@ -8,8 +8,6 @@ function classNames(...classes) {
 }
 
 export default function NewBtnDropDown({context, projects}) {
-
-
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -57,9 +55,6 @@ export default function NewBtnDropDown({context, projects}) {
                 </a>
               )}
             </Menu.Item>
-           
-           
-          
           </div>
         </Menu.Items>
       </Transition>

@@ -2,13 +2,11 @@ import React from 'react'
 
 function LoginLogo() {
   return (
-
     <svg
     xmlns="http://www.w3.org/2000/svg"
-    
     version="1"
     viewBox="0 0 5184 720"
-  >
+    >
     <defs>
       <clipPath id="id2">
         <path d="M818.16 228.512h359.582v485.96H818.16zm0 0"></path>
@@ -89,8 +87,6 @@ function LoginLogo() {
       transform="translate(4549.334 533.275)"
     ></path>
   </svg>
-      );
-
+      )
 }
-
 export default LoginLogo

@@ -4,9 +4,6 @@ const AppContext = createContext();
 import useSWR, { useSWRConfig } from 'swr'
 import { useSession, signIn, signOut } from "next-auth/react"
 
-
-
-
 export function AppWrapper({ children }) {
   const { data: session, status } = useSession()
   const [role, setRole] = useState(null)
@@ -33,8 +30,7 @@ export function AppWrapper({ children }) {
     }
   }
   }
-  
-  
+    
   let sharedState = {
         tab,
         setTab,
@@ -47,10 +43,8 @@ export function AppWrapper({ children }) {
         showEditProject,
         setShowEditProject,
         role,
-        
     }
   
-
   return (
     <AppContext.Provider 
       value={sharedState} 

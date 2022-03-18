@@ -5,18 +5,15 @@ import AlphaUsersSearch from './AlphaUsersSearch'
 import NewProjectSubmitButtons from './NewProjectSubmitButtons'
 import NewProjectSkeleton from './NewProjectSkeleton'
 
-
 function getRandomID() {
     return Math.floor(Math.random() * (9999999999 - 1111111111 + 1) + 1111111111)
 }
-
 function getNameFromEmail(str){
     if (str){
       let indexOfAt = str.indexOf("@")
       return str.substring(0, indexOfAt)
     }
   }
-
 const fetcher = url => fetch(url).then(r => r.json().then(console.log("fetched data")))
 
 function createAlphaObject(data){
@@ -36,18 +33,15 @@ function createAlphaObject(data){
                 alphaObject[user.name[0]].push(user)
                 
             }
-            
         } else { // if email user, treat email as name:
             if (!firstLetterArray.includes(user.email[0])) {
                 firstLetterArray.push(user.email[0])
                 alphaObject[user.email[0].toUpperCase()] = [user]
             } else { //if not 1st first letter, add user but not letter 
-                alphaObject[user.email[0]].push(user)
-                
+                alphaObject[user.email[0]].push(user) 
             }
         }
     })
-   
 
     // now sort a-z
     let sortedAlphaObject = {};
@@ -57,10 +51,7 @@ function createAlphaObject(data){
         sortedAlphaObject[key] = alphaObject[key];
     });
     return sortedAlphaObject
-    
-}
-
-   
+}  
 
 export default function NewProject() {
     const { data, error, isValidating } = useSWR('/api/getUsers', fetcher)
@@ -79,11 +70,7 @@ export default function NewProject() {
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState([])
     const [visibleErrorString, setVisibleErrorString] = useState(null)
-
-
-    
-
-
+ 
     useEffect(() => {
         async function sleep(){
             setTimeout(() => {
@@ -110,12 +97,10 @@ export default function NewProject() {
             }
         }
         return errorMsgArray
-        
     }
 
     async function handleSubmit(){
         let errorsArray = handleInputErrors()
-        
         if (errorsArray.length == 0) {
             setLoading(true) //for button loader icon
             // take list of selected user IDs, and add the full user object to project.members
@@ -133,17 +118,13 @@ export default function NewProject() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({...project, Members: selectedUserObjects})
             }) 
-
-
             if (newPost.ok) {
                 setButtonMessage("Added")
             } else {
                 setButtonMessage(submitRole.statusText)
-
             }
             setLoading(false) //for button loader icon
             // clear form values
-
             setProject({
                 My_ID: getRandomID(),
                 Title: '',
@@ -165,7 +146,6 @@ export default function NewProject() {
     }, [data])
 
     function filterUsers(filterTerm) {
-        
         let filteredAlpha = []
         data.map(user => {
             let name = user?.name ? user.name : getNameFromEmail(user.email)
@@ -173,68 +153,57 @@ export default function NewProject() {
                 filteredAlpha.push(user)
             }
         })
-        
         setAlphaUsersFiltered(createAlphaObject(filteredAlpha))
     }
 
     function removeFilter(){
         setAlphaUsersFiltered(alphaUsers)
     }
-    
-
     if (error) return <>error</>
     if (!data) return <NewProjectSkeleton/>
     if (data) return (
-       
-
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
             <div>
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">New Project</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
-                        Use this form to create a new project.
-                    </p>
+                <h3 className="text-lg leading-6 font-medium text-gray-900">New Project</h3>
+                <p className="mt-1 max-w-2xl text-sm text-gray-500 pb-4">
+                    Use this form to create a new project.
+                </p>
 
-                    <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
-                        <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
-                        <input
-                            type="text"
-                            value={project.Title}
-                            onChange={(e) => setProject({...project, Title: e.target.value})}
-                            name="first-name"
-                            id="first-name"
-                            autoComplete="given-name"
-                            className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s md:text-sm border-gray-300 rounded-md text-lg"
-                            placeholder='Title'
-                        />
-                    </div>
-
-
-   
-                        <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
-                            <textarea
-                                value={project.Description}
-                                onChange={(e) => setProject({...project, Description: e.target.value})}
-                                id="description"
-                                name="description"
-                                rows={3}
-                                className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 md:text-sm border border-gray-300 rounded-md text-lg"
-                                defaultValue={''}
-                                placeholder='Description'
-                            />
-                        </div>
-                           
-                          
-                        </div>
-                        
-                        <div className='hidden md:block'>
-                             <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
-                        </div>
-                        
-                                
-
+                <div className="sm:grid sm:grid-cols-1 sm:gap-4 sm:items-start sm:pt-5">
+                    <div className="mt-1 sm:mt-0 sm:col-span-2 text-black">
+                    <input
+                        type="text"
+                        value={project.Title}
+                        onChange={(e) => setProject({...project, Title: e.target.value})}
+                        name="first-name"
+                        id="first-name"
+                        autoComplete="given-name"
+                        className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:w-full s md:text-sm border-gray-300 rounded-md text-lg"
+                        placeholder='Title'
+                    />
+                </div>
+                <div className="pt-2 mt-1 sm:mt-0 sm:col-span-2">
+                    <textarea
+                        value={project.Description}
+                        onChange={(e) => setProject({...project, Description: e.target.value})}
+                        id="description"
+                        name="description"
+                        rows={3}
+                        className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 md:text-sm border border-gray-300 rounded-md text-lg"
+                        defaultValue={''}
+                        placeholder='Description'
+                    />
+                </div>
+            </div>     
+            <div className='hidden md:block'>
+                    <NewProjectSubmitButtons 
+                        buttonMessage={buttonMessage} 
+                        loading={loading} 
+                        visibleErrorString={visibleErrorString} 
+                        handleSubmit={handleSubmit}
+                    />
             </div>
-            
-
+            </div>
              <div className="space-y-6 sm:space-y-5 ">
                 <div>
                     <h3 className="text-lg leading-6 font-medium text-gray-900">Project Members</h3>
@@ -251,17 +220,15 @@ export default function NewProject() {
                     : null
                 }
              </div>
-            
              <div className='pb-36 block md:hidden md:pb-0'>
-                    <NewProjectSubmitButtons buttonMessage={buttonMessage} loading={loading} visibleErrorString={visibleErrorString} handleSubmit={handleSubmit}/>
+                    <NewProjectSubmitButtons 
+                        buttonMessage={buttonMessage} 
+                        loading={loading} 
+                        visibleErrorString={visibleErrorString} 
+                        handleSubmit={handleSubmit}
+                    />
             </div>
-         
-
-
         </div>
-
-  
-     
     )
   }
   

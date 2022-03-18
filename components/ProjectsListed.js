@@ -24,11 +24,9 @@ function ProjectsListed({projects, setCurrentProject, session}) {
 
   return (
     <>
-    <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session?.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Projects`}</h3>
-    {/* <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">My Projects</h3> */}
+        <h3 className="pl-1 pb-4 text-lg leading-6 font-medium text-gray-900">{` ${session?.user?.name ? capitalizeFirstLetter(session.user.name) : capitalizeFirstLetter(getNameFromEmail(session.user.email))}'s Projects`}</h3>
           <div className="bg-white shadow overflow-hidden sm:rounded-md mb-28">
             <ul role="list" className="divide-y divide-gray-200">
-              
             {projects.map((project, i) => (
               <li 
               key={getRandomID()}
@@ -43,11 +41,9 @@ function ProjectsListed({projects, setCurrentProject, session}) {
                       <div className="truncate">
                         <div className="flex text-sm">
                           <p className="font-medium text-indigo-600 truncate">{project.Title}</p>
-
                         </div>
                         <div className="mt-0 flex">
                           <div className="flex items-center text-sm text-gray-500">
-                          
                             <p>
                               {project.Description}
                             </p>
@@ -69,13 +65,7 @@ function ProjectsListed({projects, setCurrentProject, session}) {
                                         objectFit="cover"
                                         />
                                     </div>
-                                  </>
-                                 
-                                //   <img
-                                //     key={member.email}
-                                //     className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover"
-                                //     src={member.image}
-                                //   />        
+                                  </>      
                               )
                             } else {
                               return (
@@ -85,7 +75,6 @@ function ProjectsListed({projects, setCurrentProject, session}) {
                               )
                             }
                           })}
-
                         </div>
                       </div>
                     </div>

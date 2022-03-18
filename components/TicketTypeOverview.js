@@ -16,9 +16,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
-
 function parseTickets (tickets) {
     let Bug = 0
     let Documentation = 0
@@ -113,7 +110,6 @@ function parseTickets (tickets) {
             percent: WontFix == 0 ? 0 : Math.floor((WontFix / tickets.length) * 100),
             color: "bg-blue-400"
         },
-       
     ]
 }
 
@@ -130,9 +126,7 @@ if (tickets) return (
             <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
               <div className="flex items-baseline text-2xl font-semibold text-indigo-600">
                 {item.count}
-
               </div>
-
               <div
                 className={classNames(
                     item.percent < 33 ? 'text-Verdigris' 
@@ -143,8 +137,6 @@ if (tickets) return (
                     'ml-2 flex items-baseline text-sm font-semibold'
                 )}
               >
-               
-
                 <span className="sr-only">{item.changeType === 'increase' ? 'Increased' : 'Decreased'} by</span>
                 {(item.percent) } %
               </div>

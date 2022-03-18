@@ -1,5 +1,4 @@
- 
-const notificationMethods = [
+ const notificationMethods = [
     { id: 'Open', title: 'Open' },
     { id: 'In Progress', title: 'In Progress' },
     { id: 'Resolved', title: 'Resolved' },
@@ -8,15 +7,12 @@ const notificationMethods = [
   
   export default function AllTicketsFilter({selectedArray, setSelectedArray}) {
 
-
     return (
-      <div className="">
-        {/* <label className="text-base font-medium text-gray-900">Notifications</label> */}
-        {/* <p className="text-sm leading-5 text-gray-500">Filter By Status</p> */}
+      <div>
         <fieldset className="mb-5 pl-1">
           <legend className="sr-only">Notification method</legend>
-          <div className="sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-            {notificationMethods.map((notificationMethod) => (
+            <div className="sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+             {notificationMethods.map((notificationMethod) => (
               <div key={notificationMethod.id} className="flex items-center">
                 <input
                   onClick={(e) => {

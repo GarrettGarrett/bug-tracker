@@ -3,8 +3,6 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -17,9 +15,6 @@ export default function SelectProjectBox({
     selected,
     setSelected
 }) {
-
-  // const [selected, setSelected] = useState(projects?.length > 0 ? projects[0] : fallBackItem[0])
-
   return (
     <Listbox value={selected} onChange={
         (e) => {
@@ -27,7 +22,6 @@ export default function SelectProjectBox({
             setSelectedProjectID(e._id)
             setSelectedProjectMyID(e.My_ID)
         }
-        
         }>
       {({ open }) => (
         <>
@@ -39,7 +33,6 @@ export default function SelectProjectBox({
                 <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
-
             <Transition
               show={open}
               as={Fragment}
@@ -64,7 +57,6 @@ export default function SelectProjectBox({
                         <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
                           {project.Title}
                         </span>
-
                         {selected ? (
                           <span
                             className={classNames(

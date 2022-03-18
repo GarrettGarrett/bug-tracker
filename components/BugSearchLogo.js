@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import React from 'react'
 
 function Animation() {
-
   const ref = useRef(null);
   const [lottie, setLottie] = useState(null);
 
@@ -20,16 +19,13 @@ function Animation() {
         // path to your animation file, place it inside public folder
         path: '/images/lottie.json',
       });
-
       return () => animation.destroy();
     }
   }, [lottie]);
-
   return (
     <div ref={ref} />
   );
 }
-
 
 export default Animation
 
