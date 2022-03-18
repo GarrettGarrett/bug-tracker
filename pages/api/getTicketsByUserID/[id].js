@@ -19,8 +19,6 @@ export default async (req, res) => {
             if (session) {
               
                 const { db } = await connectToDatabase('myFirstDatabase');
-                                
-
                 const allProjects = await db.collection('projects').find().toArray()
                 
                 
