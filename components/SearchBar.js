@@ -24,7 +24,7 @@ function SearchBar({data, setSearchBarSelectedProject}) {
             value={query}
                 name="search-field"
                 id="search-field"
-                className="bg-white text-sm h-full w-full border-transparent py-2 pl-8 pr-3  text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400"
+                className="z-50 bg-white text-sm h-full w-full border-transparent py-2 pl-8 pr-3  text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400"
                 placeholder="Search Projects..."
                 // type="search"
             />
