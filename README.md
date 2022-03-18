@@ -7,7 +7,7 @@
   <br>
 </h1>
 
-<h4 align="center">Create projects and tickets to track bugs and release better products.</h4>
+<h4 align="center">Create projects and tickets to track bugs in your next software product.</h4>
 
 
 
