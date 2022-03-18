@@ -10,14 +10,16 @@ export default function MyApp({
 }) {
 
   return (
+    <ChakraProvider>
       <ThemeProvider attribute="class" >
         <SessionProvider session={session}>
         <AppWrapper>
-          <ChakraProvider>
+          
               <Component {...pageProps} />
-            </ChakraProvider>
+            
           </AppWrapper>
         </SessionProvider>
       </ThemeProvider>
+    </ChakraProvider>
   )
 }
