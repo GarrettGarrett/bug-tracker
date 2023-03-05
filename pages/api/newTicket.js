@@ -11,7 +11,7 @@ export default async (req, res) => {
             var good_id = new ObjectId(id);
             const session = await getSession({ req })
             if (session) {
-                const { db } = await connectToDatabase('myFirstDatabase');
+                const { db } = await connectToDatabase(process.env.MONGODB_DB);
                 const newTicket = await db.collection("projects").updateOne({_id: good_id}, 
                         {$push: {
                             Tickets: req.body.TicketObject, 

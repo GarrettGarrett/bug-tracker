@@ -8,7 +8,7 @@ export default async (req, res) => {
             var id = req.body.projectID    
             const session = await getSession({ req })
             if (session) {
-                const { db } = await connectToDatabase('myFirstDatabase');
+                const { db } = await connectToDatabase(process.env.MONGODB_DB);
                 const newImage = await db.collection("projects").updateOne({My_ID: req.body.ProjectID}, 
                     {$push: {
                         [`Images-${req.body.TicketID}`]: {image:req.body.Image, title: req.body.ImageTitle, Description: req.body.Description}

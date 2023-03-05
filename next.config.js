@@ -1,7 +1,7 @@
 
 module.exports = {
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    domains: ['avatars.githubusercontent.com', 'ui-avatars.com'],
   },
   env: {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,

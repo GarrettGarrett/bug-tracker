@@ -17,7 +17,7 @@ export default async (req, res) => {
             const session = await getSession({ req })
             if (session) {
                 let editTicket = null
-                const { db } = await connectToDatabase('myFirstDatabase');
+                const { db } = await connectToDatabase(process.env.MONGODB_DB);
                 
                 if (fieldsToUpdate?.length > 0){
                     for (const field of fieldsToUpdate) {

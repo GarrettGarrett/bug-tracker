@@ -27,6 +27,8 @@ export async function connectToDatabase(collection) {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
+  console.log('Connected to database')
+
 
   const db = await client.db(collection)
 

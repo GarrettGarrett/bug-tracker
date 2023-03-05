@@ -60,7 +60,7 @@ export default async (req, res) => {
                         }
                     }
                   }
-                const { db } = await connectToDatabase('myFirstDatabase');
+                const { db } = await connectToDatabase(process.env.MONGODB_DB);
                 // for each field that has been updated (not null),
                 // find the old value in the old object
                 // track the updated field name, old value, new value

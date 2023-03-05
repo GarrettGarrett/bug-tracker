@@ -14,7 +14,7 @@ export default async (req, res) => {
             const userID = id
             const session = await getSession({ req })
             if (session) {
-                const { db } = await connectToDatabase('myFirstDatabase');
+                const { db } = await connectToDatabase(process.env.MONGODB_DB);
                 const allProjects = await db.collection('projects').find().toArray()
                 if (allProjects){
                     let TicketsForUser = []

@@ -11,7 +11,7 @@ export default async (req, res) => {
         } = req
         const session = await getSession({ req })
         if (session) {
-            const { db } = await connectToDatabase('myFirstDatabase');
+            const { db } = await connectToDatabase(process.env.MONGODB_DB);
             const project = await db.collection("projects").findOne({"My_ID": parseInt(id)})          
                 
             

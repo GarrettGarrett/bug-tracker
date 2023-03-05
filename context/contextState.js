@@ -1,9 +1,8 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react'
 import { useState, useEffect, useRef } from 'react'
-const AppContext = createContext();
+const AppContext = createContext()
 import useSWR, { useSWRConfig } from 'swr'
-import { useSession, signIn, signOut } from "next-auth/react"
-
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 export function AppWrapper({ children }) {
   const { data: session, status } = useSession()
@@ -13,9 +12,6 @@ export function AppWrapper({ children }) {
   const [showProject, setShowProject] = useState(false)
   const [showTicket, setShowTicket] = useState(false)
   const [showEditProject, setShowEditProject] = useState(false)
-  
-
-
 
   useEffect(() => {
     if (session) {
@@ -24,42 +20,42 @@ export function AppWrapper({ children }) {
   }, [session])
 
   async function getRole(session) {
-    let getRole = await fetch (`/api/getRole/${session.user.email}`, {
+    let getRole = await fetch(`/api/getRole/${session.user.email}`, {
       method: 'GET',
-  })
-  if (getRole){
-    let { role } = await getRole.json()
-    if (role){
-      setRole(role)
+    })
+    if (getRole) {
+      let { role } = await getRole.json()
+      if (role) {
+        setRole(role)
+      }
     }
   }
-  }
-    
+
   let sharedState = {
-        tab,
-        setTab,
-        searchBarSelectedProject,
-        setSearchBarSelectedProject,
-        showProject,
-        setShowProject,
-        showTicket,
-        setShowTicket,
-        showEditProject,
-        setShowEditProject,
-        role,
-    }
-  
+    tab,
+    setTab,
+    searchBarSelectedProject,
+    setSearchBarSelectedProject,
+    showProject,
+    setShowProject,
+    showTicket,
+    setShowTicket,
+    showEditProject,
+    setShowEditProject,
+    role,
+  }
+
   return (
-    <AppContext.Provider 
-      value={sharedState} 
-      setTab={setTab} 
+    <AppContext.Provider
+      value={sharedState}
+      setTab={setTab}
       setSearchBarSelectedProject={setSearchBarSelectedProject}
     >
       {children}
     </AppContext.Provider>
-  );
+  )
 }
 
 export function useAppContext() {
-  return useContext(AppContext);
+  return useContext(AppContext)
 }

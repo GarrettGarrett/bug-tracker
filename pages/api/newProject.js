@@ -5,7 +5,7 @@ export default async (req, res) => {
     if (req.method === 'POST') {    
             const session = await getSession({ req })
             if (session) {
-                const { db } = await connectToDatabase('myFirstDatabase');
+                const { db } = await connectToDatabase(process.env.MONGODB_DB);
                 const newProject = await db
                 .collection("projects")
                 .insertOne(req.body)

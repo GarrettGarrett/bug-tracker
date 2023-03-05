@@ -57,7 +57,7 @@ export default function SelectUsers({session, users, defaultUser, selected, setS
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                {loadedUsers.map((person) => (
+                {loadedUsers?.map((person) => (
                   <Listbox.Option
                     key={person.name}
                     className={({ active }) =>

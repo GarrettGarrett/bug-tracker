@@ -209,7 +209,7 @@ export default function EditProject({session, existingProject, setShowEditProjec
                         id="description"
                         name="description"
                         rows={3}
-                        className="w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                        className="p-2 w-full shadow-sm block text-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                         defaultValue={''}
                         placeholder='Description'
                     />
@@ -221,7 +221,6 @@ export default function EditProject({session, existingProject, setShowEditProjec
                         setMutateProject={setMutateProject}
                         setShowEditProject={setShowEditProject} 
                         setShowProject={setShowProject}
-                        setShowEditProject={setShowEditProject}
                         buttonMessage={buttonMessage} 
                         loading={loading} 
                         visibleErrorString={visibleErrorString} 
